@@ -1,0 +1,163 @@
+canvas{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -99;
+  /* background-image: url(../img/bgimg.jpg); */
+  background-size: cover;
+}
+
+*{
+ 
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  font-family: "Rethink Sans", serif;
+    font-size: 62.5%;
+}
+
+body{
+  width: fit-content;
+}
+
+.openSettingsBtn{
+  cursor: pointer;
+  font-size: 2.4rem;
+  padding: 1.2rem;
+}
+
+aside{
+  padding: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  /* justify-content: space-between; */
+  background-color: rgba(239, 239, 239, 0.8);
+  width: fit-content;
+  border-bottom-right-radius: 12px;
+}
+
+.none{
+  display: none;
+}
+
+aside h2{
+  font-size: 3.6rem;
+  margin-bottom: 2rem;
+}
+
+aside h4{
+  font-size: 1.8rem;
+  margin-bottom: 1.8rem;
+}
+
+.btnContainer{
+  display: flex;
+  gap: 2rem;
+  font-size: 1.8rem;
+}
+
+.btnContainer div{
+  cursor: pointer;
+  width: 3.2rem;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  background-color: #000;
+  border: 2px solid #444;
+}
+
+.btnContainer div:nth-child(1){
+  background-color: #343a40;
+}
+
+.btnContainer div:nth-child(2){
+  background-color: #f03e3e;
+}
+
+.btnContainer div:nth-child(3){
+  background-color: #1c7ed6;
+}
+
+.btnContainer div:nth-child(4){
+  background-color: #d6336c;
+}
+
+.btnContainer div:nth-child(5){
+  background-color: #37b24d;
+}
+
+.changeColorBtn{
+  transition: 0.3s;
+}
+
+.clicked{
+  transform: scale(1.1);
+}
+
+.changeColorBtn:hover{
+  transform: scale(1.1);
+}
+
+.changeSizeInput{
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.changeSizeInput label{
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.changeSizeContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+
+.switch{
+  width: 6rem;
+  height: 2.4rem;
+  background-color: #37b24d;
+  opacity: 80%;
+  border-radius: 100px;
+  border: 2px solid #343a40;
+  position: relative;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.ball{
+  background-color: #efefef;
+  height: 85%;
+  aspect-ratio: 1;
+  position: absolute;
+  top: 50%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  transition: 0.2s;
+  border-radius: 100%;
+}
+
+@keyframes moveRight {
+  from{
+      left: 25%;
+  }
+  to{
+      left: 75%;
+  }
+}
+
+
+@keyframes moveLeft {
+  from {
+      left: 75%;
+  }
+
+  to {
+      left: 25%;
+  }
+}
