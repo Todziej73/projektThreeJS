@@ -39,7 +39,7 @@ class Cube extends THREE.Mesh{
   constructor(){
     super()
     this.geometry = new THREE.BoxGeometry(1, 1, 1);
-    this.material = new THREE.MeshStandardMaterial({color: '#212529'});
+    this.material = new THREE.MeshStandardMaterial({color: '#212529', wireframe: true});
   }
   sibblingNextTo = [];
 }
@@ -51,23 +51,30 @@ Cube.prototype.onClick = function(){
 
 
 
-
 const meshGroup = new THREE.Group();
+const cubesPositions = new Map();
 
 const addCube = function(side){
   const cube = new Cube()
-  meshGroup.add(cube)
   switch(side){
     case 'top':
       cube.position.set(currentBlock.position.x, currentBlock.position.y + 1, currentBlock.position.z)
       break;
-    case 'right':
-      cube.position.set(currentBlock.position.x + 1, currentBlock.position.y, currentBlock.position.z)
-      break;
-    case 'left':
-      cube.position.set(currentBlock.position.x - 1, currentBlock.position.y, currentBlock.position.z)
-      break;
+      case 'right':
+        cube.position.set(currentBlock.position.x + 1, currentBlock.position.y, currentBlock.position.z)
+    break;
+  case 'left':
+    cube.position.set(currentBlock.position.x - 1, currentBlock.position.y, currentBlock.position.z)
+    break;
   }
+
+  if(!cubesPositions.get(JSON.stringify(Object.values(cube.position)))){
+    cubesPositions.set(JSON.stringify(Object.values(cube.position)), true);
+    console.log(cubesPositions)  
+    meshGroup.add(cube)
+  }else{
+    console.log("Obiekt juz tu istnieje!");
+  } 
 }
 addCube()
 scene.add(meshGroup)
