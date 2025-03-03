@@ -1,131 +1,107 @@
+'use strict'
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {setup} from './setup.js';
 
-//* SET UP
-let width = 0;
-let height = 0;
-
-const mouse = new THREE.Vector2();
-
-const scene = new THREE.Scene();
-const canvas = document.querySelector('.canvas');
-const renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
-renderer.setClearColor('white', 0);
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 200);
-camera.position.z = 3;
-camera.position.x = 2;
-camera.position.y = 1;
-scene.add(camera);
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-scene.add(ambientLight)
-
-const pointLight = new THREE.PointLight(0xffffff, 1);
-pointLight.position.z = 3;
-pointLight.position.x = 2;
-scene.add(pointLight)
-
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true;
-
+const setupObj = setup();
+const scene = setupObj.scene;
+let width = setupObj.width;
+let height = setupObj.height;
+const camera = setupObj.camera;
+const renderer = setupObj.rederer;
+const controls = setupObj.controls;
+const mouse = setupObj.mouse;
 
 const raycaster = new THREE.Raycaster()
 let intersects = [];
 let currentBlock;
 
-class Cube extends THREE.Mesh{
-  constructor(){
+class Cube extends THREE.Mesh {
+  constructor() {
     super()
     this.geometry = new THREE.BoxGeometry(1, 1, 1);
-    this.material = new THREE.MeshStandardMaterial({color: '#212529', wireframe: true});
+    this.material = new THREE.MeshStandardMaterial({
+      color: '#212529'
+    });
   }
   sibblingNextTo = [];
 }
 
-Cube.prototype.onClick = function(){
-  this.material.color.setHex(0xc92a2a);
+Cube.prototype.onClick = function () {
+  addBlockOutline.position.copy(this.position);
 }
 
+// ! PROTOTYPE
+const addBlockOutline = new THREE.Group();
 
+const createTriangle = function (vertecies) {
+  const triangleGeo = new THREE.BufferGeometry();
+  const triangleVertecies = new Float32Array([...vertecies]);
+  triangleGeo.setAttribute('position', new THREE.BufferAttribute(triangleVertecies, 3))
+  const triangleMaterial = new THREE.MeshStandardMaterial({
+    color: 'yellow',
+    side: THREE.DoubleSide
+  })
+  const triangle = new THREE.Mesh(triangleGeo, triangleMaterial)
+  addBlockOutline.add(triangle)
+}
+createTriangle([0.0, 0.8, 0.6, -0.5, 0.6, 0.6, 0.5, 0.6, 0.6])
+createTriangle([-0.8, 0.0, 0.6, -0.6, 0.5, 0.6, -0.6, -0.5, 0.6])
+createTriangle([0.8, 0.0, 0.6, 0.6, 0.5, 0.6, 0.6, -0.5, 0.6])
+scene.add(addBlockOutline)
+//! PROTOTYPE
 
 
 const meshGroup = new THREE.Group();
 const cubesPositions = new Map();
 
-const addCube = function(side){
+const addCube = function (side) {
   const cube = new Cube()
-  switch(side){
-    case 'top':
+  switch (side) {
+    case 0:
       cube.position.set(currentBlock.position.x, currentBlock.position.y + 1, currentBlock.position.z)
       break;
-      case 'right':
-        cube.position.set(currentBlock.position.x + 1, currentBlock.position.y, currentBlock.position.z)
-    break;
-  case 'left':
-    cube.position.set(currentBlock.position.x - 1, currentBlock.position.y, currentBlock.position.z)
-    break;
+    case 2:
+      cube.position.set(currentBlock.position.x + 1, currentBlock.position.y, currentBlock.position.z)
+      break;
+    case 1:
+      cube.position.set(currentBlock.position.x - 1, currentBlock.position.y, currentBlock.position.z)
+      break;
   }
 
-  if(!cubesPositions.get(JSON.stringify(Object.values(cube.position)))){
+  if (!cubesPositions.get(JSON.stringify(Object.values(cube.position)))) {
     cubesPositions.set(JSON.stringify(Object.values(cube.position)), true);
-    console.log(cubesPositions)  
+    console.log(cubesPositions)
     meshGroup.add(cube)
-  }else{
+  } else {
     console.log("Obiekt juz tu istnieje!");
-  } 
+  }
 }
 addCube()
 scene.add(meshGroup)
 
 //* EVENTS
-const resize = function(){
-  width = window.innerWidth;
-  height = window.innerHeight;
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  console.log('resize!');
-};
-resize();
-window.addEventListener('resize', resize);
 
 
-
-document.addEventListener('pointermove', function(e){
+document.addEventListener('pointermove', function (e) {
   mouse.set((e.clientX / width) * 2 - 1, -(e.clientY / height) * 2 + 1);
   raycaster.setFromCamera(mouse, camera);
   intersects = raycaster.intersectObjects(scene.children);
 });
 
-window.addEventListener('click', function(e){
-  if(intersects.length > 0){
-  meshGroup.children.forEach(function(e){
-    e.material.color.setHex(0x212529)
-  })
-    intersects[0].object.onClick();
-    currentBlock = intersects[0].object;
+window.addEventListener('click', function (e) {
+  if (intersects.length > 0) {
+    const clickedEl = intersects[0].object;
+
+    if (clickedEl.onClick) { //? if block was clicked
+      clickedEl.onClick();
+      currentBlock = clickedEl;
+
+    } else if (addBlockOutline.children.includes(clickedEl)) { //? if the add btn was clicked
+      const addBtnNr = addBlockOutline.children.indexOf(clickedEl);
+      addCube(addBtnNr)
+    }
   }
 });
-
-
-const addBlockBtns = document.querySelectorAll('.block');
-addBlockBtns.forEach(function(el, idx){
-  if(!el.classList.contains('clickedBlock')){
-    el.addEventListener('click', function(){
-      const side = this.dataset.side;
-      addCube(side);
-    });
-  }
-});
-
-const rednerLoop = function(){
-  controls.update();
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(rednerLoop);
-  // cubeMesh.rotation.y += 0.005;
-}
-rednerLoop();
 
 
