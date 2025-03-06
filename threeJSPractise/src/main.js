@@ -28,9 +28,9 @@ class Cube extends THREE.Mesh {
 }
 
 Cube.prototype.onClick = function () {
-  addBlockOutline.position.copy(this.position);
+  const clickedPosition = this.position
+  addBlockOutline.position.copy(clickedPosition);
 }
-
 // ! PROTOTYPE
 const addBlockOutline = new THREE.Group();
 
@@ -50,6 +50,7 @@ createTriangle([-0.8, 0.0, 0.6, -0.6, 0.5, 0.6, -0.6, -0.5, 0.6])
 createTriangle([0.8, 0.0, 0.6, 0.6, 0.5, 0.6, 0.6, -0.5, 0.6])
 scene.add(addBlockOutline)
 //! PROTOTYPE
+
 
 
 const meshGroup = new THREE.Group();
@@ -78,6 +79,7 @@ const addCube = function (side) {
   }
 }
 addCube()
+currentBlock = meshGroup.children[0];
 scene.add(meshGroup)
 
 //* EVENTS
