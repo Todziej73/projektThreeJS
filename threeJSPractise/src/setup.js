@@ -1,12 +1,17 @@
 'use strict'
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass.js";
+import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+
 
 const setup = function(){
   //* SET UP
-  let width = 0;
-  let height = 0;
-  
   const mouse = new THREE.Vector2();
   
   const scene = new THREE.Scene();
@@ -24,48 +29,77 @@ const setup = function(){
   camera.position.y = 1;
   scene.add(camera);
   
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 2);
   scene.add(ambientLight)
-  
-  const pointLight = new THREE.PointLight(0xffffff, 1);
-  pointLight.position.z = 3;
-  pointLight.position.x = 2;
-  scene.add(pointLight)
+
+  const pointLight1 = new THREE.DirectionalLight(0xffffff, 1);
+  pointLight1.position.set(3, 0, 2)
+  pointLight1.castShadow = true;
+  scene.add(pointLight1)
+
+
   
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = true;
 
+  //floor
+  const planeGeo = new THREE.PlaneGeometry(10, 10);
+  const planeMaterial = new THREE.MeshPhysicalMaterial({color: 0xeaeff3, side: THREE.DoubleSide})
+  const floor = new THREE.Mesh(planeGeo, planeMaterial)
+  floor.rotation.x = Math.PI * 0.5
+  floor.position.y = -0.5
+  scene.add(floor)
 
 
+  //post processing
+  const composer = new EffectComposer(renderer);
+  const renderPass = new RenderPass(scene, camera);
+  composer.addPass(renderPass);
+
+  const outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera);
+  outlinePass.edgeStrength = 3; 
+  outlinePass.edgeGlow = 2; 
+  outlinePass.edgeThickness = 5;
+  outlinePass.visibleEdgeColor.set("#ffd43b");
+  composer.addPass(outlinePass);
+  outlinePass.renderToScreen = true;
+  
+  const effectFXAA = new ShaderPass(FXAAShader);
+  effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
+  composer.addPass( effectFXAA );
+
+  //responisve 
   const resize = function () {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    camera.aspect = width / height;
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    composer.setSize(window.innerWidth, window.innerHeight);
+    effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
     console.log('resize!');
   };
   resize();
   window.addEventListener('resize', resize);
-  
+
+  //animation loop
   const rednerLoop = function () {
     controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(rednerLoop);
+    composer.render()
   }
   rednerLoop();
 
+  
   return {
     scene: scene,
-    width: width,
-    height: height,
     camera: camera,
-    rederer: renderer,
-    controls: controls,
-    mouse: mouse
+    mouse: mouse,
+    renderer: renderer,
+    outlinePass: outlinePass
   };
 }
 
+const setUpObj = setup();
 
-export {setup};
+export {setUpObj};
 
