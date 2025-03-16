@@ -24,9 +24,7 @@ const setup = function(){
   renderer.setSize(window.innerWidth, window.innerHeight);
   
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 200);
-  camera.position.z = 3;
-  camera.position.x = 2;
-  camera.position.y = 1;
+  camera.position.set(2, 1, 3)
   scene.add(camera);
   
   const ambientLight = new THREE.AmbientLight(0xffffff, 2);
@@ -41,13 +39,14 @@ const setup = function(){
   
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = true;
+  controls.maxPolarAngle = Math.PI * 0.5;
 
   //floor
   const planeGeo = new THREE.PlaneGeometry(10, 10);
   const planeMaterial = new THREE.MeshPhysicalMaterial({color: 0xeaeff3, side: THREE.DoubleSide})
   const floor = new THREE.Mesh(planeGeo, planeMaterial)
   floor.rotation.x = Math.PI * 0.5
-  floor.position.y = -0.5
+  floor.position.y = -0.35
   scene.add(floor)
 
 
@@ -85,7 +84,6 @@ const setup = function(){
     controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(rednerLoop);
-    composer.render()
   }
   rednerLoop();
 

@@ -8,19 +8,8 @@ const scene = setUpObj.scene;
 const loader = new GLTFLoader(); 
 
 const load = function(path){
-  loader.load( path, function ( gltf ) {
-    
-    scene.add(gltf.scene);
-  }, undefined, function ( error ) {
-    
-    console.error( error );
-    
-  } );
+    return loader.loadAsync( path) ;
 }
 
-load('model.glb')
+export{load};
 
-
-const move = function(obj){
-  obj.position.x += 1
-}
