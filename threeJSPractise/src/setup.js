@@ -7,6 +7,7 @@ import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass.js";
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { rotate, shiftRight } from 'three/src/nodes/TSL.js';
 
 
 
@@ -40,6 +41,7 @@ const setup = function(){
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = true;
   controls.maxPolarAngle = Math.PI * 0.5;
+  // controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE;
 
   //floor
   const planeGeo = new THREE.PlaneGeometry(10, 10);

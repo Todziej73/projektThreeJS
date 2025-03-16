@@ -13,12 +13,13 @@ const raycaster = new THREE.Raycaster()
 let intersects = [];
 let currentBlock;
 
+const borderCollapse = 0.057;
 
 const inputColor = document.querySelector('.inputColor')
 let currentColor = inputColor.value
 
 const roundToDecimal = function(num){
-  return Math.round(num * 10) / 10;
+  return Math.round(num * 1000) / 1000;
 }
 
 
@@ -36,37 +37,37 @@ const checkPosition = function(positionObj, x, y, z){
 }
 
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
-const checkSides = function(clickedPosition){
+const checkSides = function(curentBlock){
   expansionHandles.children.forEach(function(addBtn, side){
     switch (side) {
       case 0: //check top
-       if(checkPosition(clickedPosition, 0, 0.7, 0)){
+       if(checkPosition(curentBlock.position, 0, getModelSize(curentBlock).y - borderCollapse, 0)){
         toggleAddBtn(addBtn, false, 1)
       }else{
         toggleAddBtn(addBtn, true, 0)
       }
         break;
       case 2: //check right
-        if(checkPosition(clickedPosition, 0.7, 0, 0)){
+        if(checkPosition(curentBlock.position, getModelSize(curentBlock).x - borderCollapse, 0, 0)){
           toggleAddBtn(addBtn, false, 1)
-        }else if(clickedPosition.y > 0 && !checkPosition(clickedPosition, 0.7, -0.7, 0)){
+        }else if(curentBlock.position.y > 0 && !checkPosition(curentBlock.position, getModelSize(curentBlock).x - borderCollapse, -(getModelSize(curentBlock).y - borderCollapse), 0)){
           toggleAddBtn(addBtn, false, 1)
         }else{
           toggleAddBtn(addBtn, true, 0)
         }
         break;
       case 1: //check left
-        if(checkPosition(clickedPosition, -0.7, 0, 0)){
+        if(checkPosition(curentBlock.position, -(getModelSize(curentBlock).x - borderCollapse), 0, 0)){
           toggleAddBtn(addBtn, false, 1)
-        }else if(clickedPosition.y > 0 && !checkPosition(clickedPosition, -0.7, -0.7, 0)){
+        }else if(curentBlock.position.y > 0 && !checkPosition(curentBlock.position, -(getModelSize(curentBlock).x - borderCollapse), -(getModelSize(curentBlock).y - borderCollapse), 0)){
           toggleAddBtn(addBtn, false, 1)
         }else{
           toggleAddBtn(addBtn, true, 0)
         }
+        break;
     }
   })
 }
-
 
 
 const meshGroup = new THREE.Group();
@@ -85,21 +86,21 @@ const addCube = function (side) {
   switch (side) {
     case 0:
       load('model2.glb').then(function (gltf) {
-        onObjectLoaded(gltf, [currentBlock.position.x, roundToDecimal(currentBlock.position.y + getModelSize(currentBlock).y), currentBlock.position.z]);
+        onObjectLoaded(gltf, [currentBlock.position.x, roundToDecimal(currentBlock.position.y + getModelSize(currentBlock).y - borderCollapse), currentBlock.position.z]);
       },function ( error ) {
         console.error( error );
       } )
       break;
     case 2:
       load('model2.glb').then(function (gltf) {
-        onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x + getModelSize(currentBlock).x), currentBlock.position.y, currentBlock.position.z]);
+        onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x + getModelSize(currentBlock).x - borderCollapse), currentBlock.position.y, currentBlock.position.z]);
       },function ( error ) {
         console.error( error );
       } )
       break;
     case 1:
       load('model2.glb').then(function (gltf) {
-        onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x - getModelSize(currentBlock).x), currentBlock.position.y, currentBlock.position.z]);
+        onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x - getModelSize(currentBlock).x + borderCollapse), currentBlock.position.y, currentBlock.position.z]);
       },function ( error ) {
         console.error( error );
       } )
@@ -118,8 +119,8 @@ load('model2.glb').then(function ( gltf ) {
   object.scale.set(2, 2, 2);
   console.log(cubesPositions);
   // outlinePass.selectedObjects = [currentBlock]
-
-  checkSides(currentBlock.position)
+  console.log(getModelSize(object));
+  checkSides(currentBlock)
 
 
 }, function ( error ) {
@@ -135,12 +136,12 @@ const onObjectLoaded = function (gltf, positions) {
   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), true);
   meshGroup.add(object)
   object.scale.set(2, 2, 2);
-
+  console.log(getModelSize(object));
   console.log(cubesPositions);
   
 
   if(meshGroup.children.length > 1){
-    checkSides(currentBlock.position)
+    checkSides(currentBlock)
   }
 }
 
@@ -164,7 +165,7 @@ window.addEventListener('click', function (e) {
     const clickedEl = intersects[0].object;
     if (meshGroup.children.includes(clickedEl.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent;
-      checkSides(currentBlock.position)
+      checkSides(currentBlock)
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
       const addBtnNr = expansionHandles.children.indexOf(clickedEl);
       addCube(addBtnNr)
