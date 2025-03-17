@@ -40,7 +40,7 @@ const setup = function(){
   
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = true;
-  controls.maxPolarAngle = Math.PI * 0.5;
+  controls.maxPolarAngle = Math.PI * 0.45;
   // controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE;
 
   //floor
@@ -48,7 +48,7 @@ const setup = function(){
   const planeMaterial = new THREE.MeshBasicMaterial({color: 0xeaeff3, side: THREE.DoubleSide})
   const floor = new THREE.Mesh(planeGeo, planeMaterial)
   floor.rotation.x = Math.PI * 0.5
-  floor.position.y = -0.35
+  // floor.position.y = -0.35
   scene.add(floor)
 
 

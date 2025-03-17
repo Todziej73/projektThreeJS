@@ -85,21 +85,21 @@ const getModelSize = function(object){
 const addCube = function (side) {
   switch (side) {
     case 0:
-      load('model2.glb').then(function (gltf) {
+      load('model.glb').then(function (gltf) {
         onObjectLoaded(gltf, [currentBlock.position.x, roundToDecimal(currentBlock.position.y + getModelSize(currentBlock).y - borderCollapse), currentBlock.position.z]);
       },function ( error ) {
         console.error( error );
       } )
       break;
     case 2:
-      load('model2.glb').then(function (gltf) {
+      load('model.glb').then(function (gltf) {
         onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x + getModelSize(currentBlock).x - borderCollapse), currentBlock.position.y, currentBlock.position.z]);
       },function ( error ) {
         console.error( error );
       } )
       break;
     case 1:
-      load('model2.glb').then(function (gltf) {
+      load('model.glb').then(function (gltf) {
         onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x - getModelSize(currentBlock).x + borderCollapse), currentBlock.position.y, currentBlock.position.z]);
       },function ( error ) {
         console.error( error );
@@ -110,7 +110,7 @@ const addCube = function (side) {
    
 }
 //* loads the first element
-load('model2.glb').then(function ( gltf ) {
+load('model.glb').then(function ( gltf ) {
   const object = gltf.scene;
 
   meshGroup.add(object)
@@ -121,7 +121,6 @@ load('model2.glb').then(function ( gltf ) {
   // outlinePass.selectedObjects = [currentBlock]
   console.log(getModelSize(object));
   checkSides(currentBlock)
-
 
 }, function ( error ) {
   console.error( error );
@@ -166,11 +165,20 @@ document.addEventListener('pointermove', function (e) {
   }
 });
 
+// const getLastParent = function(object){
+//   if(object.parent == null || object.parent.type == 'scene'){
+//     return object
+//   } else getLastParent(object.parent)
+// }
+
+
 window.addEventListener('click', function (e) {
   if (intersects.length > 0) {
     const clickedEl = intersects[0].object;
-    if (meshGroup.children.includes(clickedEl.parent.parent)) { //? if block was clicked
-      currentBlock = clickedEl.parent.parent;
+    if (meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
+      currentBlock = clickedEl.parent.parent.parent;
+      expansionHandles.position.copy(currentBlock.position)
+      console.log(expansionHandles.position);
       checkSides(currentBlock)
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
       const addBtnNr = expansionHandles.children.indexOf(clickedEl);
