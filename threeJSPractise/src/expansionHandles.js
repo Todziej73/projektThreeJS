@@ -11,7 +11,7 @@ const createTriangle = function (vertecies) {
   const triangleVertecies = new Float32Array([...vertecies]);
   triangleGeo.setAttribute('position', new THREE.BufferAttribute(triangleVertecies, 3))
   const triangleMaterial = new THREE.MeshBasicMaterial({
-    color: '#ffd43b',
+    color: '#ced4da',
     side: THREE.DoubleSide,
     transparent: true,
     opacity: 0.6
