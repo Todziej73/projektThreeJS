@@ -122,6 +122,7 @@ load('model.glb').then(function ( gltf ) {
   console.log(getModelSize(object));
   checkSides(currentBlock)
 
+
 }, function ( error ) {
   console.error( error );
 });
