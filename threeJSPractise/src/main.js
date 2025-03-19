@@ -1,8 +1,9 @@
 'use strict'
 import * as THREE from 'three';
 import {setUpObj} from './setup.js';
-import { expansionHandles } from './expansionHandles';
+import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
+import { round } from 'three/src/nodes/TSL.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -30,6 +31,9 @@ const toggleAddBtn = function(addBtn, visible, layer){
  addBtn.visible = visible
  addBtn.layers.set(layer);
 }
+
+
+
 
 //* helper function - checks if on the given position exist any models 
 const checkPosition = function(positionObj, x, y, z){
@@ -81,6 +85,38 @@ const getModelSize = function(object){
   return size;
 }
 
+//* generate points based on the objects/ width height
+const generatePoints = function(object){
+  const objectSize = Object.values(getModelSize(object));
+  const width = objectSize[0];
+  const height = objectSize[1];
+
+  const objectCenter = Object.values(object.position);
+  // const centerX = objectCenter[0];  
+  // const centerY = objectCenter[1];  
+
+  const box = new THREE.Box3().setFromObject(object);
+  const center = new THREE.Vector3();
+  box.getCenter(center);
+  const centerX = center.x;  
+  const centerY = center.y;  
+
+
+  return {
+    top: new THREE.Vector2(centerX, roundToDecimal(centerY + height / 2)),
+    bottom: new THREE.Vector2(centerX, roundToDecimal(centerY - height / 2)),
+    right: new THREE.Vector2(roundToDecimal(centerX + width / 2), centerY),
+    left: new THREE.Vector2(roundToDecimal(centerX - width / 2), centerY),
+    center: new THREE.Vector2(centerX, centerY),
+
+    topLeft: new THREE.Vector2(roundToDecimal(centerX - width / 2), roundToDecimal(centerY + height / 2)),
+    topRight: new THREE.Vector2(roundToDecimal(centerX + width / 2), roundToDecimal(centerY + height / 2)),
+    bottomRight: new THREE.Vector2(roundToDecimal(centerX + width / 2), roundToDecimal(centerY - height / 2)), 
+    bottomLeft: new THREE.Vector2(roundToDecimal(centerX - width / 2), roundToDecimal(centerY - height / 2))
+  }
+}
+
+
 //* adds new elements
 const addCube = function (side) {
   switch (side) {
@@ -114,22 +150,23 @@ const addCube = function (side) {
    
 }
 //* loads the first element
-load('model.glb').then(function ( gltf ) {
+load('729x329x329.glb').then(function ( gltf ) {
   const object = gltf.scene;
 
   meshGroup.add(object)
   currentBlock = meshGroup.children[0];
   cubesPositions.set(JSON.stringify(Object.values(object.position)), true)
-  object.scale.set(2, 2, 2);
+  // object.scale.set(2, 2, 2);
   console.log(cubesPositions);
   // outlinePass.selectedObjects = [currentBlock]
-  console.log(getModelSize(object));
   checkSides(currentBlock)
-
+  console.log(generatePoints(object));
+  createAddBtns(generatePoints(object))
 
 }, function ( error ) {
   console.error( error );
 });
+
 
 
 //* when the model is loaded adds it to the scene and to the map
@@ -139,10 +176,9 @@ const onObjectLoaded = function (gltf, positions) {
 
   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), true);
   meshGroup.add(object)
-  object.scale.set(2, 2, 2);
-  console.log(getModelSize(object));
-  console.log(cubesPositions);
-  
+  // object.scale.set(2, 2, 2);
+  console.log(generatePoints(object));
+
 
   if(meshGroup.children.length > 1){
     checkSides(currentBlock)
@@ -165,22 +201,16 @@ document.addEventListener('pointermove', function (e) {
     document.querySelector('body').style.cursor = 'default';
     expansionHandles.children.forEach(function(e){
       e.material.color.set(0xced4da)
-      e.material.opacity = 0.6;
+      e.material.opacity = 0.8;
     })
   }
 });
-
-// const getLastParent = function(object){
-//   if(object.parent == null || object.parent.type == 'scene'){
-//     return object
-//   } else getLastParent(object.parent)
-// }
 
 
 window.addEventListener('click', function (e) {
   if (intersects.length > 0) {
     const clickedEl = intersects[0].object;
-    if (meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
+    if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
       expansionHandles.position.copy(currentBlock.position)
       console.log(expansionHandles.position);
