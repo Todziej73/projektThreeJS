@@ -178,25 +178,6 @@ const addCube = function (side) {
   } );
 
 }
-//* loads the first element
-addCube(-1);
-// load('Legged/model.glb').then(function ( gltf ) {
-//   const object = gltf.scene;
-
-//   meshGroup.add(object)
-//   currentBlock = meshGroup.children[0];
-//   cubesPositions.set(JSON.stringify(Object.values(object.position)), true)
-//   object.scale.set(2, 2, 2);
-//   console.log(cubesPositions);
-//   // outlinePass.selectedObjects = [currentBlock]
-//   console.log(getModelSize(object));
-//   checkSides(currentBlock)
-
-
-// }, function ( error ) {
-//   console.error( error );
-// });
-
 
 
 //* when the model is loaded adds it to the scene and to the map
@@ -211,15 +192,15 @@ const onObjectLoaded = function (gltf, positions, data, selectAfter = false) {
   // object.scale.set(2, 2, 2);
   // console.log(getModelSize(object));
   // console.log(cubesPositions);
-  console.log(generatePoints(object));
-  createAddBtns(generatePoints(object))
   
   if(selectAfter)
     currentBlock = object;
   console.log(dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z));
-  console.log(cubesPositions);
+  // console.log(cubesPositions);
 
 
+  if(meshGroup.children.length == 1)
+    createAddBtns(generatePoints(currentBlock));
 
   if(meshGroup.children.length > 1){
     checkSides(currentBlock);  
@@ -266,6 +247,17 @@ window.addEventListener('click', function (e) {
     }
   }
 });
+
+
+
+
+
+//* EXECUTABLE
+
+
+//* loads the first element
+addCube(-1);
+
 
 
 
