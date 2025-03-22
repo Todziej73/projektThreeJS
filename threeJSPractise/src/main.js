@@ -76,7 +76,7 @@ const checkSides = function(curentBlock){
    }
 }
 
-// toggleAddBtn(addBtn, false, 1)
+
 
 const meshGroup = new THREE.Group();
 scene.add(meshGroup);
@@ -96,8 +96,6 @@ const generatePoints = function(object){
   const height = objectSize[1];
 
   const objectCenter = Object.values(object.position);
-  // const centerX = objectCenter[0];  
-  // const centerY = objectCenter[1];  
 
   const box = new THREE.Box3().setFromObject(object);
   const center = new THREE.Vector3();
@@ -137,7 +135,7 @@ const addCube = function (side) {
   // load model on scene
 
   load(modelPath).then(function (gltf) {
-    onObjectLoaded(gltf, side);
+    onObjectLoaded(gltf, side, withLegs);
   },function ( error ) {
     console.error( error );
   } );
@@ -146,7 +144,7 @@ const addCube = function (side) {
 
 
 //* when the model is loaded adds it to the scene and to the map
-const onObjectLoaded = function (gltf, side) {
+const onObjectLoaded = function (gltf, side, withLegs) {
 
   const object = gltf.scene;
   
@@ -162,6 +160,7 @@ const onObjectLoaded = function (gltf, side) {
     currentBlockPoints = generatePoints(currentBlock)
   }
     
+  const borderCollapse =  withLegs ? 0.04 : 0.029;
 
   switch (side) {
     case 0: // UP
@@ -169,11 +168,11 @@ const onObjectLoaded = function (gltf, side) {
       data.y_index++;
       break;
     case 1: // Left
-      positions = [currentBlockPoints.left.x - getModelSize(currentBlock).x / 2, currentBlock.position.y, currentBlock.position.z];
+      positions = [currentBlockPoints.left.x - getModelSize(currentBlock).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z];
       data.x_index++;
       break;
     case 2: // Right
-      positions = [currentBlockPoints.right.x + getModelSize(currentBlock).x / 2, currentBlock.position.y, currentBlock.position.z];
+      positions = [currentBlockPoints.right.x + getModelSize(currentBlock).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z];
       data.x_index--;
       break;
     case -1: // THE DEFAULT ONE ( THE FIRST ONE )
@@ -185,13 +184,6 @@ const onObjectLoaded = function (gltf, side) {
       return;  
   }
 
-  // -- 2. pick model
-
-  const withLegs = data.y_index == 0;
-  const directory = withLegs ? "Legged/" : "Normal/";
-  const modelName = "model.glb";
-  const modelPath = directory + modelName;
-
 
 
 
@@ -199,10 +191,7 @@ const onObjectLoaded = function (gltf, side) {
 
   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), { ...data });
   meshGroup.add(object)
-  console.log(cubesPositions);
-  // object.scale.set(2, 2, 2);
-  // console.log(getModelSize(object));
-  // console.log(cubesPositions);
+
   
   if(selectAfter)
     currentBlock = object;
