@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
-import { round } from 'three/src/nodes/TSL.js';
+import { faceForward, round } from 'three/src/nodes/TSL.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -33,16 +33,33 @@ const toggleAddBtn = function(addBtn, visible, layer){
 }
 
 
-
+const hasValue = function(map, posX, posY){
+  let has = false;
+  map.forEach(function(el){
+    if(el.x_index === posX && el.y_index === posY){
+      has = true;
+    }
+  })
+  return has;
+}
 
 //* helper function - checks if on the given position exist any models 
-const checkPosition = function(positionObj, x, y, z){
-  return cubesPositions.has(JSON.stringify(Object.values({x: roundToDecimal(positionObj.x + x), y: roundToDecimal(positionObj.y + y), z: roundToDecimal(positionObj.z + z)})));
+const checkPosition = function(positionObj){
+  let addOption = [true, true, true]; 
+  const currentData = dataFromPosition(...Object.values(positionObj));
+
+  if(hasValue(cubesPositions, currentData.x_index, currentData.y_index + 1)) addOption[0] = false;
+  if(hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index)) addOption[1] = false;
+  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index - 1)) addOption[1] = false;
+  if(hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index)) addOption[2] = false;
+  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index - 1)) addOption[2] = false;
+
+  return addOption;
 }
 
 //* returns data from map<position, data> | copy of that data
 const dataFromPosition = function(x, y, z){
-  const key = JSON.stringify([x, y, z]);
+  const key = JSON.stringify([x, y, z].map((el) => el = roundToDecimal(el)));
   if(cubesPositions.has(key))
     return { ...cubesPositions.get(key) };
   
@@ -52,37 +69,14 @@ const dataFromPosition = function(x, y, z){
 
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
 const checkSides = function(curentBlock){
-  expansionHandles.children.forEach(function(addBtn, side){
-    switch (side) {
-      case 0: //check top
-       if(checkPosition(curentBlock.position, 0, getModelSize(curentBlock).y - borderCollapse, 0)){
-        toggleAddBtn(addBtn, false, 1)
-      }else{
-        toggleAddBtn(addBtn, true, 0)
-      }
-        break;
-      case 2: //check right
-        if(checkPosition(curentBlock.position, getModelSize(curentBlock).x - borderCollapse, 0, 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else if(curentBlock.position.y > 0 && !checkPosition(curentBlock.position, getModelSize(curentBlock).x - borderCollapse, -(getModelSize(curentBlock).y - borderCollapse), 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else{
-          toggleAddBtn(addBtn, true, 0)
-        }
-        break;
-      case 1: //check left
-        if(checkPosition(curentBlock.position, -(getModelSize(curentBlock).x - borderCollapse), 0, 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else if(curentBlock.position.y > 0 && !checkPosition(curentBlock.position, -(getModelSize(curentBlock).x - borderCollapse), -(getModelSize(curentBlock).y - borderCollapse), 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else{
-          toggleAddBtn(addBtn, true, 0)
-        }
-        break;
-    }
-  })
+  const addOption = checkPosition(curentBlock.position);
+  console.log(addOption);
+   for(let i = 0; i < 3; i++){
+    toggleAddBtn(expansionHandles.children[i], addOption[i], !addOption[i]);
+   }
 }
 
+// toggleAddBtn(addBtn, false, 1)
 
 const meshGroup = new THREE.Group();
 scene.add(meshGroup);
@@ -130,26 +124,56 @@ const generatePoints = function(object){
 //* adds new elements
 const addCube = function (side) {
 
+  let data; 
+  if(currentBlock !== undefined){
+     data = dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z)
+  }
+  const withLegs = currentBlock !== undefined ? data.y_index == 0 && side != 0 : true;
+  const directory = withLegs ? "Legged/" : "Normal/";
+  const modelName = "model.glb";
+  const modelPath = directory + modelName;
+
+
+  // load model on scene
+
+  load(modelPath).then(function (gltf) {
+    onObjectLoaded(gltf, side);
+  },function ( error ) {
+    console.error( error );
+  } );
+
+}
+
+
+//* when the model is loaded adds it to the scene and to the map
+const onObjectLoaded = function (gltf, side) {
+
+  const object = gltf.scene;
+  
   // -- 1. setup position and map<position, data> value
 
   let positions, selectAfter = false;
   let data = { y_index: 0, x_index: 0 }; // DEFAULT
+  let currentBlockPoints;
+  const newObjectSize = getModelSize(object);
 
-  if(currentBlock !== undefined)
+  if(currentBlock !== undefined){
     data = dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z); // UPDATE IF EXISTS | (EXACT SAME LIKE CURRENTBLOCK DATA)
-
+    currentBlockPoints = generatePoints(currentBlock)
+  }
+    
 
   switch (side) {
     case 0: // UP
-      positions = [currentBlock.position.x, roundToDecimal(currentBlock.position.y + getModelSize(currentBlock).y - borderCollapse), currentBlock.position.z];
+      positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.09, currentBlock.position.z];
       data.y_index++;
       break;
-    case 1: // RIGHT
-      positions = [roundToDecimal(currentBlock.position.x - getModelSize(currentBlock).x + borderCollapse), currentBlock.position.y, currentBlock.position.z];
+    case 1: // Left
+      positions = [currentBlockPoints.left.x - getModelSize(currentBlock).x / 2, currentBlock.position.y, currentBlock.position.z];
       data.x_index++;
       break;
-    case 2: // LEFT
-      positions = [roundToDecimal(currentBlock.position.x + getModelSize(currentBlock).x - borderCollapse), currentBlock.position.y, currentBlock.position.z];
+    case 2: // Right
+      positions = [currentBlockPoints.right.x + getModelSize(currentBlock).x / 2, currentBlock.position.y, currentBlock.position.z];
       data.x_index--;
       break;
     case -1: // THE DEFAULT ONE ( THE FIRST ONE )
@@ -169,33 +193,20 @@ const addCube = function (side) {
   const modelPath = directory + modelName;
 
 
-  // -- 3. load model on scene
-
-  load(modelPath).then(function (gltf) {
-    onObjectLoaded(gltf, positions, data, selectAfter);
-  },function ( error ) {
-    console.error( error );
-  } );
-
-}
 
 
-//* when the model is loaded adds it to the scene and to the map
-const onObjectLoaded = function (gltf, positions, data, selectAfter = false) {
-
-  const object = gltf.scene;
   object.position.set(...positions);
 
   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), { ...data });
   meshGroup.add(object)
-
+  console.log(cubesPositions);
   // object.scale.set(2, 2, 2);
   // console.log(getModelSize(object));
   // console.log(cubesPositions);
   
   if(selectAfter)
     currentBlock = object;
-  console.log(dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z));
+  // console.log(dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z));
   // console.log(cubesPositions);
 
 

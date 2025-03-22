@@ -48,7 +48,7 @@ const setup = function(){
   const planeMaterial = new THREE.MeshBasicMaterial({color: 0xeaeff3, side: THREE.DoubleSide})
   const floor = new THREE.Mesh(planeGeo, planeMaterial)
   floor.rotation.x = Math.PI * 0.5
-  // floor.position.y = -0.35
+  floor.position.y = 0
   scene.add(floor)
 
 
