@@ -3,85 +3,89 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
-import { round } from 'three/src/nodes/TSL.js';
+import { faceForward, round } from 'three/src/nodes/TSL.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
 const mouse = setUpObj.mouse;
-const outlinePass = setUpObj.outlinePass
+const outlinePass = setUpObj.outlinePass;
 
-const raycaster = new THREE.Raycaster()
+const raycaster = new THREE.Raycaster();
 let intersects = [];
 let currentBlock;
 
 const borderCollapse = 0.057;
 
-const inputColor = document.querySelector('.inputColor')
-let currentColor = inputColor.value
+const inputColor = document.querySelector('.inputColor');
+let currentColor = inputColor.value;
 
 const roundToDecimal = function(num){
   return Math.round(num * 1000) / 1000;
 }
 
 
-scene.add(expansionHandles)
+scene.add(expansionHandles);
 
 //* on / off the buttons
 const toggleAddBtn = function(addBtn, visible, layer){
- addBtn.visible = visible
+ addBtn.visible = visible;
  addBtn.layers.set(layer);
 }
 
 
-
+const hasValue = function(map, posX, posY){
+  let has = false;
+  map.forEach(function(el){
+    if(el.x_index === posX && el.y_index === posY){
+      has = true;
+    }
+  })
+  return has;
+}
 
 //* helper function - checks if on the given position exist any models 
-const checkPosition = function(positionObj, x, y, z){
-  return cubesPositions.get(JSON.stringify(Object.values({x: roundToDecimal(positionObj.x + x), y: roundToDecimal(positionObj.y + y), z: roundToDecimal(positionObj.z + z)})));
+const checkPosition = function(positionObj){
+  let addOption = [true, true, true]; 
+  const currentData = dataFromPosition(...Object.values(positionObj));
+
+  if(hasValue(cubesPositions, currentData.x_index, currentData.y_index + 1)) addOption[0] = false;
+  if(hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index)) addOption[1] = false;
+  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index - 1)) addOption[1] = false;
+  if(hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index)) addOption[2] = false;
+  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index - 1)) addOption[2] = false;
+
+  return addOption;
 }
+
+//* returns data from map<position, data> | copy of that data
+const dataFromPosition = function(x, y, z){
+  const key = JSON.stringify([x, y, z].map((el) => el = roundToDecimal(el)));
+  if(cubesPositions.has(key))
+    return { ...cubesPositions.get(key) };
+  
+  return undefined;
+}
+
 
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
 const checkSides = function(curentBlock){
-  expansionHandles.children.forEach(function(addBtn, side){
-    switch (side) {
-      case 0: //check top
-       if(checkPosition(curentBlock.position, 0, getModelSize(curentBlock).y - borderCollapse, 0)){
-        toggleAddBtn(addBtn, false, 1)
-      }else{
-        toggleAddBtn(addBtn, true, 0)
-      }
-        break;
-      case 2: //check right
-        if(checkPosition(curentBlock.position, getModelSize(curentBlock).x - borderCollapse, 0, 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else if(curentBlock.position.y > 0 && !checkPosition(curentBlock.position, getModelSize(curentBlock).x - borderCollapse, -(getModelSize(curentBlock).y - borderCollapse), 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else{
-          toggleAddBtn(addBtn, true, 0)
-        }
-        break;
-      case 1: //check left
-        if(checkPosition(curentBlock.position, -(getModelSize(curentBlock).x - borderCollapse), 0, 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else if(curentBlock.position.y > 0 && !checkPosition(curentBlock.position, -(getModelSize(curentBlock).x - borderCollapse), -(getModelSize(curentBlock).y - borderCollapse), 0)){
-          toggleAddBtn(addBtn, false, 1)
-        }else{
-          toggleAddBtn(addBtn, true, 0)
-        }
-        break;
-    }
-  })
+  const addOption = checkPosition(curentBlock.position);
+  console.log(addOption);
+   for(let i = 0; i < 3; i++){
+    toggleAddBtn(expansionHandles.children[i], addOption[i], !addOption[i]);
+   }
 }
 
 
+
 const meshGroup = new THREE.Group();
-scene.add(meshGroup)
+scene.add(meshGroup);
 const cubesPositions = new Map();
 
 //* returns the exact size of the model
 const getModelSize = function(object){
-  const boundingBox = new THREE.Box3().setFromObject(object)
-  const size = boundingBox.getSize(new THREE.Vector3())
+  const boundingBox = new THREE.Box3().setFromObject(object);
+  const size = boundingBox.getSize(new THREE.Vector3());
   return size;
 }
 
@@ -92,8 +96,6 @@ const generatePoints = function(object){
   const height = objectSize[1];
 
   const objectCenter = Object.values(object.position);
-  // const centerX = objectCenter[0];  
-  // const centerY = objectCenter[1];  
 
   const box = new THREE.Box3().setFromObject(object);
   const center = new THREE.Vector3();
@@ -119,70 +121,92 @@ const generatePoints = function(object){
 
 //* adds new elements
 const addCube = function (side) {
-  switch (side) {
-    case 0:
-      load('model.glb').then(function (gltf) {
-        onObjectLoaded(gltf, [currentBlock.position.x, roundToDecimal(currentBlock.position.y + getModelSize(currentBlock).y - borderCollapse), currentBlock.position.z]);
-      },function ( error ) {
-        console.error( error );
-      } )
-      break;
-    case 2:
-      load('model.glb').then(function (gltf) {
-        onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x + getModelSize(currentBlock).x - borderCollapse), currentBlock.position.y, currentBlock.position.z]);
-      },function ( error ) {
-        console.error( error );
-      } )
-      break;
-    case 1:
-      load('model.glb').then(function (gltf) {
-        onObjectLoaded(gltf, [roundToDecimal(currentBlock.position.x - getModelSize(currentBlock).x + borderCollapse), currentBlock.position.y, currentBlock.position.z]);
-      },function ( error ) {
-        console.error( error );
-      } )
+
+  let data; 
+  if(currentBlock !== undefined){
+     data = dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z)
   }
+  const withLegs = currentBlock !== undefined ? data.y_index == 0 && side != 0 : true;
+  const directory = withLegs ? "Legged/" : "Normal/";
+  const modelName = "model.glb";
+  const modelPath = directory + modelName;
 
 
+  // load model on scene
 
+  load(modelPath).then(function (gltf) {
+    onObjectLoaded(gltf, side, withLegs);
+  },function ( error ) {
+    console.error( error );
+  } );
 
-
-  
-   
 }
-//* loads the first element
-load('729x329x329.glb').then(function ( gltf ) {
-  const object = gltf.scene;
-
-  meshGroup.add(object)
-  currentBlock = meshGroup.children[0];
-  cubesPositions.set(JSON.stringify(Object.values(object.position)), true)
-  // object.scale.set(2, 2, 2);
-  console.log(cubesPositions);
-  // outlinePass.selectedObjects = [currentBlock]
-  checkSides(currentBlock)
-  console.log(generatePoints(object));
-  createAddBtns(generatePoints(object))
-
-}, function ( error ) {
-  console.error( error );
-});
-
 
 
 //* when the model is loaded adds it to the scene and to the map
-const onObjectLoaded = function (gltf, positions) {
+const onObjectLoaded = function (gltf, side, withLegs) {
+
   const object = gltf.scene;
-  object.position.set(...positions)
+  
+  // -- 1. setup position and map<position, data> value
 
-  cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), true);
+  let positions, selectAfter = false;
+  let data = { y_index: 0, x_index: 0 }; // DEFAULT
+  let currentBlockPoints;
+  const newObjectSize = getModelSize(object);
+
+  if(currentBlock !== undefined){
+    data = dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z); // UPDATE IF EXISTS | (EXACT SAME LIKE CURRENTBLOCK DATA)
+    currentBlockPoints = generatePoints(currentBlock)
+  }
+    
+  const borderCollapse =  withLegs ? 0.04 : 0.029;
+
+  switch (side) {
+    case 0: // UP
+      positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.09, currentBlock.position.z];
+      data.y_index++;
+      break;
+    case 1: // Left
+      positions = [currentBlockPoints.left.x - getModelSize(currentBlock).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z];
+      data.x_index++;
+      break;
+    case 2: // Right
+      positions = [currentBlockPoints.right.x + getModelSize(currentBlock).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z];
+      data.x_index--;
+      break;
+    case -1: // THE DEFAULT ONE ( THE FIRST ONE )
+      positions = [0, 0, 0];
+      selectAfter = true;
+      break;
+    default:
+      console.error("AddCube function had problem with deciding positions|sides");
+      return;  
+  }
+
+
+
+
+  object.position.set(...positions);
+
+  cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), { ...data });
   meshGroup.add(object)
-  // object.scale.set(2, 2, 2);
-  console.log(generatePoints(object));
 
+  
+  if(selectAfter)
+    currentBlock = object;
+  // console.log(dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z));
+  // console.log(cubesPositions);
+
+
+  if(meshGroup.children.length == 1)
+    createAddBtns(generatePoints(currentBlock));
 
   if(meshGroup.children.length > 1){
-    checkSides(currentBlock)
+    checkSides(currentBlock);  
   }
+
+
 }
 
 
@@ -212,15 +236,28 @@ window.addEventListener('click', function (e) {
     const clickedEl = intersects[0].object;
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
-      expansionHandles.position.copy(currentBlock.position)
-      console.log(expansionHandles.position);
-      checkSides(currentBlock)
+      expansionHandles.position.copy(currentBlock.position);
+      // console.log(expansionHandles.position);
+
+
+      checkSides(currentBlock);
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
       const addBtnNr = expansionHandles.children.indexOf(clickedEl);
-      addCube(addBtnNr)
+      addCube(addBtnNr);
     }
   }
 });
+
+
+
+
+
+//* EXECUTABLE
+
+
+//* loads the first element
+addCube(-1);
+
 
 
 

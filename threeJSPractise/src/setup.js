@@ -25,7 +25,7 @@ const setup = function(){
   renderer.setSize(window.innerWidth, window.innerHeight);
   
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 200);
-  camera.position.set(2, 1, 3)
+  camera.position.set(0.6, 0.65, 1.2)
   scene.add(camera);
   
   const ambientLight = new THREE.AmbientLight(0xffffff, 2);
@@ -48,7 +48,7 @@ const setup = function(){
   const planeMaterial = new THREE.MeshBasicMaterial({color: 0xeaeff3, side: THREE.DoubleSide})
   const floor = new THREE.Mesh(planeGeo, planeMaterial)
   floor.rotation.x = Math.PI * 0.5
-  // floor.position.y = -0.35
+  floor.position.y = 0
   scene.add(floor)
 
 
