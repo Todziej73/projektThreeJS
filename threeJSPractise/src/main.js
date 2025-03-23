@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
-import { faceForward, round } from 'three/src/nodes/TSL.js';
+import { faceForward, log, round } from 'three/src/nodes/TSL.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -17,7 +17,6 @@ let currentBlock;
 const borderCollapse = 0.057;
 
 const inputColor = document.querySelector('.inputColor');
-let currentColor = inputColor.value;
 
 const roundToDecimal = function(num){
   return Math.round(num * 1000) / 1000;
@@ -31,7 +30,6 @@ const toggleAddBtn = function(addBtn, visible, layer){
  addBtn.visible = visible;
  addBtn.layers.set(layer);
 }
-
 
 const hasValue = function(map, posX, posY){
   let has = false;
@@ -153,7 +151,7 @@ const onObjectLoaded = function (gltf, side, withLegs) {
   let positions, selectAfter = false;
   let data = { y_index: 0, x_index: 0 }; // DEFAULT
   let currentBlockPoints;
-  const newObjectSize = getModelSize(object);
+  // const newObjectSize = getModelSize(object);
 
   if(currentBlock !== undefined){
     data = dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z); // UPDATE IF EXISTS | (EXACT SAME LIKE CURRENTBLOCK DATA)
@@ -206,8 +204,24 @@ const onObjectLoaded = function (gltf, side, withLegs) {
     checkSides(currentBlock);  
   }
 
+  changeObjectColor(object);
 
 }
+
+
+
+const changeObjectColor = function(object, targetColor = inputColor.value){ 
+  console.log(object.children[0].children[0].children);
+
+  const targetColorVector = new THREE.Color(targetColor);
+  const meshToChange = object.children[0].children[0].children[1];
+
+
+  meshToChange.material.color = targetColorVector;
+
+  
+}
+
 
 
 //* EVENTS
@@ -248,7 +262,9 @@ window.addEventListener('click', function (e) {
   }
 });
 
-
+inputColor.addEventListener('change', function(){
+  changeObjectColor(currentBlock);
+});
 
 
 
