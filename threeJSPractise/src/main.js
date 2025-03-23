@@ -128,7 +128,7 @@ const addCube = function (side) {
   }
   const withLegs = currentBlock !== undefined ? data.y_index == 0 && side != 0 : true;
   const directory = withLegs ? "Legged/" : "Normal/";
-  const modelName = "model.glb";
+  const modelName = "329x329x329.glb";
   const modelPath = directory + modelName;
 
 
@@ -164,7 +164,7 @@ const onObjectLoaded = function (gltf, side, withLegs) {
 
   switch (side) {
     case 0: // UP
-      positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.09, currentBlock.position.z];
+      positions = [currentBlock.position.x, currentBlockPoints.top.y - borderCollapse, currentBlock.position.z];
       data.y_index++;
       break;
     case 1: // Left
