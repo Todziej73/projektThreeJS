@@ -1,26 +1,109 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/style.css" type="text/css">
-  </head>
-  <body>
-    <div class="configureContainer">
-      <div class="settingsEl">
-        <h3>Zmień Kolor</h3>
-        <input type="color" class="inputColor"> 
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="src/style.css" type="text/css">
+</head>
+
+<body>
+  <div class="configureContainer">
+    <div class="settingsEl">
+      <h3>Zmień Kolor</h3>
+      <input type="color" class="inputColor">
+    </div>
+  </div>
+  <div class="configure-tabs">
+    <div class="select-tab-container">
+      <div class="open-tab-btn tab--active" data-tab="configure-tab--size">Wymiary</div>
+      <div class="open-tab-btn" data-tab="configure-tab--color">Kolor</div>
+    </div>
+
+    <div class="configure-tab configure-tab--size">
+      <div class="size-container">
+        <div class="select-size select-size--depth">
+          <h4>Głębokość</h4>
+          <div class="inputs">
+            <div class="size-option depth--option size-option--active" data-size="329">329</div>
+            <div class="size-option depth--option" data-size="374">374</div>
+          </div>
+        </div>
+
+        <div class="select-size select-size--height">
+          <h4>Wysokość</h4>
+          <div class="inputs">
+            <div class="size-option height--option" data-size="79">79</div>
+            <div class="size-option height--option size-option--active" data-size="154">154</div>
+            <div class="size-option height--option" data-size="229">229</div>
+            <div class="size-option height--option" data-size="329">329</div>
+            <div class="size-option height--option" data-size="374">374</div>
+            <div class="size-option height--option" data-size="420">420</div>
+          </div>
+        </div>
+
+
+        <div class="select-size select-size--width">
+          <h4>Szerokość</h4>
+          <div class="inputs">
+            <div class="size-option width--option" data-size="229">229</div>
+            <div class="size-option width--option" data-size="329">329</div>
+            <div class="size-option width--option" data-size="374">374</div>
+            <div class="size-option width--option" data-size="420">420</div>
+            <div class="size-option width--option" data-size="479">479</div>
+            <div class="size-option width--option" data-size="523">523</div>
+            <div class="size-option width--option size-option--active" data-size="729">729</div>
+          </div>
+        </div>
       </div>
     </div>
-    <canvas class="canvas"></canvas>
-    <script type="module" src="src/setup.js"></script>
-    <script type="module" src="src/rederObject.js"></script>
-    <script type="module" src="src/expansionHandles.js"></script>
-    <script type="module" src="src/main.js"></script>
-  </body>
+
+    <div class="configure-tab configure-tab--color hidden">
+      <div class="main-color-picker">
+      <h4>Kolor główny:</h4>
+        <div class="inputs">
+          <div class="color" data-color="#f1ece1" title="biały"></div>
+          <div class="color" data-color="#c5c7c4" title="szary jasny"></div>
+          <div class="color" data-color="#6c6e6b" title="szary ciemny"></div>
+          <div class="color" data-color="#383e42" title="antracyt"></div>
+          <div class="color" data-color="#27292b" title="czarny"></div>
+          <div class="color" data-color="#004f7c" title="jasny niebieski"></div>
+          <div class="color" data-color="#008b29" title="zielony"></div>
+          <div class="color" data-color="#61993b" title="zielony"></div>
+          <div class="color" data-color="#e49e00" title="żółty"></div>
+          <div class="color" data-color="#e25303" title="pomarańcz"></div>
+          <div class="color" data-color="#861a22" title="czerwony"></div>
+          <div class="color" data-color="#d0b084" title="beżowy"></div>
+          <div class="color" data-color="#513a2a" title="brąz ciemny"></div>
+          <div class="color" data-color="#6a5f31" title="dąb naturalny"></div>
+          <div class="color" data-color="#bd9460" title="orzech naturalny"></div>
+          <div class="color" data-color="#47261C" title="orzech wysoki połysk"></div>
+        </div>
+      </div>
+      <div class="frame-color-picker">
+        <h4>Kolor ramy: </h4>
+        <div class="inputs">
+          <div class="color" data-color="#0e0e10" title="czarny"></div>
+          <div class="color" data-color="#FFD700" title="czarny"></div>
+          <div class="color" data-color="#CD7F32" title="czarny"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <canvas class="canvas"></canvas>
+  <script type="module" src="src/setup.js"></script>
+  <script type="module" src="src/rederObject.js"></script>
+  <script type="module" src="src/expansionHandles.js"></script>
+  <script type="module" src="src/main.js"></script>
+  <script type="module" src="src/changeProperties.js"></script>
+</body>
+
 </html>

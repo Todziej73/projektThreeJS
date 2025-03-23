@@ -128,7 +128,7 @@ const addCube = function (side) {
   }
   const withLegs = currentBlock !== undefined ? data.y_index == 0 && side != 0 : true;
   const directory = withLegs ? "Legged/" : "Normal/";
-  const modelName = "model.glb";
+  const modelName = "729x329x154.glb";
   const modelPath = directory + modelName;
 
 
@@ -160,11 +160,11 @@ const onObjectLoaded = function (gltf, side, withLegs) {
     currentBlockPoints = generatePoints(currentBlock)
   }
     
-  const borderCollapse =  withLegs ? 0.04 : 0.029;
+  const borderCollapse =  withLegs ? 0.04 : 0.028;
 
   switch (side) {
     case 0: // UP
-      positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.09, currentBlock.position.z];
+      positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.028, currentBlock.position.z];
       data.y_index++;
       break;
     case 1: // Left
@@ -193,8 +193,11 @@ const onObjectLoaded = function (gltf, side, withLegs) {
   meshGroup.add(object)
 
   
-  if(selectAfter)
+  if(selectAfter){
     currentBlock = object;
+    createAddBtns(generatePoints(currentBlock));
+  }
+  
   // console.log(dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z));
   // console.log(cubesPositions);
 
@@ -270,4 +273,6 @@ addCube(-1);
 //   currentColor = this.value;
 //   unpdateColors()
 // });
+
+//
 

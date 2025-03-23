@@ -7,14 +7,14 @@ canvas{
 }
 
 *{
- 
   margin: 0;
   padding: 0;
 }
 
 html{
   font-family: "Rethink Sans", serif;
-    font-size: 62.5%;
+  font-size: 62.5%;
+  color: #333;
 }
 
 body{
@@ -30,17 +30,8 @@ body{
   padding: 1.2rem;
   background-color: #efefef;
   border-bottom-right-radius: 12px;
-  animation: showSettings 1s ease-in-out forwards;
 }
 
-@keyframes showSettings {
-  0%{
-    left: -10%;
-  }
-  100%{
-    left: 0%;
-  }
-}
 
 
 .settingsEl{
@@ -65,3 +56,146 @@ body{
   border: 2px solid #333;
 }
 
+
+
+/* configure tab */
+
+
+/* configure size */
+.configure-tabs{
+  position: absolute;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 1.8rem 2rem;
+  gap: 2rem;
+  border-bottom-right-radius: 8px;
+  width: 25%;
+  max-width: 32rem;
+}
+
+.select-tab-container{
+  display: flex;
+  font-size: 1.6rem;
+  align-items: center;
+  padding-bottom: 0.4rem;
+}
+
+.open-tab-btn{
+  width: 50%;
+  text-align: center;
+  border-bottom: 2px solid #ced4da;
+  transition: 0.2s;
+
+}
+
+.tab--active{
+  border-bottom: 2px solid #333;
+}
+
+.select-tab-container .open-tab-btn{
+  cursor: pointer;
+}
+
+.size-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.select-size{
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.configure-tabs h4{
+  font-size: 1.6rem;
+}
+
+.select-size .inputs{
+  display: flex;
+}
+
+.inputs{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.inputs .size-option{
+  font-size: 1.4rem;
+  border: 1px solid #333;
+  padding: 0.4rem;
+  width: 2.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.size-option--active{
+  background-color: #333;
+  color: #fff;
+}
+
+.size-option:hover:not(.size-option--active){
+  background-color: #dee3e9;
+}
+
+/* configure color */
+
+.main-color-picker, .frame-color-picker{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.main-color-picker, .frame-color-picker{
+  gap: 0.8rem;
+}
+
+.configure-tab--color{
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.main-color-picker .inputs, .frame-color-picker .inputs{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.color {
+  width: 3.2rem;
+  aspect-ratio: 1;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.color:nth-child(1) { background-color: #f1ece1; }
+.color:nth-child(2) { background-color: #c5c7c4; }
+.color:nth-child(3) { background-color: #6c6e6b; }
+.color:nth-child(4) { background-color: #383e42; }
+.color:nth-child(5) { background-color: #27292b; }
+.color:nth-child(6) { background-color: #004f7c; }
+.color:nth-child(7) { background-color: #008b29; }
+.color:nth-child(8) { background-color: #61993b; }
+.color:nth-child(9) { background-color: #e49e00; }
+.color:nth-child(10) { background-color: #e25303; }
+.color:nth-child(11) { background-color: #861a22; }
+.color:nth-child(12) { background-color: #d0b084; }
+.color:nth-child(13) { background-color: #513a2a; }
+.color:nth-child(14) { background-color: #6a5f31; }
+.color:nth-child(15) { background-color: #bd9460; }
+.color:nth-child(16) { background-color: #47261C; }
+
+.frame-color-picker .inputs .color:nth-child(1){background-color: #0e0e10;}
+.frame-color-picker .inputs .color:nth-child(2){background-color: #FFD700;}
+.frame-color-picker .inputs .color:nth-child(3){background-color: #CD7F32;}
+
+
+.hidden{
+  display: none;
+}

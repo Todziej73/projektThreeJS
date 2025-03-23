@@ -1,13 +1,6 @@
 'use strict'
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass.js";
-import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { rotate, shiftRight } from 'three/src/nodes/TSL.js';
 
 
 
