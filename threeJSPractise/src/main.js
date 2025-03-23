@@ -16,7 +16,7 @@ let currentBlock;
 
 const borderCollapse = 0.057;
 
-const inputColor = document.querySelector('.inputColor');
+let currentColor;
 
 const roundToDecimal = function(num){
   return Math.round(num * 1000) / 1000;
@@ -207,22 +207,19 @@ const onObjectLoaded = function (gltf, side, withLegs) {
     checkSides(currentBlock);  
   }
 
-  changeObjectColor(object);
+  changeObjectColor(object, currentColor);
 
 }
 
 
 
-const changeObjectColor = function(object, targetColor = inputColor.value){ 
-  console.log(object.children[0].children[0].children);
+const changeObjectColor = function(object, targetColor){ 
 
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[1];
 
 
   meshToChange.material.color = targetColorVector;
-
-  
 }
 
 
@@ -254,7 +251,6 @@ window.addEventListener('click', function (e) {
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
       expansionHandles.position.copy(currentBlock.position);
-      // console.log(expansionHandles.position);
 
 
       checkSides(currentBlock);
@@ -265,10 +261,23 @@ window.addEventListener('click', function (e) {
   }
 });
 
-inputColor.addEventListener('change', function(){
-  changeObjectColor(currentBlock);
-});
 
+//* changing the colors
+const mainColorInputs = document.querySelector('.main-color-picker .inputs');
+
+mainColorInputs.addEventListener('click', function(e){
+  const clickedEl = e.target;
+  if(clickedEl.classList.contains('color')){
+
+    Array.from(mainColorInputs.children).forEach(e => e.classList.remove('color--active'));
+    clickedEl.classList.add('color--active');
+
+    meshGroup.children.forEach(function(obj){
+      changeObjectColor(obj, clickedEl.dataset.color);
+    })
+    currentColor = clickedEl.dataset.color;
+  }
+})
 
 
 //* EXECUTABLE
@@ -276,19 +285,4 @@ inputColor.addEventListener('change', function(){
 
 //* loads the first element
 addCube(-1);
-
-
-
-
-// const unpdateColors = function(){
-//   meshGroup.children.forEach((e) => e.material.color.set(currentColor))
-
-// }
-
-// inputColor.addEventListener('input', function(){
-//   currentColor = this.value;
-//   unpdateColors()
-// });
-
-//
 

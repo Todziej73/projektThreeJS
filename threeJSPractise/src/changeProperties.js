@@ -66,4 +66,3 @@ widthInputsEl.addEventListener('click', function(e){
 });
 
 
-//! changing the color 
