@@ -3,12 +3,10 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
-import { faceForward, log, round } from 'three/src/nodes/TSL.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
 const mouse = setUpObj.mouse;
-const outlinePass = setUpObj.outlinePass;
 
 const raycaster = new THREE.Raycaster();
 let intersects = [];
@@ -16,7 +14,7 @@ let currentBlock;
 
 
 let currentColor;
-let currentFrameColor;
+let currentFrameColor = '#0e0e10';
 
 const roundToDecimal = function(num){
   return Math.round(num * 1000) / 1000;
@@ -93,7 +91,6 @@ const generatePoints = function(object){
   const width = objectSize[0];
   const height = objectSize[1];
 
-  const objectCenter = Object.values(object.position);
 
   const box = new THREE.Box3().setFromObject(object);
   const center = new THREE.Vector3();
@@ -208,6 +205,7 @@ const onObjectLoaded = function (gltf, side, withLegs) {
   }
 
   changeObjectColor(object, currentColor);
+  changeFrameColor(object, currentFrameColor);
 
 }
 
@@ -261,8 +259,10 @@ document.addEventListener('pointermove', function (e) {
 });
 
 
+
 window.addEventListener('click', function (e) {
   if (intersects.length > 0) {
+
     const clickedEl = intersects[0].object;
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
