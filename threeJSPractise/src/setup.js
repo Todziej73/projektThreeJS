@@ -44,24 +44,6 @@ const setup = function(){
   floor.position.y = 0
   scene.add(floor)
 
-
-  //post processing
-  // const composer = new EffectComposer(renderer);
-  // const renderPass = new RenderPass(scene, camera);
-  // composer.addPass(renderPass);
-
-  // const outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera);
-  // outlinePass.edgeStrength = 3; 
-  // outlinePass.edgeGlow = 2; 
-  // outlinePass.edgeThickness = 5;
-  // outlinePass.visibleEdgeColor.set("#ffd43b");
-  // composer.addPass(outlinePass);
-  // outlinePass.renderToScreen = true;
-  
-  // const effectFXAA = new ShaderPass(FXAAShader);
-  // effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
-  // composer.addPass( effectFXAA );
-
   //responisve 
   const resize = function () {
     camera.aspect = window.innerWidth / window.innerHeight;

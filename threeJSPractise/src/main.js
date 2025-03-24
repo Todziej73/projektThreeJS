@@ -14,9 +14,9 @@ const raycaster = new THREE.Raycaster();
 let intersects = [];
 let currentBlock;
 
-const borderCollapse = 0.057;
 
 let currentColor;
+let currentFrameColor;
 
 const roundToDecimal = function(num){
   return Math.round(num * 1000) / 1000;
@@ -217,12 +217,28 @@ const changeObjectColor = function(object, targetColor){
 
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[1];
+ 
+
+
+  meshToChange.material.color = targetColorVector;
+}
+
+const changeFrameColor = function(object, targetColor){
+  const targetColorVector = new THREE.Color(targetColor);
+  const meshToChange = object.children[0].children[0].children[0];
+ 
 
 
   meshToChange.material.color = targetColorVector;
 }
 
 
+const deselectCurrentBlock = function(){
+  currentBlock = undefined;
+  expansionHandles.children.forEach(function(el){
+    toggleAddBtn(el, false, 1);
+  })
+}
 
 //* EVENTS
 
@@ -257,8 +273,13 @@ window.addEventListener('click', function (e) {
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
       const addBtnNr = expansionHandles.children.indexOf(clickedEl);
       addCube(addBtnNr);
+    }else if(!document.querySelector('.configure-tabs').contains(e.target) && e.target != document.querySelector('.configure-tabs')){
+      deselectCurrentBlock();
     }
+  }else if(!document.querySelector('.configure-tabs').contains(e.target) && e.target != document.querySelector('.configure-tabs')){
+    deselectCurrentBlock();
   }
+
 });
 
 
@@ -272,10 +293,33 @@ mainColorInputs.addEventListener('click', function(e){
     Array.from(mainColorInputs.children).forEach(e => e.classList.remove('color--active'));
     clickedEl.classList.add('color--active');
 
-    meshGroup.children.forEach(function(obj){
-      changeObjectColor(obj, clickedEl.dataset.color);
-    })
-    currentColor = clickedEl.dataset.color;
+    if(currentBlock == undefined){
+      meshGroup.children.forEach(function(obj){
+        changeObjectColor(obj, clickedEl.dataset.color);
+      })
+      currentColor = clickedEl.dataset.color;
+    }else{
+      changeObjectColor(currentBlock, clickedEl.dataset.color);
+    }
+  }
+})
+
+const frameColorInputs = document.querySelector('.frame-color-picker .inputs');
+frameColorInputs.addEventListener('click', function(e){
+  const clickedEl = e.target;
+  if(clickedEl.classList.contains('color')){
+
+    Array.from(frameColorInputs.children).forEach(e => e.classList.remove('color--active'));
+    clickedEl.classList.add('color--active');
+
+    if(currentBlock == undefined){
+      meshGroup.children.forEach(function(obj){
+        changeFrameColor(obj, clickedEl.dataset.color);
+      })
+      currentFrameColor = clickedEl.dataset.color;
+    }else{
+      changeFrameColor(currentBlock, clickedEl.dataset.color);
+    }
   }
 })
 
