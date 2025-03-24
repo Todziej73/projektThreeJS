@@ -312,14 +312,11 @@ frameColorInputs.addEventListener('click', function(e){
     Array.from(frameColorInputs.children).forEach(e => e.classList.remove('color--active'));
     clickedEl.classList.add('color--active');
 
-    if(currentBlock == undefined){
+    
       meshGroup.children.forEach(function(obj){
         changeFrameColor(obj, clickedEl.dataset.color);
       })
       currentFrameColor = clickedEl.dataset.color;
-    }else{
-      changeFrameColor(currentBlock, clickedEl.dataset.color);
-    }
   }
 })
 
