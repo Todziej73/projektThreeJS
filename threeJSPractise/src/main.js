@@ -3,10 +3,15 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
+import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
 const mouse = setUpObj.mouse;
+
+camera.layers.enableAll();
 
 const raycaster = new THREE.Raycaster();
 let intersects = [];
@@ -190,6 +195,7 @@ const onObjectLoaded = function (gltf, side, withLegs) {
   
   if(selectAfter){
     currentBlock = object;
+    updateActiveVisibler();
     createAddBtns(generatePoints(currentBlock));
   }
   
@@ -244,6 +250,7 @@ const deselectCurrentBlock = function(){
 document.addEventListener('pointermove', function (e) {
   mouse.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
   raycaster.setFromCamera(mouse, camera);
+  raycaster.layers.set(0);
   intersects = raycaster.intersectObjects(scene.children);
   if(intersects.length > 0 && expansionHandles.children.includes(intersects[0].object)){
     document.querySelector('body').style.cursor = 'pointer';
@@ -264,8 +271,13 @@ window.addEventListener('click', function (e) {
   if (intersects.length > 0) {
 
     const clickedEl = intersects[0].object;
+
+    console.log(clickedEl);
+    
+
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
+      updateActiveVisibler();
       expansionHandles.position.copy(currentBlock.position);
 
 
@@ -319,6 +331,56 @@ frameColorInputs.addEventListener('click', function(e){
       currentFrameColor = clickedEl.dataset.color;
   }
 })
+
+
+/**
+ * @type { THREE.LineSegments }
+ */
+let visibler;
+
+const updateActiveVisibler = function(){
+  if(visibler){
+    scene.remove(visibler);
+    visibler.geometry.dispose();
+    visibler.material.dispose();
+  }
+  if(!currentBlock)
+    return;
+
+
+  const currentBlockSize = getModelSize(currentBlock);
+
+  const geometry = new THREE.PlaneGeometry(currentBlockSize.x, currentBlockSize.y);
+  const edges = new THREE.EdgesGeometry(geometry);
+  const positions = Array.from(edges.attributes.position.array);
+
+  
+
+  const lineGeometry = new LineGeometry();
+  lineGeometry.setPositions(positions);
+
+  const lineMaterial = new LineMaterial({
+    color: 0xffff00,
+    linewidth: 5,
+  });
+
+  visibler = new LineSegments2(lineGeometry, lineMaterial);
+
+  // visibler.rotateY(180);
+  visibler.position.x = currentBlock.position.x;
+  visibler.position.y = currentBlock.position.y;
+  visibler.position.z = currentBlock.position.z;
+
+  visibler.position.y += currentBlockSize.y / 2;
+  visibler.position.z += currentBlockSize.z / 2;
+
+  visibler.layers.set(1);
+
+  scene.add(visibler);
+}
+
+
+
 
 
 //* EXECUTABLE
