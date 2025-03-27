@@ -1,8 +1,6 @@
 'use strict'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import {setUpObj} from './setup.js';
 
-const scene = setUpObj.scene;
 
 const loader = new GLTFLoader(); 
 

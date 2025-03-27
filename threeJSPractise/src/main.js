@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
+import { dataFromPosition, generatePoints, getModelSize, roundToDecimal } from './helpers.js';
+import { getColumn } from './configuratorPanel.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -15,11 +17,6 @@ let currentBlock;
 
 let currentColor;
 let currentFrameColor = '#0e0e10';
-
-const roundToDecimal = function(num){
-  return Math.round(num * 1000) / 1000;
-}
-
 
 scene.add(expansionHandles);
 
@@ -42,31 +39,21 @@ const hasValue = function(map, posX, posY){
 //* helper function - checks if on the given position exist any models 
 const checkPosition = function(positionObj){
   let addOption = [true, true, true]; 
-  const currentData = dataFromPosition(...Object.values(positionObj));
+  const currentData = dataFromPosition(cubesPositions, ...Object.values(positionObj));
 
   if(hasValue(cubesPositions, currentData.x_index, currentData.y_index + 1)) addOption[0] = false;
-  if(hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index)) addOption[1] = false;
-  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index - 1)) addOption[1] = false;
-  if(hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index)) addOption[2] = false;
-  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index - 1)) addOption[2] = false;
+  if(hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index)) addOption[1] = false;
+  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index - 1)) addOption[1] = false;
+  if(hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index)) addOption[2] = false;
+  if(currentData.y_index != 0 && !hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index - 1)) addOption[2] = false;
 
   return addOption;
 }
 
-//* returns data from map<position, data> | copy of that data
-const dataFromPosition = function(x, y, z){
-  const key = JSON.stringify([x, y, z].map((el) => el = roundToDecimal(el)));
-  if(cubesPositions.has(key))
-    return { ...cubesPositions.get(key) };
-  
-  return undefined;
-}
-
-
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
 const checkSides = function(curentBlock){
   const addOption = checkPosition(curentBlock.position);
-  console.log(addOption);
+  // console.log(addOption);
    for(let i = 0; i < 3; i++){
     toggleAddBtn(expansionHandles.children[i], addOption[i], !addOption[i]);
    }
@@ -76,50 +63,14 @@ const checkSides = function(curentBlock){
 
 const meshGroup = new THREE.Group();
 scene.add(meshGroup);
-const cubesPositions = new Map();
-
-//* returns the exact size of the model
-const getModelSize = function(object){
-  const boundingBox = new THREE.Box3().setFromObject(object);
-  const size = boundingBox.getSize(new THREE.Vector3());
-  return size;
-}
-
-//* generate points based on the objects/ width height
-const generatePoints = function(object){
-  const objectSize = Object.values(getModelSize(object));
-  const width = objectSize[0];
-  const height = objectSize[1];
-
-
-  const box = new THREE.Box3().setFromObject(object);
-  const center = new THREE.Vector3();
-  box.getCenter(center);
-  const centerX = center.x;  
-  const centerY = center.y;  
-
-
-  return {
-    top: new THREE.Vector2(centerX, roundToDecimal(centerY + height / 2)),
-    bottom: new THREE.Vector2(centerX, roundToDecimal(centerY - height / 2)),
-    right: new THREE.Vector2(roundToDecimal(centerX + width / 2), centerY),
-    left: new THREE.Vector2(roundToDecimal(centerX - width / 2), centerY),
-    center: new THREE.Vector2(centerX, centerY),
-
-    topLeft: new THREE.Vector2(roundToDecimal(centerX - width / 2), roundToDecimal(centerY + height / 2)),
-    topRight: new THREE.Vector2(roundToDecimal(centerX + width / 2), roundToDecimal(centerY + height / 2)),
-    bottomRight: new THREE.Vector2(roundToDecimal(centerX + width / 2), roundToDecimal(centerY - height / 2)), 
-    bottomLeft: new THREE.Vector2(roundToDecimal(centerX - width / 2), roundToDecimal(centerY - height / 2))
-  }
-}
-
+export const cubesPositions = new Map();
 
 //* adds new elements
 const addCube = function (side) {
 
   let data; 
   if(currentBlock !== undefined){
-     data = dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z)
+     data = dataFromPosition(cubesPositions, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z)
   }
   const withLegs = currentBlock !== undefined ? data.y_index == 0 && side != 0 : true;
   const directory = withLegs ? "Legged/" : "Normal/";
@@ -151,7 +102,7 @@ const onObjectLoaded = function (gltf, side, withLegs) {
   // const newObjectSize = getModelSize(object);
 
   if(currentBlock !== undefined){
-    data = dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z); // UPDATE IF EXISTS | (EXACT SAME LIKE CURRENTBLOCK DATA)
+    data = dataFromPosition(cubesPositions, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z); // UPDATE IF EXISTS | (EXACT SAME LIKE CURRENTBLOCK DATA)
     currentBlockPoints = generatePoints(currentBlock)
   }
     
@@ -164,11 +115,11 @@ const onObjectLoaded = function (gltf, side, withLegs) {
       break;
     case 1: // Left
       positions = [currentBlockPoints.left.x - getModelSize(currentBlock).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z];
-      data.x_index++;
+      data.x_index--;
       break;
     case 2: // Right
       positions = [currentBlockPoints.right.x + getModelSize(currentBlock).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z];
-      data.x_index--;
+      data.x_index++;
       break;
     case -1: // THE DEFAULT ONE ( THE FIRST ONE )
       positions = [0, 0, 0];
@@ -185,8 +136,9 @@ const onObjectLoaded = function (gltf, side, withLegs) {
   object.position.set(...positions);
 
   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), { ...data });
+ 
   meshGroup.add(object)
-
+  // console.log(cubesPositions);
   
   if(selectAfter){
     currentBlock = object;
@@ -319,6 +271,54 @@ frameColorInputs.addEventListener('click', function(e){
       currentFrameColor = clickedEl.dataset.color;
   }
 })
+
+// ! changing the size 
+let measurments = [729, 329, 154];
+
+const depthInputsEl = document.querySelector('.select-size--depth .inputs');
+const heightInputsEl = document.querySelector('.select-size--height .inputs');
+const widthInputsEl = document.querySelector('.select-size--width .inputs');
+
+
+const getModelPath = function(measurments){
+  return measurments.join("x") + ".glb";
+}
+
+
+const showActiveBtn = function(arr){
+  arr.forEach(element => {
+    element.classList.remove('size-option--active')
+  });
+}
+
+depthInputsEl.addEventListener('click', function(e){
+  if(e.target.classList.contains('size-option')){
+    showActiveBtn(document.querySelectorAll('.select-size--depth .inputs *'))
+    e.target.classList.add('size-option--active');
+    measurments[1] = Number(e.target.dataset.size);
+    console.log(getModelPath(measurments));    
+  }
+});
+
+
+heightInputsEl.addEventListener('click', function(e){
+  if(e.target.classList.contains('size-option')){
+    showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
+    e.target.classList.add('size-option--active');
+    measurments[2] = Number(e.target.dataset.size);
+    console.log(getModelPath(measurments));    
+  }
+});
+
+widthInputsEl.addEventListener('click', function(e){
+  if(e.target.classList.contains('size-option')){
+    showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
+    e.target.classList.add('size-option--active');
+    measurments[0] = Number(e.target.dataset.size);
+    console.log(getModelPath(measurments));    
+    console.log(getColumn(meshGroup, cubesPositions, currentBlock.position.x));
+  }
+});
 
 
 //* EXECUTABLE
