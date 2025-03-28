@@ -62,3 +62,4 @@ export const createAddBtns = function(points){
   createTriangle(rightBtnVertecies)
 }
 
+
