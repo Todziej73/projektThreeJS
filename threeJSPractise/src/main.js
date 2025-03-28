@@ -267,6 +267,9 @@ mainColorInputs.addEventListener('click', function(e){
   }
 })
 
+
+
+
 const frameColorInputs = document.querySelector('.frame-color-picker .inputs');
 frameColorInputs.addEventListener('click', function(e){
   const clickedEl = e.target;
