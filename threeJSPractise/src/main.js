@@ -3,11 +3,9 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
-import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
-import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
-import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
 import { dataFromPosition, generatePoints, getModelSize, roundToDecimal } from './helpers.js';
 import { getColumn } from './configuratorPanel.js';
+import { updateActiveVisibler } from './activeVisibler.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -193,7 +191,8 @@ const deselectCurrentBlock = function(){
   currentBlock = undefined;
   expansionHandles.children.forEach(function(el){
     toggleAddBtn(el, false, 1);
-  })
+  });
+  updateActiveVisibler();
 }
 
 //* EVENTS
@@ -285,52 +284,6 @@ frameColorInputs.addEventListener('click', function(e){
 })
 
 
-/**
- * @type { THREE.LineSegments }
- */
-let visibler;
-
-const updateActiveVisibler = function(){
-  if(visibler){
-    scene.remove(visibler);
-    visibler.geometry.dispose();
-    visibler.material.dispose();
-  }
-  if(!currentBlock)
-    return;
-
-
-  const currentBlockSize = getModelSize(currentBlock);
-
-  const geometry = new THREE.PlaneGeometry(currentBlockSize.x, currentBlockSize.y);
-  const edges = new THREE.EdgesGeometry(geometry);
-  const positions = Array.from(edges.attributes.position.array);
-
-  
-
-  const lineGeometry = new LineGeometry();
-  lineGeometry.setPositions(positions);
-
-  const lineMaterial = new LineMaterial({
-    color: 0xffff00,
-    linewidth: 5,
-  });
-
-  visibler = new LineSegments2(lineGeometry, lineMaterial);
-
-  // visibler.rotateY(180);
-  visibler.position.x = currentBlock.position.x;
-  visibler.position.y = currentBlock.position.y;
-  visibler.position.z = currentBlock.position.z;
-
-  visibler.position.y += currentBlockSize.y / 2;
-  visibler.position.z += currentBlockSize.z / 2;
-
-  visibler.layers.set(1);
-
-  scene.add(visibler);
-}
-
 
 
 
@@ -389,3 +342,6 @@ widthInputsEl.addEventListener('click', function(e){
 //* loads the first element
 addCube(-1);
 
+
+//* EXPORTS
+export { currentBlock, generatePoints, getModelSize, scene };
