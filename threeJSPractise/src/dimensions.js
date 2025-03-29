@@ -2,7 +2,6 @@ import { cubesPositions, generatePoints, scene, meshGroup } from "./main";
 import * as THREE from 'three';
 import { load, loadText } from "./rederObject";
 import { getColumn } from "./configuratorPanel";
-import { getDimensionModelSize } from "./helpers";
 
 
 const dimensionsGroup = new THREE.Group();
