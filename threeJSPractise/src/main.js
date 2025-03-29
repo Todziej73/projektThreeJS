@@ -6,6 +6,7 @@ import {load} from './rederObject.js';
 import { dataFromPosition, generatePoints, getModelSize, roundToDecimal } from './helpers.js';
 import { getColumn } from './configuratorPanel.js';
 import { updateActiveVisibler } from './activeVisibler.js';
+import * as DIMENSIONS from './dimensions.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -344,7 +345,18 @@ widthInputsEl.addEventListener('click', function(e){
 
 //* loads the first element
 addCube(-1);
+DIMENSIONS.setDimensionsVisiblity(true);
+DIMENSIONS.updateDimensions();
 
 
 //* EXPORTS
-export { currentBlock, generatePoints, getModelSize, scene };
+export { currentBlock, generatePoints, getModelSize, scene, meshGroup };
+
+
+
+
+
+//* DEBUG
+window.scene = scene;
+window.updateDimensions = DIMENSIONS.updateDimensions;
+
