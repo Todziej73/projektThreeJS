@@ -4,7 +4,7 @@ import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
 import { dataFromPosition, generatePoints, getModelSize, roundToDecimal } from './helpers.js';
-import { changeRow, getColumn } from './configuratorPanel.js';
+import { changeColumnSize, changeRowSize} from './configuratorPanel.js';
 import { updateActiveVisibler } from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 
@@ -78,13 +78,14 @@ const addCube = function (side) {
   }
   const withLegs = currentBlock !== undefined ? data.y_index == 0 && side != 0 : true;
   const directory = withLegs ? "Legged/" : "Normal/";
-  const modelName = "729x329x154.glb";
+  const modelName = currentBlock ? currentBlock.name : "729x329x154.glb";
   const modelPath = directory + modelName;
 
 
   // load model on scene
 
   load(modelPath).then(function (gltf) {
+    gltf.scene.name = modelName;
     onObjectLoaded(gltf, side, withLegs);
   },function ( error ) {
     console.error( error );
@@ -142,6 +143,7 @@ const onObjectLoaded = function (gltf, side, withLegs) {
   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), { ...data });
  
   meshGroup.add(object)
+  console.log(object);
   // console.log(cubesPositions);
   
   if(selectAfter){
@@ -327,7 +329,7 @@ heightInputsEl.addEventListener('click', function(e){
     e.target.classList.add('size-option--active');
     measurments[2] = Number(e.target.dataset.size);
     console.log(getModelPath(measurments));
-    changeRow(meshGroup, getModelPath(measurments), currentBlock.position.y);
+    changeRowSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock.position);
   }
 });
 
@@ -337,7 +339,7 @@ widthInputsEl.addEventListener('click', function(e){
     e.target.classList.add('size-option--active');
     measurments[0] = Number(e.target.dataset.size);
     // console.log(getModelPath(measurments));
-    getColumn(meshGroup, getModelPath(measurments), currentBlock.position.x);
+    changeColumnSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock.position);
   }
 });
 

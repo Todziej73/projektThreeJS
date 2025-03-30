@@ -20,11 +20,10 @@ tabBtnsContainer.addEventListener('click', function (e) {
 })
 
 
-//* log columns and rows
 
-export const getColumn = function (group, path, posX) {
+export const changeColumnSize = function (group, map, path, position) {
 
-  const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(posX));
+  const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(position.x));
   const otherModels = group.children.filter((child) => !currentColumn.includes(child));
   const otherColumns = new Map();
   otherModels.forEach(function (el) {
@@ -42,11 +41,13 @@ export const getColumn = function (group, path, posX) {
 
     load(directory + path).then(function (gltf) {
       const object = gltf.scene;
-      group.add(object)
+      object.name = path;
+      group.add(object);
+
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
 
       const newWidth = getModelSize(object).x;
-      if(idx === 0)  adjustColmuns(otherColumns, getModelSize(currentColumn[0]).x, newWidth, posX);
+      if(idx === 0)  adjustColmuns(otherColumns, map, getModelSize(currentColumn[0]).x, newWidth, position);
 
     }, function (error) {
       console.error(error);
@@ -55,36 +56,35 @@ export const getColumn = function (group, path, posX) {
     group.remove(el);
   });
 
-
-
- 
-
-
 }
 
 
 
 
-function adjustColmuns(otherColumns, oldWidth, newWidth, posX) {
+function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
   const gap = (oldWidth - newWidth) / 2;
+
   otherColumns.forEach(function (column, positionX, idx) {
-    const side = positionX > roundToDecimal(posX) ? "right" : "left";
-    if(side == 'right'){
+    const side = positionX > roundToDecimal(position.x) ? "right" : "left";
+
       column.forEach(function(el){
-        el.position.x -= gap;
+        const key = JSON.stringify(Object.values(el.position).map((el) => el = roundToDecimal(el)));
+        const value = map.get(key);
+        map.delete(key)
+        if(side === 'left'){
+          el.position.x += gap;
+        }else{
+          el.position.x -= gap;
+        }
+        map.set(JSON.stringify(Object.values(el.position).map((val) => val = roundToDecimal(val))), value);
       })
-    }else{
-      column.forEach(function(el){
-        el.position.x += gap;
-      })
-    }
   });
 }
 
 
-export const changeRow = function (group, path, posY) {
+export const changeRowSize = function (group, map, path, position) {
 
-  const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(posY));
+  const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(position.y));
   const otherModels = group.children.filter((child) => !currentRow.includes(child) && roundToDecimal(child.position.y) > roundToDecimal(currentRow[0].position.y));
   const otherRows = new Map();
   otherModels.forEach(function (el) {
@@ -103,11 +103,12 @@ export const changeRow = function (group, path, posY) {
     load(directory + path).then(function (gltf) {
       const object = gltf.scene;
       group.add(object)
+      object.name = path;
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
 
 
       const newHeight = getModelSize(object).y;
-      if(idx === 0)  adjustRows(otherRows, getModelSize(currentRow[0]).y, newHeight, posY);
+      if(idx === 0)  adjustRows(otherRows, getModelSize(currentRow[0]).y, newHeight, position.y);
       
     }, function (error) {
       console.error(error);
@@ -130,63 +131,19 @@ function adjustRows(otherRows, oldHeight, newHeight, posY) {
   const gap = (oldHeight - newHeight);
   otherRows.forEach(function (column, positionY, idx) {
     const side = positionY > roundToDecimal(posY) ? "upper" : "lower";
-    if(side == 'upper'){
+    
       column.forEach(function(el){
-        el.position.y -= gap;
+        const key = JSON.stringify(Object.values(el.position).map((el) => el = roundToDecimal(el)));
+        const value = map.get(key);
+        map.delete(key)
+        if(side === 'upper'){
+          el.position.y -= gap;
+        }else{
+          el.position.y += gap;
+        }
+        map.set(JSON.stringify(Object.values(el.position).map((val) => val = roundToDecimal(val))), value);
       })
-    }else{
-      column.forEach(function(el){
-        el.position.y += gap;
-      })
-    }
+   
   });
 }
 
-
-// // ! changing the size 
-// let measurments = [729, 329, 154];
-
-// const depthInputsEl = document.querySelector('.select-size--depth .inputs');
-// const heightInputsEl = document.querySelector('.select-size--height .inputs');
-// const widthInputsEl = document.querySelector('.select-size--width .inputs');
-
-
-// const getModelPath = function(measurments){
-//   return measurments.join("x") + ".glb";
-// }
-
-
-// const showActiveBtn = function(arr){
-//   arr.forEach(element => {
-//     element.classList.remove('size-option--active')
-//   });
-// }
-
-// depthInputsEl.addEventListener('click', function(e){
-//   if(e.target.classList.contains('size-option')){
-//     showActiveBtn(document.querySelectorAll('.select-size--depth .inputs *'))
-//     e.target.classList.add('size-option--active');
-//     measurments[1] = Number(e.target.dataset.size);
-//     console.log(getModelPath(measurments));    
-//   }
-// });
-
-
-// heightInputsEl.addEventListener('click', function(e){
-//   if(e.target.classList.contains('size-option')){
-//     showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
-//     e.target.classList.add('size-option--active');
-//     measurments[2] = Number(e.target.dataset.size);
-//     console.log(getModelPath(measurments));    
-//   }
-// });
-
-// widthInputsEl.addEventListener('click', function(e){
-//   if(e.target.classList.contains('size-option')){
-//     showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
-//     e.target.classList.add('size-option--active');
-//     measurments[0] = Number(e.target.dataset.size);
-//     console.log(getModelPath(measurments));    
-//     console.log(currentBlock);
-//   }
-// });
