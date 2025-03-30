@@ -344,6 +344,61 @@ widthInputsEl.addEventListener('click', function(e){
 });
 
 
+// x, y - gdzie powinno byc
+const getPredictedSize = function(x_index, y_index){
+  let width = undefined;
+  let height = undefined;
+  let depth = getSizeParametersFromModel(meshGroup.children.name).depth;
+
+  const column = select(cubesPositions, meshGroup, x_index);
+  const row = select(cubesPositions, meshGroup, y_index);
+  if(column.length > 0) width = getSizeParametersFromModel(column[0].name).width;
+  if(row.length > 0) height = getSizeParametersFromModel(row[0].name).height;
+
+  return {
+    width: width,
+    height: height,
+    depth: depth
+  }
+}
+
+/**
+ * 
+ * @param {*} map 
+ * @param {THREE.Group} group 
+ * @param {*} x_index 
+ * @param {*} y_index 
+ */
+const select = function(map, group, x_index = null, y_index = null){
+  const ret = [];
+  
+  group.children.forEach(el => {
+    const data = dataFromPosition(map, el.position.x, el.position.y, el.position.z); // { x_index: ?, y_index: ? }
+    if(x_index != null && y_index != null && (data.x_index == x_index && data.y_index == y_index)) ret.push(el); // x i y
+    else if(x_index != null && y_index == null && (data.x_index == x_index)) ret.push(el); // x
+    else if(x_index == null && y_index != null && (data.y_index == y_index)) ret.push(el); // y
+    else if(x_index == null && y_index == null) ret.push(el); // wszystkie
+  });
+
+
+  return ret;
+}
+
+/**
+ * 
+ * @param {string} name 
+ */
+const getSizeParametersFromModel = function(name){
+  // 729x383x222.glb
+  const params = name.split('x');
+  return {
+    width: params[0],
+    height: params[1],
+    depth: params[2].split(".")[0],
+  }
+}
+
+
 //* EXECUTABLE
 
 
@@ -363,4 +418,6 @@ export { currentBlock, generatePoints, getModelSize, scene, meshGroup };
 //* DEBUG
 window.scene = scene;
 window.updateDimensions = DIMENSIONS.updateDimensions;
-
+window.select = select;
+window.meshGroup = meshGroup;
+window.cubesPositions = cubesPositions;
