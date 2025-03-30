@@ -4,7 +4,7 @@ import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
 import { dataFromPosition, generatePoints, getModelSize, roundToDecimal } from './helpers.js';
-import { getColumn } from './configuratorPanel.js';
+import { changeRow, getColumn } from './configuratorPanel.js';
 import { updateActiveVisibler } from './activeVisibler.js';
 
 const scene = setUpObj.scene;
@@ -223,13 +223,14 @@ window.addEventListener('click', function (e) {
 
     const clickedEl = intersects[0].object;
 
-    console.log(clickedEl);
     
 
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
       updateActiveVisibler();
       expansionHandles.position.copy(currentBlock.position);
+
+
 
 
       checkSides(currentBlock);
@@ -324,7 +325,8 @@ heightInputsEl.addEventListener('click', function(e){
     showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[2] = Number(e.target.dataset.size);
-    console.log(getModelPath(measurments));    
+    console.log(getModelPath(measurments));
+    changeRow(meshGroup, getModelPath(measurments), currentBlock.position.y);
   }
 });
 
@@ -333,8 +335,8 @@ widthInputsEl.addEventListener('click', function(e){
     showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[0] = Number(e.target.dataset.size);
-    console.log(getModelPath(measurments));    
-    console.log(getColumn(meshGroup, cubesPositions, currentBlock.position.x));
+    // console.log(getModelPath(measurments));
+    getColumn(meshGroup, getModelPath(measurments), currentBlock.position.x);
   }
 });
 
