@@ -42,15 +42,15 @@ export const changeColumnSize = function (group, map, path) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
     const width = getSizeParametersFromModel(path).width;
-    path = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
+    const newpath = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
     console.log("Old size: ", oldSize);
-    console.log("New size: ", getSizeParametersFromModel(path));
-    console.log("Path: ", path);
+    console.log("New size: ", getSizeParametersFromModel(newpath));
+    console.log("Path: ", newpath);
 
-    load(directory + path).then(function (gltf) {
+    load(directory + newpath).then(function (gltf) {
       const object = gltf.scene;
-      object.name = path;
+      object.name = newpath;
       group.add(object);
       
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
@@ -106,7 +106,7 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 
 
 
-export const changeRowSize = function (group, map, path, currentBlock) {
+export const changeRowSize = function (group, map, path) {
 
   const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(currentBlock.position.y));
   const otherModels = group.children.filter((child) => !currentRow.includes(child) && roundToDecimal(child.position.y) > roundToDecimal(currentRow[0].position.y));
@@ -115,26 +115,26 @@ export const changeRowSize = function (group, map, path, currentBlock) {
     const positionY = roundToDecimal(el.position.y);
     if (!otherRows.has(positionY)) {
       otherRows.set(positionY, [el]);
-    } else otherRows.get(positionY).push(el)
+    } else otherRows.get(positionY).push(el);
   })
 
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
   currentRow.forEach(function (el, idx) {
-    const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
+    const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
     const oldSize = getSizeParametersFromModel(el.name);
     const height = getSizeParametersFromModel(path).height;
-    path = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
+    const newpath = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
     console.log("Old size: ", oldSize);
-    console.log("New size: ", getSizeParametersFromModel(path));
-    console.log("Path: ", path);
+    console.log("New size: ", getSizeParametersFromModel(newpath));
+    console.log("Path: ", newpath);
     
     
 
-    load(directory + path).then(function (gltf) {
+    load(directory + newpath).then(function (gltf) {
       const object = gltf.scene;
       group.add(object)
-      object.name = path;
+      object.name = newpath;
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
 
       const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
