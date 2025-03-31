@@ -106,7 +106,7 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 
 
 
-export const changeRowSize = function (group, map, path, currentBlock) {
+export const changeRowSize = function (group, map, path) {
 
   const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(currentBlock.position.y));
   const otherModels = group.children.filter((child) => !currentRow.includes(child) && roundToDecimal(child.position.y) > roundToDecimal(currentRow[0].position.y));
@@ -115,13 +115,13 @@ export const changeRowSize = function (group, map, path, currentBlock) {
     const positionY = roundToDecimal(el.position.y);
     if (!otherRows.has(positionY)) {
       otherRows.set(positionY, [el]);
-    } else otherRows.get(positionY).push(el)
+    } else otherRows.get(positionY).push(el);
   })
 
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
   currentRow.forEach(function (el, idx) {
-    const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
+    const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
     const oldSize = getSizeParametersFromModel(el.name);
     const height = getSizeParametersFromModel(path).height;
     const newPath = `${oldSize.width}x${oldSize.depth}x${height}.glb`;

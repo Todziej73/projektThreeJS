@@ -328,8 +328,7 @@ heightInputsEl.addEventListener('click', function(e){
     showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[2] = Number(e.target.dataset.size);
-    console.log(getModelPath(measurments));
-    changeRowSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock);
+    changeRowSize(meshGroup, cubesPositions, getModelPath(measurments));
   }
 });
 
@@ -338,7 +337,6 @@ widthInputsEl.addEventListener('click', function(e){
     showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[0] = Number(e.target.dataset.size);
-    // console.log(getModelPath(measurments));
     changeColumnSize(meshGroup, cubesPositions, getModelPath(measurments));
   }
 });
