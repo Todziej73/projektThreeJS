@@ -44,6 +44,10 @@ export const changeColumnSize = function (group, map, path) {
     const width = getSizeParametersFromModel(path).width;
     path = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
+    console.log("Old size: ", oldSize);
+    console.log("New size: ", getSizeParametersFromModel(path));
+    console.log("Path: ", path);
+
     load(directory + path).then(function (gltf) {
       const object = gltf.scene;
       object.name = path;
@@ -121,6 +125,11 @@ export const changeRowSize = function (group, map, path, currentBlock) {
     const oldSize = getSizeParametersFromModel(el.name);
     const height = getSizeParametersFromModel(path).height;
     path = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
+    console.log("Old size: ", oldSize);
+    console.log("New size: ", getSizeParametersFromModel(path));
+    console.log("Path: ", path);
+    
+    
 
     load(directory + path).then(function (gltf) {
       const object = gltf.scene;
