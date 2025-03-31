@@ -329,7 +329,7 @@ heightInputsEl.addEventListener('click', function(e){
     e.target.classList.add('size-option--active');
     measurments[2] = Number(e.target.dataset.size);
     console.log(getModelPath(measurments));
-    changeRowSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock.position);
+    changeRowSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock);
   }
 });
 
@@ -339,7 +339,7 @@ widthInputsEl.addEventListener('click', function(e){
     e.target.classList.add('size-option--active');
     measurments[0] = Number(e.target.dataset.size);
     // console.log(getModelPath(measurments));
-    changeColumnSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock.position);
+    changeColumnSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock);
   }
 });
 
