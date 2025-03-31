@@ -1,5 +1,6 @@
 'use strict'
 import {getModelSize,roundToDecimal} from "./helpers";
+import { cubesPositions } from "./main";
 import {load} from "./rederObject";
 
 
@@ -108,7 +109,7 @@ export const changeRowSize = function (group, map, path, position) {
 
 
       const newHeight = getModelSize(object).y;
-      if(idx === 0)  adjustRows(otherRows, getModelSize(currentRow[0]).y, newHeight, position.y);
+      if(idx === 0)  adjustRows(otherRows, map, getModelSize(currentRow[0]).y, newHeight, position.y);
       
     }, function (error) {
       console.error(error);
@@ -127,7 +128,7 @@ export const changeRowSize = function (group, map, path, position) {
 
 
 
-function adjustRows(otherRows, oldHeight, newHeight, posY) {
+function adjustRows(otherRows, map, oldHeight, newHeight, posY) {
   const gap = (oldHeight - newHeight);
   otherRows.forEach(function (column, positionY, idx) {
     const side = positionY > roundToDecimal(posY) ? "upper" : "lower";

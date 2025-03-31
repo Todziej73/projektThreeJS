@@ -72,21 +72,43 @@ export const cubesPositions = new Map();
 //* adds new elements
 const addCube = function (side) {
 
-  let data; 
+  let data = { y_index: 0, x_index: 0 }; 
   if(currentBlock !== undefined){
-     data = dataFromPosition(cubesPositions, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z)
+     data = dataFromPosition(cubesPositions, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z) // UPDATE IF EXISTS | (EXACT SAME LIKE CURRENTBLOCK DATA)
   }
   const withLegs = currentBlock !== undefined ? data.y_index == 0 && side != 0 : true;
+
+
+
+  switch (side) {
+    case 0: // UP
+      data.y_index++;
+      break;
+    case 1: // Left
+      data.x_index--;
+      break;
+    case 2: // Right
+      data.x_index++;
+      break;
+    default:
+      break;
+  }
+
+  const predictedSize = getPredictedSize(data.x_index, data.y_index);
+  const width = predictedSize.width == undefined ? 729 : predictedSize.width;
+  const height = predictedSize.height == undefined ? 154 : predictedSize.height;
+  const depth = predictedSize.depth == undefined ? 329 : predictedSize.depth;
+  console.log(predictedSize);
+
   const directory = withLegs ? "Legged/" : "Normal/";
-  const modelName = currentBlock ? currentBlock.name : "729x329x154.glb";
+  const modelName = `${width}x${depth}x${height}.glb`;
   const modelPath = directory + modelName;
-
-
   // load model on scene
-
+  console.log(modelPath);
+  
   load(modelPath).then(function (gltf) {
     gltf.scene.name = modelName;
-    onObjectLoaded(gltf, side, withLegs);
+    onObjectLoaded(gltf, data, side);
   },function ( error ) {
     console.error( error );
   } );
@@ -95,48 +117,29 @@ const addCube = function (side) {
 
 
 //* when the model is loaded adds it to the scene and to the map
-const onObjectLoaded = function (gltf, side, withLegs) {
+const onObjectLoaded = function (gltf, data, side) {
 
   const object = gltf.scene;
   
   // -- 1. setup position and map<position, data> value
 
-  let positions, selectAfter = false;
-  let data = { y_index: 0, x_index: 0 }; // DEFAULT
-  let currentBlockPoints;
-  // const newObjectSize = getModelSize(object);
+  let selectAfter = data.x_index == 0 && data.y_index == 0;
+  const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
 
+  
+  let positions, currentBlockPoints;
   if(currentBlock !== undefined){
-    data = dataFromPosition(cubesPositions, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z); // UPDATE IF EXISTS | (EXACT SAME LIKE CURRENTBLOCK DATA)
     currentBlockPoints = generatePoints(currentBlock)
   }
-    
-  const borderCollapse =  withLegs ? 0.04 : 0.028;
 
-  switch (side) {
-    case 0: // UP
-      positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.028, currentBlock.position.z];
-      data.y_index++;
-      break;
-    case 1: // Left
-      positions = [currentBlockPoints.left.x - getModelSize(currentBlock).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z];
-      data.x_index--;
-      break;
-    case 2: // Right
-      positions = [currentBlockPoints.right.x + getModelSize(currentBlock).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z];
-      data.x_index++;
-      break;
-    case -1: // THE DEFAULT ONE ( THE FIRST ONE )
-      positions = [0, 0, 0];
-      selectAfter = true;
-      break;
-    default:
-      console.error("AddCube function had problem with deciding positions|sides");
-      return;  
+  if(side == 0) positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.028, currentBlock.position.z]; // UP
+  else if(side == 1) positions = [currentBlockPoints.left.x - getModelSize(object).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z]; // LEFT
+  else if(side == 2) positions = [currentBlockPoints.right.x + getModelSize(object).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z]; // RIGHT
+  else if(side == -1) positions = [0, 0, 0]; // THE DEFAULT ONE
+  else { 
+    console.error("AddCube function had problem with deciding positions|sides");  
+    return;
   }
-
-
-
 
   object.position.set(...positions);
 
@@ -348,10 +351,10 @@ widthInputsEl.addEventListener('click', function(e){
 const getPredictedSize = function(x_index, y_index){
   let width = undefined;
   let height = undefined;
-  let depth = getSizeParametersFromModel(meshGroup.children.name).depth;
+  let depth = meshGroup.children.length > 0 ? getSizeParametersFromModel(meshGroup.children[0].name).depth : undefined;
 
   const column = select(cubesPositions, meshGroup, x_index);
-  const row = select(cubesPositions, meshGroup, y_index);
+  const row = select(cubesPositions, meshGroup, null, y_index);
   if(column.length > 0) width = getSizeParametersFromModel(column[0].name).width;
   if(row.length > 0) height = getSizeParametersFromModel(row[0].name).height;
 
@@ -389,12 +392,12 @@ const select = function(map, group, x_index = null, y_index = null){
  * @param {string} name 
  */
 const getSizeParametersFromModel = function(name){
-  // 729x383x222.glb
+  // np. 729x383x222.glb => [729, 383, 222]
   const params = name.split('x');
   return {
-    width: params[0],
-    height: params[1],
-    depth: params[2].split(".")[0],
+    width: parseInt(params[0]),
+    depth: parseInt(params[1]),
+    height: parseInt(params[2].split(".")[0]),
   }
 }
 
@@ -421,3 +424,4 @@ window.updateDimensions = DIMENSIONS.updateDimensions;
 window.select = select;
 window.meshGroup = meshGroup;
 window.cubesPositions = cubesPositions;
+window.getSizeParametersFromModel = getSizeParametersFromModel;
