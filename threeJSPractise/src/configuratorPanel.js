@@ -1,6 +1,7 @@
 'use strict'
-import {getModelSize,roundToDecimal} from "./helpers";
-import { cubesPositions } from "./main";
+import { updateActiveVisibler } from "./activeVisibler";
+import { createAddBtns } from "./expansionHandles";
+import {generatePoints, getModelSize,roundToDecimal} from "./helpers";
 import {load} from "./rederObject";
 
 
@@ -22,9 +23,10 @@ tabBtnsContainer.addEventListener('click', function (e) {
 
 
 
-export const changeColumnSize = function (group, map, path, position) {
+export const changeColumnSize = function (group, map, path, currentBlock) {
+ 
 
-  const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(position.x));
+  const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(currentBlock.position.x));
   const otherModels = group.children.filter((child) => !currentColumn.includes(child));
   const otherColumns = new Map();
   otherModels.forEach(function (el) {
@@ -48,7 +50,9 @@ export const changeColumnSize = function (group, map, path, position) {
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
 
       const newWidth = getModelSize(object).x;
-      if(idx === 0)  adjustColmuns(otherColumns, map, getModelSize(currentColumn[0]).x, newWidth, position);
+      if(idx === 0){
+        adjustColmuns(otherColumns, map, getModelSize(currentColumn[0]).x, newWidth, currentBlock.position);
+      }
 
     }, function (error) {
       console.error(error);
@@ -58,8 +62,6 @@ export const changeColumnSize = function (group, map, path, position) {
   });
 
 }
-
-
 
 
 function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
@@ -83,9 +85,12 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 }
 
 
-export const changeRowSize = function (group, map, path, position) {
 
-  const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(position.y));
+
+
+export const changeRowSize = function (group, map, path, currentBlock) {
+
+  const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(currentBlock.position.y));
   const otherModels = group.children.filter((child) => !currentRow.includes(child) && roundToDecimal(child.position.y) > roundToDecimal(currentRow[0].position.y));
   const otherRows = new Map();
   otherModels.forEach(function (el) {
@@ -94,7 +99,6 @@ export const changeRowSize = function (group, map, path, position) {
       otherRows.set(positionY, [el]);
     } else otherRows.get(positionY).push(el)
   })
-
 
 
   //delete old and load new elements
@@ -109,7 +113,7 @@ export const changeRowSize = function (group, map, path, position) {
 
 
       const newHeight = getModelSize(object).y;
-      if(idx === 0)  adjustRows(otherRows, map, getModelSize(currentRow[0]).y, newHeight, position.y);
+      if(idx === 0)  adjustRows(otherRows, map, getModelSize(currentRow[0]).y, newHeight, currentBlock.position.y);
       
     }, function (error) {
       console.error(error);
@@ -117,11 +121,6 @@ export const changeRowSize = function (group, map, path, position) {
 
     group.remove(el);
   });
-
-
-
- 
-
 
 }
 

@@ -1,13 +1,6 @@
 'use strict'
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer.js";
-import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass.js";
-import {OutlinePass} from "three/examples/jsm/postprocessing/OutlinePass.js";
-import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
-import { GammaCorrectionShader } from "three/examples/jsm/shaders/GammaCorrectionShader.js";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-
 
 const setup = function () {
   //* SET UP
@@ -39,7 +32,7 @@ const setup = function () {
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = true;
   controls.maxPolarAngle = Math.PI * 0.45;
-  controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE;
+  // controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE;
 
   //floor
   const planeGeo = new THREE.PlaneGeometry(15, 15);
