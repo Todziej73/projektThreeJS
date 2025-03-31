@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import { expansionHandles, createAddBtns} from './expansionHandles';
 import {load} from './rederObject.js';
-import { dataFromPosition, generatePoints, getModelSize, roundToDecimal } from './helpers.js';
+import { dataFromPosition, generatePoints, getModelSize, getSizeParametersFromModel, roundToDecimal } from './helpers.js';
 import { changeColumnSize, changeRowSize} from './configuratorPanel.js';
 import { updateActiveVisibler } from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
@@ -17,7 +17,9 @@ camera.layers.enableAll();
 const raycaster = new THREE.Raycaster();
 let intersects = [];
 let currentBlock;
-
+export const setCurrentBlock = function(object){
+  currentBlock = object
+}; 
 
 let currentColor;
 let currentFrameColor = '#0e0e10';
@@ -98,7 +100,6 @@ const addCube = function (side) {
   const width = predictedSize.width == undefined ? 729 : predictedSize.width;
   const height = predictedSize.height == undefined ? 154 : predictedSize.height;
   const depth = predictedSize.depth == undefined ? 329 : predictedSize.depth;
-  console.log(predictedSize);
 
   const directory = withLegs ? "Legged/" : "Normal/";
   const modelName = `${width}x${depth}x${height}.glb`;
@@ -147,16 +148,12 @@ const onObjectLoaded = function (gltf, data, side) {
  
   meshGroup.add(object)
   console.log(object);
-  // console.log(cubesPositions);
   
   if(selectAfter){
     currentBlock = object;
     updateActiveVisibler();
     createAddBtns(generatePoints(currentBlock));
   }
-  
-  // console.log(dataFromPosition(currentBlock.position.x, currentBlock.position.y, currentBlock.position.z));
-  // console.log(cubesPositions);
 
 
   if(meshGroup.children.length == 1)
@@ -342,7 +339,7 @@ widthInputsEl.addEventListener('click', function(e){
     e.target.classList.add('size-option--active');
     measurments[0] = Number(e.target.dataset.size);
     // console.log(getModelPath(measurments));
-    changeColumnSize(meshGroup, cubesPositions, getModelPath(measurments), currentBlock);
+    changeColumnSize(meshGroup, cubesPositions, getModelPath(measurments));
   }
 });
 
@@ -386,21 +383,6 @@ const select = function(map, group, x_index = null, y_index = null){
 
   return ret;
 }
-
-/**
- * 
- * @param {string} name 
- */
-const getSizeParametersFromModel = function(name){
-  // np. 729x383x222.glb => [729, 383, 222]
-  const params = name.split('x');
-  return {
-    width: parseInt(params[0]),
-    depth: parseInt(params[1]),
-    height: parseInt(params[2].split(".")[0]),
-  }
-}
-
 
 //* EXECUTABLE
 

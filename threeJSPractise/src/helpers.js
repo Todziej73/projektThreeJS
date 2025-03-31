@@ -50,4 +50,17 @@ export const generatePoints = function (object) {
     bottomLeft: new THREE.Vector2(roundToDecimal(centerX - width / 2), roundToDecimal(centerY - height / 2))
   };
 };
+/**
+ *
+ * @param {string} name
+ */
+export const getSizeParametersFromModel = function (name) {
+  // np. 729x383x222.glb => [729, 383, 222]
+  const params = name.split('x');
+  return {
+    width: parseInt(params[0]),
+    depth: parseInt(params[1]),
+    height: parseInt(params[2].split(".")[0]),
+  };
+};
 

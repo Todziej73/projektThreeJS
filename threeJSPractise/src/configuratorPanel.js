@@ -1,7 +1,8 @@
 'use strict'
 import { updateActiveVisibler } from "./activeVisibler";
 import { createAddBtns } from "./expansionHandles";
-import {generatePoints, getModelSize,roundToDecimal} from "./helpers";
+import {dataFromPosition, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal} from "./helpers";
+import { currentBlock, setCurrentBlock } from "./main";
 import {load} from "./rederObject";
 
 
@@ -23,9 +24,7 @@ tabBtnsContainer.addEventListener('click', function (e) {
 
 
 
-export const changeColumnSize = function (group, map, path, currentBlock) {
- 
-
+export const changeColumnSize = function (group, map, path) {
   const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(currentBlock.position.x));
   const otherModels = group.children.filter((child) => !currentColumn.includes(child));
   const otherColumns = new Map();
@@ -36,18 +35,29 @@ export const changeColumnSize = function (group, map, path, currentBlock) {
     } else otherColumns.get(positionX).push(el)
   })
 
-
-
+  
+  const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
   currentColumn.forEach(function (el, idx) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
+    const oldSize = getSizeParametersFromModel(el.name);
+    const width = getSizeParametersFromModel(path).width;
+    path = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
     load(directory + path).then(function (gltf) {
       const object = gltf.scene;
       object.name = path;
       group.add(object);
-
+      
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+
+      const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
+      const value = map.get(key);
+      if(value.x_index === currentBlockGridPosition.x_index && value.y_index === currentBlockGridPosition.y_index){
+        setCurrentBlock(object);
+        updateActiveVisibler(object)
+        createAddBtns(generatePoints(object));
+      }
 
       const newWidth = getModelSize(object).x;
       if(idx === 0){
@@ -58,15 +68,18 @@ export const changeColumnSize = function (group, map, path, currentBlock) {
       console.error(error);
     });
 
+    
     group.remove(el);
+    
   });
+
 
 }
 
 
 function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
   const gap = (oldWidth - newWidth) / 2;
-
+  
   otherColumns.forEach(function (column, positionX, idx) {
     const side = positionX > roundToDecimal(position.x) ? "right" : "left";
 
@@ -80,6 +93,7 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
           el.position.x -= gap;
         }
         map.set(JSON.stringify(Object.values(el.position).map((val) => val = roundToDecimal(val))), value);
+        
       })
   });
 }
@@ -100,10 +114,13 @@ export const changeRowSize = function (group, map, path, currentBlock) {
     } else otherRows.get(positionY).push(el)
   })
 
-
+  const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
   currentRow.forEach(function (el, idx) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
+    const oldSize = getSizeParametersFromModel(el.name);
+    const height = getSizeParametersFromModel(path).height;
+    path = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
 
     load(directory + path).then(function (gltf) {
       const object = gltf.scene;
@@ -111,6 +128,13 @@ export const changeRowSize = function (group, map, path, currentBlock) {
       object.name = path;
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
 
+      const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
+      const value = map.get(key);
+      if(value.x_index === currentBlockGridPosition.x_index && value.y_index === currentBlockGridPosition.y_index){
+        setCurrentBlock(object);
+        updateActiveVisibler(object)
+        createAddBtns(generatePoints(object));
+      }
 
       const newHeight = getModelSize(object).y;
       if(idx === 0)  adjustRows(otherRows, map, getModelSize(currentRow[0]).y, newHeight, currentBlock.position.y);
