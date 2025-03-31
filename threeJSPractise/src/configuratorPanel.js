@@ -42,15 +42,15 @@ export const changeColumnSize = function (group, map, path) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
     const width = getSizeParametersFromModel(path).width;
-    path = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
+    const newPath = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
     console.log("Old size: ", oldSize);
-    console.log("New size: ", getSizeParametersFromModel(path));
-    console.log("Path: ", path);
+    console.log("New size: ", getSizeParametersFromModel(newPath));
+    console.log("Path: ", newPath);
 
-    load(directory + path).then(function (gltf) {
+    load(directory + newPath).then(function (gltf) {
       const object = gltf.scene;
-      object.name = path;
+      object.name = newPath;
       group.add(object);
       
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
@@ -124,17 +124,17 @@ export const changeRowSize = function (group, map, path, currentBlock) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
     const height = getSizeParametersFromModel(path).height;
-    path = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
+    const newPath = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
     console.log("Old size: ", oldSize);
-    console.log("New size: ", getSizeParametersFromModel(path));
-    console.log("Path: ", path);
+    console.log("New size: ", getSizeParametersFromModel(newPath));
+    console.log("Path: ", newPath);
     
     
 
-    load(directory + path).then(function (gltf) {
+    load(directory + newPath).then(function (gltf) {
       const object = gltf.scene;
       group.add(object)
-      object.name = path;
+      object.name = newPath;
       object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
 
       const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
