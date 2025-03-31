@@ -24,7 +24,7 @@ tabBtnsContainer.addEventListener('click', function (e) {
 
 
 
-export const changeColumnSize = function (group, map, path) {
+export const changeColumnSize = function (group, map, sizeSettings) {
   const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(currentBlock.position.x));
   const otherModels = group.children.filter((child) => !currentColumn.includes(child));
   const otherColumns = new Map();
@@ -41,12 +41,10 @@ export const changeColumnSize = function (group, map, path) {
   currentColumn.forEach(function (el, idx) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
-    const width = getSizeParametersFromModel(path).width;
+    const width = sizeSettings[0];
     const newPath = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
-    console.log("Old size: ", oldSize);
-    console.log("New size: ", getSizeParametersFromModel(newPath));
-    console.log("Path: ", newPath);
+
 
     load(directory + newPath).then(function (gltf) {
       const object = gltf.scene;
@@ -106,7 +104,7 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 
 
 
-export const changeRowSize = function (group, map, path) {
+export const changeRowSize = function (group, map, sizeSettings) {
 
   const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(currentBlock.position.y));
   const otherModels = group.children.filter((child) => !currentRow.includes(child) && roundToDecimal(child.position.y) > roundToDecimal(currentRow[0].position.y));
@@ -123,12 +121,9 @@ export const changeRowSize = function (group, map, path) {
   currentRow.forEach(function (el, idx) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
     const oldSize = getSizeParametersFromModel(el.name);
-    const height = getSizeParametersFromModel(path).height;
+    const height = sizeSettings[2];
     const newPath = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
-    console.log("Old size: ", oldSize);
-    console.log("New size: ", getSizeParametersFromModel(newPath));
-    console.log("Path: ", newPath);
-    
+  
     
 
     load(directory + newPath).then(function (gltf) {
