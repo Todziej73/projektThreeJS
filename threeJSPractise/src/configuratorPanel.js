@@ -3,7 +3,7 @@ import { updateActiveVisibler } from "./activeVisibler";
 import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
 import {dataFromPosition, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal} from "./helpers";
-import { currentBlock, setCurrentBlock } from "./main";
+import { checkSides, currentBlock, setCurrentBlock } from "./main";
 import {load} from "./rederObject";
 
 
@@ -60,6 +60,8 @@ export const changeColumnSize = function (group, map, sizeSettings) {
         setCurrentBlock(object);
         updateActiveVisibler(object)
         createAddBtns(generatePoints(object));
+        checkSides(object);
+
       }
 
       const newWidth = getModelSize(object).x;
@@ -106,7 +108,6 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 
 
 
-
 export const changeRowSize = function (group, map, sizeSettings) {
 
   const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(currentBlock.position.y));
@@ -141,6 +142,7 @@ export const changeRowSize = function (group, map, sizeSettings) {
         setCurrentBlock(object);
         updateActiveVisibler(object)
         createAddBtns(generatePoints(object));
+        checkSides(object);
       }
 
       const newHeight = getModelSize(object).y;

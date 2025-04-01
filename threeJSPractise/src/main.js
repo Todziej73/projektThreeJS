@@ -1,33 +1,11 @@
 'use strict'
 import * as THREE from 'three';
-import {
-  setUpObj
-} from './setup.js';
-import {
-  expansionHandles,
-  createAddBtns
-} from './expansionHandles';
-import {
-  load,
-  loadText
-} from './rederObject.js';
-import {
-  dataFromPosition,
-  extremeInArray,
-  extremeValues,
-  generatePoints,
-  getModelSize,
-  getSizeParametersFromModel,
-  roundToDecimal,
-  select
-} from './helpers.js';
-import {
-  changeColumnSize,
-  changeRowSize
-} from './configuratorPanel.js';
-import {
-  updateActiveVisibler
-} from './activeVisibler.js';
+import {setUpObj} from './setup.js';
+import {expansionHandles,createAddBtns} from './expansionHandles';
+import {load} from './rederObject.js';
+import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal} from './helpers.js';
+import {changeColumnSize,changeRowSize} from './configuratorPanel.js';
+import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 
 const scene = setUpObj.scene;
@@ -42,6 +20,9 @@ let currentBlock;
 export const setCurrentBlock = function (object) {
   currentBlock = object
 };
+
+
+
 
 let currentColor;
 let currentFrameColor = '#0e0e10';
@@ -79,7 +60,8 @@ const checkPosition = function (positionObj) {
 }
 
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
-const checkSides = function (curentBlock) {
+export const checkSides = function (curentBlock) {
+  console.log(curentBlock);
   const addOption = checkPosition(curentBlock.position);
   // console.log(addOption);
   for (let i = 0; i < 3; i++) {
@@ -130,7 +112,7 @@ const addCube = function (side) {
   const modelName = `${width}x${depth}x${height}.glb`;
   const modelPath = directory + modelName;
   // load model on scene
-  console.log(modelPath);
+  // console.log(modelPath);
 
   load(modelPath).then(function (gltf) {
     gltf.scene.name = modelName;
@@ -151,6 +133,7 @@ const onObjectLoaded = function (gltf, data, side) {
 
   let selectAfter = data.x_index == 0 && data.y_index == 0;
   const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
+
 
 
   let positions, currentBlockPoints;
@@ -190,9 +173,9 @@ const onObjectLoaded = function (gltf, data, side) {
     checkSides(currentBlock);
   }
 
-  changeObjectColor(object, currentColor);
-  changeFrameColor(object, currentFrameColor);
-  DIMENSIONS.updateDimensions();
+  // changeObjectColor(object, currentColor);
+  // changeFrameColor(object, currentFrameColor);
+
 }
 
 
@@ -201,18 +184,12 @@ const changeObjectColor = function (object, targetColor) {
 
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[1];
-
-
-
   meshToChange.material.color = targetColorVector;
 }
 
 const changeFrameColor = function (object, targetColor) {
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[0];
-
-
-
   meshToChange.material.color = targetColorVector;
 }
 
@@ -224,6 +201,14 @@ const deselectCurrentBlock = function () {
   });
   updateActiveVisibler();
 }
+
+// ! changing the size 
+let measurments = [729, 329, 154];
+
+const depthInputsEl = document.querySelector('.select-size--depth .inputs');
+const heightInputsEl = document.querySelector('.select-size--height .inputs');
+const widthInputsEl = document.querySelector('.select-size--width .inputs');
+
 
 //* EVENTS
 
@@ -256,9 +241,19 @@ window.addEventListener('click', function (e) {
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
       updateActiveVisibler();
-      expansionHandles.position.copy(currentBlock.position);
-      // createAddBtns(generatePoints(currentBlock))
+      createAddBtns(generatePoints(currentBlock));
+
+
+      //updating the panel to show te current dimensions 
+      const modelSize = getSizeParametersFromModel(currentBlock.name);
+      const allInputs = document.querySelectorAll('.size-option');
+      allInputs.forEach(el => el.classList.remove('size-option--active'));
+
+      document.querySelector(`.width--option[data-size="${modelSize.width}"]`).classList.add('size-option--active');
+      document.querySelector(`.height--option[data-size="${modelSize.height}"]`).classList.add('size-option--active');
+      document.querySelector(`.depth--option[data-size="${modelSize.depth}"]`).classList.add('size-option--active');
       
+
 
       checkSides(currentBlock);
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
@@ -270,6 +265,7 @@ window.addEventListener('click', function (e) {
   } else if (!document.querySelector('.configure-tabs').contains(e.target) && e.target != document.querySelector('.configure-tabs')) {
     deselectCurrentBlock();
   }
+
 
 });
 
@@ -313,17 +309,6 @@ frameColorInputs.addEventListener('click', function (e) {
     currentFrameColor = clickedEl.dataset.color;
   }
 })
-
-
-
-
-
-// ! changing the size 
-let measurments = [729, 329, 154];
-
-const depthInputsEl = document.querySelector('.select-size--depth .inputs');
-const heightInputsEl = document.querySelector('.select-size--height .inputs');
-const widthInputsEl = document.querySelector('.select-size--width .inputs');
 
 
 
