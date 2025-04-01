@@ -60,7 +60,8 @@ const checkPosition = function (positionObj) {
 }
 
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
-const checkSides = function (curentBlock) {
+export const checkSides = function (curentBlock) {
+  console.log(curentBlock);
   const addOption = checkPosition(curentBlock.position);
   // console.log(addOption);
   for (let i = 0; i < 3; i++) {
@@ -172,8 +173,8 @@ const onObjectLoaded = function (gltf, data, side) {
     checkSides(currentBlock);
   }
 
-  changeObjectColor(object, currentColor);
-  changeFrameColor(object, currentFrameColor);
+  // changeObjectColor(object, currentColor);
+  // changeFrameColor(object, currentFrameColor);
 
 }
 
@@ -183,18 +184,12 @@ const changeObjectColor = function (object, targetColor) {
 
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[1];
-
-
-
   meshToChange.material.color = targetColorVector;
 }
 
 const changeFrameColor = function (object, targetColor) {
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[0];
-
-
-
   meshToChange.material.color = targetColorVector;
 }
 
@@ -246,11 +241,13 @@ window.addEventListener('click', function (e) {
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
       updateActiveVisibler();
-      expansionHandles.position.copy(currentBlock.position)
+      createAddBtns(generatePoints(currentBlock));
+
+
       //updating the panel to show te current dimensions 
       const modelSize = getSizeParametersFromModel(currentBlock.name);
-      const all = document.querySelectorAll('.size-option');
-      all.forEach(el => el.classList.remove('size-option--active'));
+      const allInputs = document.querySelectorAll('.size-option');
+      allInputs.forEach(el => el.classList.remove('size-option--active'));
 
       document.querySelector(`.width--option[data-size="${modelSize.width}"]`).classList.add('size-option--active');
       document.querySelector(`.height--option[data-size="${modelSize.height}"]`).classList.add('size-option--active');
@@ -312,11 +309,6 @@ frameColorInputs.addEventListener('click', function (e) {
     currentFrameColor = clickedEl.dataset.color;
   }
 })
-
-
-
-
-
 
 
 
