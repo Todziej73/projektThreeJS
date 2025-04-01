@@ -182,3 +182,37 @@ function adjustRows(otherRows, map, oldHeight, newHeight, posY) {
 
 }
 
+export const changeDepth = function(group, map, sizeSettings){
+  const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
+  const modelsToChange = group.children.map(el => el);
+  modelsToChange.forEach(function(el, idx){
+    const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
+    const oldSize = getSizeParametersFromModel(el.name);
+    const depth = sizeSettings[1];
+    const newPath = `${oldSize.width}x${depth}x${oldSize.height}.glb`;
+
+
+    load(directory + newPath).then(function (gltf) {
+      const object = gltf.scene;
+      group.add(object)
+      object.name = newPath;
+      object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+
+      const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
+      const value = map.get(key);
+      if(value.x_index === currentBlockGridPosition.x_index && value.y_index === currentBlockGridPosition.y_index){
+        setCurrentBlock(object);
+        updateActiveVisibler(object)
+        createAddBtns(generatePoints(object));
+        checkSides(object);
+      }
+
+      
+      
+    }, function (error) {
+      console.error(error);
+    });
+    group.remove(el);    
+  });
+  updateDimensions();
+}

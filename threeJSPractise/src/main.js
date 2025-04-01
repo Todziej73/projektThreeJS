@@ -4,7 +4,7 @@ import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
 import {load, loadText} from './rederObject.js';
 import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
-import {changeColumnSize,changeRowSize} from './configuratorPanel.js';
+import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 
@@ -61,7 +61,6 @@ const checkPosition = function (positionObj) {
 
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
 export const checkSides = function (curentBlock) {
-  console.log(curentBlock);
   const addOption = checkPosition(curentBlock.position);
   // console.log(addOption);
   for (let i = 0; i < 3; i++) {
@@ -157,6 +156,7 @@ const onObjectLoaded = function (gltf, data, side) {
   });
 
   meshGroup.add(object)
+  console.log(meshGroup.children);
   // console.log(object);
 
   if (selectAfter) {
@@ -325,6 +325,8 @@ depthInputsEl.addEventListener('click', function (e) {
     showActiveBtn(document.querySelectorAll('.select-size--depth .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[1] = Number(e.target.dataset.size);
+    console.log(meshGroup.children);
+    changeDepth(meshGroup, cubesPositions, measurments);
   }
 });
 

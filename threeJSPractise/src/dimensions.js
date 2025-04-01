@@ -68,7 +68,7 @@ const uDFront = function(){
     const last = generatePoints(extremeInArray(bottomRow).max_x_Object).right;
     const scaleX = last.x + first.x;
     console.log(last);
-    console.log(first);
+    // console.log(first);
     
     const geometry = new THREE.BoxGeometry(scaleX);
     const tempObj = new THREE.Mesh(geometry);
