@@ -8,14 +8,18 @@ import {
   createAddBtns
 } from './expansionHandles';
 import {
-  load
+  load,
+  loadText
 } from './rederObject.js';
 import {
   dataFromPosition,
+  extremeInArray,
+  extremeValues,
   generatePoints,
   getModelSize,
   getSizeParametersFromModel,
-  roundToDecimal
+  roundToDecimal,
+  select
 } from './helpers.js';
 import {
   changeColumnSize,
@@ -170,7 +174,7 @@ const onObjectLoaded = function (gltf, data, side) {
   });
 
   meshGroup.add(object)
-  console.log(object);
+  // console.log(object);
 
   if (selectAfter) {
     currentBlock = object;
@@ -188,7 +192,7 @@ const onObjectLoaded = function (gltf, data, side) {
 
   changeObjectColor(object, currentColor);
   changeFrameColor(object, currentFrameColor);
-
+  DIMENSIONS.updateDimensions();
 }
 
 
@@ -377,35 +381,12 @@ const getPredictedSize = function (x_index, y_index) {
   }
 }
 
-/**
- * 
- * @param {*} map 
- * @param {THREE.Group} group 
- * @param {*} x_index 
- * @param {*} y_index 
- */
-const select = function (map, group, x_index = null, y_index = null) {
-  const ret = [];
-
-  group.children.forEach(el => {
-    const data = dataFromPosition(map, el.position.x, el.position.y, el.position.z); // { x_index: ?, y_index: ? }
-    if (x_index != null && y_index != null && (data.x_index == x_index && data.y_index == y_index)) ret.push(el); // x i y
-    else if (x_index != null && y_index == null && (data.x_index == x_index)) ret.push(el); // x
-    else if (x_index == null && y_index != null && (data.y_index == y_index)) ret.push(el); // y
-    else if (x_index == null && y_index == null) ret.push(el); // wszystkie
-  });
-
-
-  return ret;
-}
-
 //* EXECUTABLE
 
 
 //* loads the first element
 addCube(-1);
 DIMENSIONS.setDimensionsVisiblity(true);
-DIMENSIONS.updateDimensions();
 
 
 //* EXPORTS
@@ -428,3 +409,8 @@ window.select = select;
 window.meshGroup = meshGroup;
 window.cubesPositions = cubesPositions;
 window.getSizeParametersFromModel = getSizeParametersFromModel;
+
+window.updateDimensions = DIMENSIONS.updateDimensions;
+window.extremeValues = extremeValues;
+window.loadText = loadText;
+window.extremeInArray = extremeInArray;

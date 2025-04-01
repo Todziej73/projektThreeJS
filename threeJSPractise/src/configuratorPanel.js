@@ -1,5 +1,6 @@
 'use strict'
 import { updateActiveVisibler } from "./activeVisibler";
+import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
 import {dataFromPosition, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal} from "./helpers";
 import { currentBlock, setCurrentBlock } from "./main";
@@ -75,6 +76,7 @@ export const changeColumnSize = function (group, map, sizeSettings) {
     
   });
 
+  updateDimensions();
 
 }
 
@@ -98,6 +100,7 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
         
       })
   });
+
 }
 
 
@@ -149,6 +152,7 @@ export const changeRowSize = function (group, map, sizeSettings) {
 
     group.remove(el);
   });
+  updateDimensions();
 
 }
 
@@ -173,5 +177,6 @@ function adjustRows(otherRows, map, oldHeight, newHeight, posY) {
       })
    
   });
+
 }
 

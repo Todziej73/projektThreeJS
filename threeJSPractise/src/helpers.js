@@ -1,6 +1,7 @@
 'use strict'
 
 import * as THREE from 'three';
+import { cubesPositions } from './main';
 
 
 export const roundToDecimal = function (num) {
@@ -50,6 +51,7 @@ export const generatePoints = function (object) {
     bottomLeft: new THREE.Vector2(roundToDecimal(centerX - width / 2), roundToDecimal(centerY - height / 2))
   };
 };
+
 /**
  *
  * @param {string} name
@@ -64,3 +66,93 @@ export const getSizeParametersFromModel = function (name) {
   };
 };
 
+/**
+ *
+ * @param {Map} map
+ * @param {THREE.Group} group
+ * @param {number} x_index
+ * @param {number} y_index
+ * @returns {[THREE.Mesh]}
+ */
+export const select = function (map, group, x_index = null, y_index = null) {
+  const ret = [];
+
+  group.children.forEach(el => {
+    const data = dataFromPosition(map, el.position.x, el.position.y, el.position.z); // { x_index: ?, y_index: ? }
+    if (x_index != null && y_index != null && (data.x_index == x_index && data.y_index == y_index)) ret.push(el); // x i y
+    else if (x_index != null && y_index == null && (data.x_index == x_index)) ret.push(el); // x
+    else if (x_index == null && y_index != null && (data.y_index == y_index)) ret.push(el); // y
+    else if (x_index == null && y_index == null) ret.push(el); // wszystkie
+  });
+
+
+  return ret;
+};
+
+/**
+ * @param {Map} map 
+ */
+export const extremeValues = function(map) {
+  
+  if (map.size <= 0) {
+    console.error("Map is empty!");
+    return;
+  }
+
+  const first = map.values().toArray()[0];
+  
+  let min_x = first.x_index;
+  let max_x = first.x_index;
+  let min_y = first.y_index;
+  let max_y = first.y_index;
+
+  map.forEach(el => {
+    if (el.x_index < min_x) min_x = el.x_index;
+    if (el.x_index > max_x) max_x = el.x_index;
+    if (el.y_index < min_y) min_y = el.y_index;
+    if (el.y_index > max_y) max_y = el.y_index;
+  });
+
+  return { min_x, max_x, min_y, max_y };
+};
+
+/**
+ * @param {[THREE.Mesh]} array
+ * @returns {{min_x: number, max_x: number, min_x_Object: THREE.Mesh, max_x_Object: THREE.Mesh, min_y: number, max_y: number, min_y_Object: THREE.Mesh, max_y_Object: THREE.Mesh}}
+ */
+export const extremeInArray = function(array) {
+  if (array.length <= 0) {
+      console.error("Array is empty!");
+      return null;
+  }
+
+  const first = dataFromPosition(cubesPositions, array[0].position.x, array[0].position.y, array[0].position.z);
+
+  let min_x = first.x_index, min_x_Object = array[0];
+  let max_x = first.x_index, max_x_Object = array[0];
+  let min_y = first.y_index, min_y_Object = array[0];
+  let max_y = first.y_index, max_y_Object = array[0];
+
+  array.forEach(el => {
+      const data = dataFromPosition(cubesPositions, el.position.x, el.position.y, el.position.z);
+
+      if (data.x_index < min_x) {
+          min_x = data.x_index;
+          min_x_Object = el;
+      }
+      if (data.x_index > max_x) {
+          max_x = data.x_index;
+          max_x_Object = el;
+      }
+      if (data.y_index < min_y) {
+          min_y = data.y_index;
+          min_y_Object = el;
+      }
+      if (data.y_index > max_y) {
+          max_y = data.y_index;
+          max_y_Object = el;
+      }
+  });
+
+  return { min_x, max_x, min_x_Object, max_x_Object, min_y, max_y, min_y_Object, max_y_Object };
+};
