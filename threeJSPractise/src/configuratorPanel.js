@@ -59,6 +59,7 @@ export const changeColumnSize = function (group, map, sizeSettings) {
         setCurrentBlock(object);
         updateActiveVisibler(object)
         createAddBtns(generatePoints(object));
+
       }
 
       const newWidth = getModelSize(object).x;
@@ -99,7 +100,6 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
       })
   });
 }
-
 
 
 

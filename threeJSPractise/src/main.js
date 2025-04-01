@@ -1,29 +1,11 @@
 'use strict'
 import * as THREE from 'three';
-import {
-  setUpObj
-} from './setup.js';
-import {
-  expansionHandles,
-  createAddBtns
-} from './expansionHandles';
-import {
-  load
-} from './rederObject.js';
-import {
-  dataFromPosition,
-  generatePoints,
-  getModelSize,
-  getSizeParametersFromModel,
-  roundToDecimal
-} from './helpers.js';
-import {
-  changeColumnSize,
-  changeRowSize
-} from './configuratorPanel.js';
-import {
-  updateActiveVisibler
-} from './activeVisibler.js';
+import {setUpObj} from './setup.js';
+import {expansionHandles,createAddBtns} from './expansionHandles';
+import {load} from './rederObject.js';
+import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal} from './helpers.js';
+import {changeColumnSize,changeRowSize} from './configuratorPanel.js';
+import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 
 const scene = setUpObj.scene;
@@ -38,6 +20,9 @@ let currentBlock;
 export const setCurrentBlock = function (object) {
   currentBlock = object
 };
+
+
+
 
 let currentColor;
 let currentFrameColor = '#0e0e10';
@@ -126,7 +111,7 @@ const addCube = function (side) {
   const modelName = `${width}x${depth}x${height}.glb`;
   const modelPath = directory + modelName;
   // load model on scene
-  console.log(modelPath);
+  // console.log(modelPath);
 
   load(modelPath).then(function (gltf) {
     gltf.scene.name = modelName;
@@ -147,6 +132,7 @@ const onObjectLoaded = function (gltf, data, side) {
 
   let selectAfter = data.x_index == 0 && data.y_index == 0;
   const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
+
 
 
   let positions, currentBlockPoints;
@@ -170,7 +156,7 @@ const onObjectLoaded = function (gltf, data, side) {
   });
 
   meshGroup.add(object)
-  console.log(object);
+  // console.log(object);
 
   if (selectAfter) {
     currentBlock = object;
@@ -221,6 +207,14 @@ const deselectCurrentBlock = function () {
   updateActiveVisibler();
 }
 
+// ! changing the size 
+let measurments = [729, 329, 154];
+
+const depthInputsEl = document.querySelector('.select-size--depth .inputs');
+const heightInputsEl = document.querySelector('.select-size--height .inputs');
+const widthInputsEl = document.querySelector('.select-size--width .inputs');
+
+
 //* EVENTS
 
 
@@ -252,9 +246,15 @@ window.addEventListener('click', function (e) {
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
       updateActiveVisibler();
-      expansionHandles.position.copy(currentBlock.position);
-      // createAddBtns(generatePoints(currentBlock))
-      
+      expansionHandles.position.copy(currentBlock.position)
+      //updating the panel to show te current dimensions 
+      const modelSize = getSizeParametersFromModel(currentBlock.name);
+      const all = document.querySelectorAll('.size-option');
+      all.forEach(el => el.classList.remove('tab--active'));
+
+      document.querySelector(`[data-size="${modelSize.width}"]`).classList.add('tab--active');
+      document.querySelector(`[data-size="${modelSize.height}"]`).classList.add('tab--active');
+      document.querySelector(`[data-size="${modelSize.depth}"]`).classList.add('tab--active');
 
       checkSides(currentBlock);
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
@@ -266,6 +266,7 @@ window.addEventListener('click', function (e) {
   } else if (!document.querySelector('.configure-tabs').contains(e.target) && e.target != document.querySelector('.configure-tabs')) {
     deselectCurrentBlock();
   }
+
 
 });
 
@@ -314,12 +315,6 @@ frameColorInputs.addEventListener('click', function (e) {
 
 
 
-// ! changing the size 
-let measurments = [729, 329, 154];
-
-const depthInputsEl = document.querySelector('.select-size--depth .inputs');
-const heightInputsEl = document.querySelector('.select-size--height .inputs');
-const widthInputsEl = document.querySelector('.select-size--width .inputs');
 
 
 
