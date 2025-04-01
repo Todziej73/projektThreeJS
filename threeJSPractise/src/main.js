@@ -250,11 +250,13 @@ window.addEventListener('click', function (e) {
       //updating the panel to show te current dimensions 
       const modelSize = getSizeParametersFromModel(currentBlock.name);
       const all = document.querySelectorAll('.size-option');
-      all.forEach(el => el.classList.remove('tab--active'));
+      all.forEach(el => el.classList.remove('size-option--active'));
 
-      document.querySelector(`[data-size="${modelSize.width}"]`).classList.add('tab--active');
-      document.querySelector(`[data-size="${modelSize.height}"]`).classList.add('tab--active');
-      document.querySelector(`[data-size="${modelSize.depth}"]`).classList.add('tab--active');
+      document.querySelector(`.width--option[data-size="${modelSize.width}"]`).classList.add('size-option--active');
+      document.querySelector(`.height--option[data-size="${modelSize.height}"]`).classList.add('size-option--active');
+      document.querySelector(`.depth--option[data-size="${modelSize.depth}"]`).classList.add('size-option--active');
+      
+
 
       checkSides(currentBlock);
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
