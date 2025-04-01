@@ -2,8 +2,8 @@
 import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
-import {load} from './rederObject.js';
-import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal} from './helpers.js';
+import {load, loadText} from './rederObject.js';
+import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
 import {changeColumnSize,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
@@ -175,7 +175,7 @@ const onObjectLoaded = function (gltf, data, side) {
 
   // changeObjectColor(object, currentColor);
   // changeFrameColor(object, currentFrameColor);
-
+  DIMENSIONS.updateDimensions();
 }
 
 
