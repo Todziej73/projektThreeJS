@@ -78,7 +78,6 @@ export const changeColumnSize = function (group, map, sizeSettings) {
     
   });
 
-  updateDimensions();
 
 }
 
@@ -154,7 +153,6 @@ export const changeRowSize = function (group, map, sizeSettings) {
 
     group.remove(el);
   });
-  updateDimensions();
 
 }
 
@@ -214,5 +212,4 @@ export const changeDepth = function(group, map, sizeSettings){
     });
     group.remove(el);    
   });
-  updateDimensions();
 }

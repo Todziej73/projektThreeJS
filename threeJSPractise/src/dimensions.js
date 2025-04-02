@@ -27,8 +27,10 @@ const setDimensionsVisiblity = async function(visible = true){
 const updateDimensions = function(){
     dimensionsGroup.clear();
     
-    // dimensionsGroup.add(uDTop());
+    dimensionsGroup.add(uDTop());
     dimensionsGroup.add(uDFront());
+    dimensionsGroup.add(uDDepth());
+    dimensionsGroup.add(uDHeight());
 }
 
 const uDTop = function (){
@@ -38,10 +40,13 @@ const uDTop = function (){
     
     const extremes = extremeValues(cubesPositions);
     const texted = [];
-    for(let i = extremes.min_x; i <= extremes.max_x; i++){       
-                 
-        texted.push(extremeInArray(select(cubesPositions, meshGroup, i)).max_y_Object);
+    for(let i = extremes.min_x; i <= extremes.max_x; i++){      
+        const col = select(cubesPositions, meshGroup, i);
+        
+        texted.push(extremeInArray(col).max_y_Object);
     }
+
+    
     
     texted.forEach(el => {
         const text = blockDimensionTextWithPlacement(el, EDGES.FrontWidthTop);
@@ -53,7 +58,7 @@ const uDTop = function (){
 }
 
 const uDFront = function(){
-    const offset = new THREE.Vector3(0, 0.5, -0.2);
+    const offset = new THREE.Vector3(0, 0.52, -0.15);
     // -=-=-=-=-=-=
     const miniGroup = new THREE.Group();
     const extremes = extremeValues(cubesPositions);
@@ -89,11 +94,48 @@ const uDFront = function(){
 }
 
 const uDDepth = function(){
+    const offset = new THREE.Vector3(0, 0.02, 0);
+    // -=-=-=-=-=-=
+    const miniGroup = new THREE.Group();
+    const extremes = extremeValues(cubesPositions);
+    const bottomRow = select(cubesPositions, meshGroup, null, extremes.min_y);
 
+    const extremeObjects = extremeInArray(bottomRow);
+    const left = extremeObjects.min_x_Object;
+    const right = extremeObjects.max_x_Object;
+
+    const textLeft = blockDimensionTextWithPlacement(left, EDGES.DepthBottomLeft);
+    const textRight = blockDimensionTextWithPlacement(right, EDGES.DepthBottomRight);
+
+    textLeft.position.add(offset);
+    textRight.position.add(offset);
+
+
+    miniGroup.add(textLeft);
+    miniGroup.add(textRight);
+
+    
+
+
+    return miniGroup;
 }
 
 const uDHeight = function(){
+    const offset = new THREE.Vector3(-0.1, 0, 0.15);
+    // -=-=-=-=-=-=
+    const miniGroup = new THREE.Group();
+    const extremes = extremeValues(cubesPositions);
+    const leftColumn = select(cubesPositions, meshGroup, extremes.min_x);
 
+    leftColumn.forEach(el => {
+        const text = blockDimensionTextWithPlacement(el, EDGES.FrontHeightLeft);
+        text.rotateY(Math.PI / 4);
+        text.position.add(offset);
+        miniGroup.add(text);
+    });
+
+
+    return miniGroup;
 }
 
 
@@ -110,14 +152,24 @@ const TextEdgesHelper = {
     getPoint: function(object, edge){
         const points = generatePoints(object);
         const size = getModelSize(object);
+
         points.top.z = size.z / 2;
         points.top.rotation = new THREE.Vector3(0, 0, 0);
 
         points.bottom.z = size.z / 2;
-        points.bottom.rotation = new THREE.Vector3(-1.3, 0, 0);
+        points.bottom.rotation = new THREE.Vector3(-Math.PI / 2, 0, 0);
 
         points.left.z = size.z / 2;
+        points.left.rotation = new THREE.Vector3(0, 0, 0);
+
         points.right.z = size.z / 2;
+        points.right.rotation = new THREE.Vector3(0, 0, 0);
+
+        points.bottomLeft.z = 0;
+        points.bottomLeft.rotation = new THREE.Vector3(-Math.PI / 2, 0, -Math.PI / 2);
+
+        points.bottomRight.z = 0;
+        points.bottomRight.rotation = new THREE.Vector3(-Math.PI / 2, 0, Math.PI / 2);
 
 
         if(edge == EDGES.FrontWidthTop) return points.top;
@@ -165,7 +217,14 @@ const blockDimensionTextWithPlacement = function(object, edge){
     text.scale.z *= TextOptions.size;
 
     const textSize = getModelSize(text);
-    text.position.x -= textSize.x / 2;
+    const rotationMultiplier = (point.rotation.z < 0 ? 1 : -1);
+
+    text.position.x -= textSize.x / 2 * (edge == EDGES.DepthBottomRight ? rotationMultiplier : 1);
+    text.position.y -= textSize.y / 2;
+    if(edge == EDGES.DepthBottomLeft || edge == EDGES.DepthBottomRight)
+        text.position.z -= (textSize.x / 2) * rotationMultiplier;
+    else
+        text.position.z -= textSize.z / 2;
 
     
     text.rotateX(point.rotation.x);

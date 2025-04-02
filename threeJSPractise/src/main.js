@@ -156,7 +156,7 @@ const onObjectLoaded = function (gltf, data, side) {
   });
 
   meshGroup.add(object)
-  console.log(meshGroup.children);
+  // console.log(meshGroup.children);
   // console.log(object);
 
   if (selectAfter) {
@@ -325,7 +325,7 @@ depthInputsEl.addEventListener('click', function (e) {
     showActiveBtn(document.querySelectorAll('.select-size--depth .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[1] = Number(e.target.dataset.size);
-    console.log(meshGroup.children);
+    // console.log(meshGroup.children);
     changeDepth(meshGroup, cubesPositions, measurments);
   }
 });
