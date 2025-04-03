@@ -22,9 +22,7 @@ export const setCurrentBlock = function (object) {
 };
 
 
-
-
-let currentColor;
+let currentColor = '#ebc027';
 let currentFrameColor = '#0e0e10';
 
 scene.add(expansionHandles);
@@ -249,10 +247,16 @@ window.addEventListener('click', function (e) {
       const allInputs = document.querySelectorAll('.size-option');
       allInputs.forEach(el => el.classList.remove('size-option--active'));
 
+      //selecting size on the panel
       document.querySelector(`.width--option[data-size="${modelSize.width}"]`).classList.add('size-option--active');
       document.querySelector(`.height--option[data-size="${modelSize.height}"]`).classList.add('size-option--active');
       document.querySelector(`.depth--option[data-size="${modelSize.depth}"]`).classList.add('size-option--active');
       
+      //selecting color on the panel
+      const clickedElColor = '#' + currentBlock.children[0].children[0].children[1].material.color.getHexString();
+      const allColorInputs = document.querySelectorAll('.color');
+      allColorInputs.forEach(el => el.classList.remove('.color--active'));
+      document.querySelector(`.color[data-color="${clickedElColor}"]`).classList.add('color--active');
 
 
       checkSides(currentBlock);
