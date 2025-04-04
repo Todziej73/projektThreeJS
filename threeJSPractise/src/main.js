@@ -211,24 +211,33 @@ const widthInputsEl = document.querySelector('.select-size--width .inputs');
 //* EVENTS
 
 
-document.addEventListener('pointermove', function (e) {
-  mouse.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
-  raycaster.setFromCamera(mouse, camera);
-  raycaster.layers.set(0);
-  intersects = raycaster.intersectObjects(scene.children);
-  
-  if (intersects.length > 0 && expansionHandles.children.includes(intersects[0].object)) {
-    document.querySelector('body').style.cursor = 'pointer';
-    intersects[0].object.material.opacity = 0.8;
-    intersects[0].object.material.color.set(0xadb5bd);
-  } else {
-    document.querySelector('body').style.cursor = 'default';
-    expansionHandles.children.forEach(function (e) {
-      e.material.color.set(0xced4da)
-      e.material.opacity = 0.8;
-    })
-  }
+let isMouseDown = false;
+document.addEventListener("pointerdown", () => isMouseDown = true);
+document.addEventListener("pointerup", () => isMouseDown = false);
+
+document.addEventListener("pointermove", function (e) {
+    if (isMouseDown) return; // Nie rób raycastingu, jeśli myszka jest wciśnięta!
+    
+    mouse.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+    raycaster.setFromCamera(mouse, camera);
+    raycaster.layers.set(0);
+    intersects = raycaster.intersectObjects(scene.children);
+    
+    
+    
+    if (intersects.length > 0 && expansionHandles.children.includes(intersects[0].object)) {
+      document.querySelector('body').style.cursor = 'pointer';
+      intersects[0].object.material.opacity = 0.8;
+      intersects[0].object.material.color.set(0xadb5bd);
+    } else {
+      document.querySelector('body').style.cursor = 'default';
+      expansionHandles.children.forEach(function (e) {
+        e.material.color.set(0xced4da)
+        e.material.opacity = 0.8;
+      });
+    }
 });
+
 
 
 
