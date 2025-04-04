@@ -8,7 +8,7 @@ import { getSizeParametersFromModel, select, extremeValues, getModelSize, extrem
 const dimensionsGroup = new THREE.Group();
 
 const TextOptions = {
-    size: 0.75,
+    size: 0.6,
     material: new THREE.MeshBasicMaterial({
         color: "#222222"
     })
@@ -72,7 +72,7 @@ const uDFront = function(){
     const first = generatePoints(extremeInArray(bottomRow).min_x_Object).left;
     const last = generatePoints(extremeInArray(bottomRow).max_x_Object).right;
     const scaleX = last.x + first.x;
-    console.log(last);
+    // console.log(last);
     // console.log(first);
     
     const geometry = new THREE.BoxGeometry(scaleX);
@@ -121,22 +121,46 @@ const uDDepth = function(){
 }
 
 const uDHeight = function(){
-    const offset = new THREE.Vector3(-0.1, 0, 0.15);
+    const offset = new THREE.Vector3(-0, -0.05, 0.085);
     // -=-=-=-=-=-=
     const miniGroup = new THREE.Group();
     const extremes = extremeValues(cubesPositions);
     const leftColumn = select(cubesPositions, meshGroup, extremes.min_x);
+    let modelYSizeName = 0;
 
     leftColumn.forEach(el => {
         const text = blockDimensionTextWithPlacement(el, EDGES.FrontHeightLeft);
         text.rotateY(Math.PI / 4);
+        text.rotateZ(Math.PI / 2);
         text.position.add(offset);
         miniGroup.add(text);
+        // -=-=-=-
+        modelYSizeName += getSizeParametersFromModel(el.name).height;
     });
 
+    // -=-=-=-=-=-=
+
+    const first = generatePoints(extremeInArray(leftColumn).min_y_Object);
+    const last = generatePoints(extremeInArray(leftColumn).max_y_Object).top;
+    const scaleY = last.y + first.bottom.y;
+
+    const geometry = new THREE.BoxGeometry(undefined, scaleY);
+    const tempObj = new THREE.Mesh(geometry);
+    tempObj.position.y = scaleY / 2 + offset.y;
+    
+    tempObj.name = `0x0x${modelYSizeName}.glb`;
+
+    const text = blockDimensionTextWithPlacement(tempObj, EDGES.FrontHeightLeft);
+    // text.position.add(offset);
+    text.rotateY(Math.PI / 4);
+    text.rotateZ(Math.PI / 2);
+    text.position.x = miniGroup.children[0].position.x - getModelSize(text).y / 2;
+    text.position.z = miniGroup.children[0].position.z + getModelSize(text).y / 2;
+    miniGroup.add(text);
 
     return miniGroup;
 }
+
 
 
 const EDGES = {
