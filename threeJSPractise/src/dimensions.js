@@ -201,7 +201,7 @@ const TextEdgesHelper = {
         points.top.rotation = new THREE.Vector3(0, 0, 0);
 
         points.bottom.z = size.z / 2;
-        points.bottom.rotation = new THREE.Vector3(-Math.PI / 2, 0, 0);
+        points.bottom.rotation = new THREE.Vector3(-Math.PI / 3, 0, 0);
 
         points.left.z = size.z / 2;
         points.left.rotation = new THREE.Vector3(0, 0, 0);
@@ -210,10 +210,10 @@ const TextEdgesHelper = {
         points.right.rotation = new THREE.Vector3(0, 0, 0);
 
         points.bottomLeft.z = 0;
-        points.bottomLeft.rotation = new THREE.Vector3(-Math.PI / 2, 0, -Math.PI / 2);
+        points.bottomLeft.rotation = new THREE.Vector3(-Math.PI / 2, -Math.PI / 3, -Math.PI / 2);
 
         points.bottomRight.z = 0;
-        points.bottomRight.rotation = new THREE.Vector3(-Math.PI / 2, 0, Math.PI / 2);
+        points.bottomRight.rotation = new THREE.Vector3(-Math.PI / 2, Math.PI / 3, Math.PI / 2);
 
 
         if(edge == EDGES.FrontWidthTop) return points.top;
