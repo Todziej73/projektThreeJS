@@ -2,19 +2,25 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 
+const canvas = document.querySelector('.canvas');
+
+
 const setup = function () {
   //* SET UP
   const mouse = new THREE.Vector2();
 
   const scene = new THREE.Scene();
-  const canvas = document.querySelector('.canvas');
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    antialias: true
+    antialias: true,
+    alpha: true
   });
+
+  renderer.getContext('webgl', { failIfMajorPerformanceCaveat: false });
   renderer.setClearColor('white', 0);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(2)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 200);
   camera.position.set(0.6, 0.65, 1.2)
   scene.add(camera);
@@ -75,6 +81,14 @@ const setup = function () {
 }
 
 const setUpObj = setup();
+
+canvas.addEventListener('webglcontextlost', (event) => {
+  event.preventDefault();
+  console.warn("WebGL context lost. Restarting...");
+  setTimeout(() => location.reload(), 1000);
+});
+
+
 
 export {
   setUpObj
