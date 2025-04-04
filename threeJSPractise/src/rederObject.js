@@ -7,8 +7,12 @@ import * as THREE from 'three';
 
 const loader = new GLTFLoader(); 
 
-const load = function(path){
-    return loader.loadAsync(path);
+
+
+
+
+const load = async function(path){
+    return await loader.loadAsync(path);
 }
 
 

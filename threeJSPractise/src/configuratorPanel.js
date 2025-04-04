@@ -25,7 +25,7 @@ tabBtnsContainer.addEventListener('click', function (e) {
 
 
 
-export const changeColumnSize = function (group, map, sizeSettings) {
+export const changeColumnSize = async function (group, map, sizeSettings) {
   const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(currentBlock.position.x));
   const otherModels = group.children.filter((child) => !currentColumn.includes(child));
   const otherColumns = new Map();
@@ -39,7 +39,7 @@ export const changeColumnSize = function (group, map, sizeSettings) {
   
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
-  currentColumn.forEach(function (el, idx) {
+  for(const [idx, el] of currentColumn.entries()){
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
     const width = sizeSettings[0];
@@ -47,7 +47,7 @@ export const changeColumnSize = function (group, map, sizeSettings) {
 
 
 
-    load(directory + newPath).then(function (gltf) {
+    await load(directory + newPath).then(function (gltf) {
       const object = gltf.scene;
       object.name = newPath;
       group.add(object);
@@ -76,9 +76,9 @@ export const changeColumnSize = function (group, map, sizeSettings) {
     
     group.remove(el);
     
-  });
+  };
 
-
+  updateDimensions();
 }
 
 
@@ -107,7 +107,7 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 
 
 
-export const changeRowSize = function (group, map, sizeSettings) {
+export const changeRowSize = async function (group, map, sizeSettings) {
 
   const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(currentBlock.position.y));
   const otherModels = group.children.filter((child) => !currentRow.includes(child) && roundToDecimal(child.position.y) > roundToDecimal(currentRow[0].position.y));
@@ -121,7 +121,7 @@ export const changeRowSize = function (group, map, sizeSettings) {
 
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
-  currentRow.forEach(function (el, idx) {
+  for(const [idx, el] of currentRow.entries()){
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
     const oldSize = getSizeParametersFromModel(el.name);
     const height = sizeSettings[2];
@@ -129,7 +129,7 @@ export const changeRowSize = function (group, map, sizeSettings) {
   
     
 
-    load(directory + newPath).then(function (gltf) {
+    await load(directory + newPath).then(function (gltf) {
       const object = gltf.scene;
       group.add(object)
       object.name = newPath;
@@ -152,10 +152,11 @@ export const changeRowSize = function (group, map, sizeSettings) {
     });
 
     group.remove(el);
-  });
+  };
+
+  updateDimensions();
 
 }
-
 
 
 
@@ -180,17 +181,17 @@ function adjustRows(otherRows, map, oldHeight, newHeight, posY) {
 
 }
 
-export const changeDepth = function(group, map, sizeSettings){
+export const changeDepth = async function(group, map, sizeSettings){
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   const modelsToChange = group.children.map(el => el);
-  modelsToChange.forEach(function(el, idx){
+  for(const el of modelsToChange){    
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
     const oldSize = getSizeParametersFromModel(el.name);
     const depth = sizeSettings[1];
     const newPath = `${oldSize.width}x${depth}x${oldSize.height}.glb`;
 
 
-    load(directory + newPath).then(function (gltf) {
+    await load(directory + newPath).then(function (gltf) {
       const object = gltf.scene;
       group.add(object)
       object.name = newPath;
@@ -211,5 +212,6 @@ export const changeDepth = function(group, map, sizeSettings){
       console.error(error);
     });
     group.remove(el);    
-  });
+  };
+  updateDimensions();
 }

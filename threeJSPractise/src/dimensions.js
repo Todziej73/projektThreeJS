@@ -2,13 +2,16 @@ import { cubesPositions, generatePoints, scene, meshGroup } from "./main";
 import * as THREE from 'three';
 import { load, loadText } from "./rederObject";
 import { changeColumnSize } from "./configuratorPanel";
-import { getSizeParametersFromModel, select, extremeValues, getModelSize, extremeInArray } from "./helpers";
+import { getSizeParametersFromModel, select, extremeValues, getModelSize, extremeInArray, dataFromPosition, dataFromPositionVector } from "./helpers";
 
 
 const dimensionsGroup = new THREE.Group();
 
+
+
+
 const TextOptions = {
-    size: 0.6,
+    size: 0.5,
     material: new THREE.MeshBasicMaterial({
         color: "#222222"
     })
@@ -26,6 +29,8 @@ const setDimensionsVisiblity = async function(visible = true){
 
 const updateDimensions = function(){
     dimensionsGroup.clear();
+    
+    console.log(cubesPositions);
     
     dimensionsGroup.add(uDTop());
     dimensionsGroup.add(uDFront());
@@ -121,28 +126,43 @@ const uDDepth = function(){
 }
 
 const uDHeight = function(){
-    const offset = new THREE.Vector3(-0, -0.05, 0.085);
-    // -=-=-=-=-=-=
+    const offset = new THREE.Vector3(-0, -0.05, 0);
+    // -=-=-=-=-=-=-
     const miniGroup = new THREE.Group();
     const extremes = extremeValues(cubesPositions);
+    const highestColumnXIndex = dataFromPositionVector(cubesPositions, extremeInArray(select(cubesPositions, meshGroup, null, extremes.max_y)).max_y_Object.position).x_index;
+    const highestColumn = select(cubesPositions, meshGroup, highestColumnXIndex);
     const leftColumn = select(cubesPositions, meshGroup, extremes.min_x);
     let modelYSizeName = 0;
 
-    leftColumn.forEach(el => {
+    // only for position
+    const firstObject = extremeInArray(leftColumn).min_y_Object;
+    const first = generatePoints(firstObject);
+    const last = generatePoints(extremeInArray(highestColumn).max_y_Object);    
+    // -=-=-=-=-
+
+    highestColumn.forEach(el => {
         const text = blockDimensionTextWithPlacement(el, EDGES.FrontHeightLeft);
+        const elPoints = generatePoints(el);
         text.rotateY(Math.PI / 4);
         text.rotateZ(Math.PI / 2);
+        const pos = new THREE.Vector3(first.left.x, elPoints.left.y, getModelSize(firstObject).z / 2);
+        console.log(pos);
+        text.position.x = pos.x;
+        text.position.y = pos.y;
+        text.position.z = pos.z;
         text.position.add(offset);
+        console.log(text.position);
+        
         miniGroup.add(text);
         // -=-=-=-
         modelYSizeName += getSizeParametersFromModel(el.name).height;
     });
 
-    // -=-=-=-=-=-=
+    // -=-=-=-=-=-=-
 
-    const first = generatePoints(extremeInArray(leftColumn).min_y_Object);
-    const last = generatePoints(extremeInArray(leftColumn).max_y_Object).top;
-    const scaleY = last.y + first.bottom.y;
+    
+    const scaleY = last.top.y + first.bottom.y;
 
     const geometry = new THREE.BoxGeometry(undefined, scaleY);
     const tempObj = new THREE.Mesh(geometry);

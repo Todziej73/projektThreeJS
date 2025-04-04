@@ -9,6 +9,14 @@ export const roundToDecimal = function (num) {
 };
 
 //* returns data from map<position, data> | copy of that data
+/**
+ * 
+ * @param {Map} cubesPositions 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {number} z 
+ * @returns {{x_index: number, y_index: number}}
+ */
 export const dataFromPosition = function (cubesPositions, x, y, z) {
   const key = JSON.stringify([x, y, z].map((el) => el = roundToDecimal(el)));
   if (cubesPositions.has(key))
@@ -16,6 +24,15 @@ export const dataFromPosition = function (cubesPositions, x, y, z) {
 
   return undefined;
 };
+
+/**
+ * 
+ * @param {Map} cubesPositions 
+ * @param {THREE.Vector3} vector 
+ */
+export const dataFromPositionVector = function(cubesPositions, vector){
+  return dataFromPosition(cubesPositions, vector.x, vector.y, vector.z);
+}
 
 //* returns the exact size of the model
 export const getModelSize = function (object) {
@@ -156,3 +173,4 @@ export const extremeInArray = function(array) {
 
   return { min_x, max_x, min_x_Object, max_x_Object, min_y, max_y, min_y_Object, max_y_Object };
 };
+

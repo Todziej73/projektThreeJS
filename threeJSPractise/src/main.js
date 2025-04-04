@@ -217,7 +217,7 @@ document.addEventListener("pointerup", () => isMouseDown = false);
 
 document.addEventListener("pointermove", function (e) {
     if (isMouseDown) return; // Nie rób raycastingu, jeśli myszka jest wciśnięta!
-    
+
     mouse.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
     raycaster.setFromCamera(mouse, camera);
     raycaster.layers.set(0);
@@ -334,32 +334,32 @@ const showActiveBtn = function (arr) {
   });
 }
 
-depthInputsEl.addEventListener('click', function (e) {
+depthInputsEl.addEventListener('click', async function (e) {
   if (e.target.classList.contains('size-option')) {
     showActiveBtn(document.querySelectorAll('.select-size--depth .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[1] = Number(e.target.dataset.size);
     // console.log(meshGroup.children);
-    changeDepth(meshGroup, cubesPositions, measurments);
+    await changeDepth(meshGroup, cubesPositions, measurments);
   }
 });
 
 
-heightInputsEl.addEventListener('click', function (e) {
+heightInputsEl.addEventListener('click', async function (e) {
   if (e.target.classList.contains('size-option')) {
     showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[2] = Number(e.target.dataset.size);
-    changeRowSize(meshGroup, cubesPositions, measurments);
+    await changeRowSize(meshGroup, cubesPositions, measurments);
   }
 });
 
-widthInputsEl.addEventListener('click', function (e) {
+widthInputsEl.addEventListener('click', async function (e) {
   if (e.target.classList.contains('size-option')) {
     showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[0] = Number(e.target.dataset.size);
-    changeColumnSize(meshGroup, cubesPositions, measurments);
+    await changeColumnSize(meshGroup, cubesPositions, measurments);
   }
 });
 
