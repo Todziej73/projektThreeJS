@@ -1,6 +1,6 @@
 import { cubesPositions, generatePoints, scene, meshGroup } from "./main";
 import * as THREE from 'three';
-import { load, loadText } from "./rederObject";
+import { loadText } from "./rederObject";
 import { changeColumnSize } from "./configuratorPanel";
 import { getSizeParametersFromModel, select, extremeValues, getModelSize, extremeInArray, dataFromPosition, dataFromPositionVector } from "./helpers";
 
@@ -30,7 +30,7 @@ const setDimensionsVisiblity = async function(visible = true){
 const updateDimensions = function(){
     dimensionsGroup.clear();
     
-    console.log(cubesPositions);
+    // console.log(cubesPositions);
     
     dimensionsGroup.add(uDTop());
     dimensionsGroup.add(uDFront());
@@ -230,7 +230,7 @@ const TextEdgesHelper = {
             d: `${size.depth} mm`,
         };
 
-        console.log(size);
+        // console.log(size);
         
 
         if(edge == EDGES.FrontWidthTop || edge == EDGES.FrontWidthBottom) return printTexts.w;

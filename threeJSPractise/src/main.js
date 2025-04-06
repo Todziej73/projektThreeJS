@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
-import {load, loadText, models} from './rederObject.js';
+import {models} from './rederObject.js';
 import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
 import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
@@ -114,6 +114,11 @@ export const addCube = function (side) {
   // console.log(models, modelPath)
   if(model){
     const clone = model.scene.clone();
+    clone.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material = child.material.clone();
+      }
+    });
     clone.name = modelName;
     let selectAfter = data.x_index == 0 && data.y_index == 0;
     const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
@@ -138,7 +143,7 @@ export const addCube = function (side) {
     cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
       ...data
     });
-
+    console.log(cubesPositions);
     meshGroup.add(clone)
 
     if (selectAfter) {
@@ -165,70 +170,12 @@ export const addCube = function (side) {
 
 
 
-  // load(modelPath).then(function (gltf) {
-  //   gltf.scene.name = modelName;
-  //   onObjectLoaded(gltf, data, side);
-  // }, function (error) {
-  //   console.error(error);
-  // });
+
 
 }
 
 
-//* when the model is loaded adds it to the scene and to the map
-// const onObjectLoaded = function (gltf, data, side) {
-//
-//   const object = gltf.scene;
-//
-//   // -- 1. setup position and map<position, data> value
-//
-//   let selectAfter = data.x_index == 0 && data.y_index == 0;
-//   const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
-//
-//
-//
-//   let positions, currentBlockPoints;
-//   if (currentBlock !== undefined) {
-//     currentBlockPoints = generatePoints(currentBlock)
-//   }
-//
-//   if (side == 0) positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.028, currentBlock.position.z]; // UP
-//   else if (side == 1) positions = [currentBlockPoints.left.x - getModelSize(object).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z]; // LEFT
-//   else if (side == 2) positions = [currentBlockPoints.right.x + getModelSize(object).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z]; // RIGHT
-//   else if (side == -1) positions = [0, 0, 0]; // THE DEFAULT ONE
-//   else {
-//     console.error("AddCube function had problem with deciding positions|sides");
-//     return;
-//   }
-//
-//   object.position.set(...positions);
-//
-//   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
-//     ...data
-//   });
-//
-//   meshGroup.add(object)
-//   // console.log(meshGroup.children);
-//   // console.log(object);
-//
-//   if (selectAfter) {
-//     currentBlock = object;
-//     updateActiveVisibler();
-//     createAddBtns(generatePoints(currentBlock));
-//   }
-//
-//
-//   if (meshGroup.children.length == 1)
-//     createAddBtns(generatePoints(currentBlock));
-//
-//   if (meshGroup.children.length > 1) {
-//     checkSides(currentBlock);
-//   }
-//
-//   // changeObjectColor(object, currentColor);
-//   // changeFrameColor(object, currentFrameColor);
-//   DIMENSIONS.updateDimensions();
-// }
+
 
 
 
@@ -292,6 +239,15 @@ document.addEventListener("pointermove", function (e) {
     }
 });
 
+const deleteModelBtn = document.querySelector('.deleteModelBtn');
+let canDelete = false;
+deleteModelBtn.addEventListener('click', function(){
+  if(currentBlock && canDelete){
+    cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
+   meshGroup.remove(currentBlock)
+  }
+});
+
 
 
 
@@ -320,9 +276,15 @@ window.addEventListener('click', function (e) {
       const clickedElColor = '#' + currentBlock.children[0].children[0].children[1].material.color.getHexString();
       const allColorInputs = document.querySelectorAll('.main-color-picker .inputs .color');
       allColorInputs.forEach(el => el.classList.remove('color--active'));
-      console.log(clickedElColor);
       document.querySelector(`.color[data-color="${clickedElColor}"]`).classList.add('color--active');
 
+      if(meshGroup.children.length > 1 && checkPosition(currentBlock.position)[0]){
+        canDelete = true;
+        deleteModelBtn.classList.add('active-btn');
+      }else{
+        deleteModelBtn.classList.remove('active-btn');
+        canDelete = false;
+      }
 
       checkSides(currentBlock);
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
@@ -356,6 +318,7 @@ mainColorInputs.addEventListener('click', function (e) {
       currentColor = clickedEl.dataset.color;
     } else {
       changeObjectColor(currentBlock, clickedEl.dataset.color);
+      currentColor = clickedEl.dataset.color;
     }
   }
 })

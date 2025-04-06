@@ -4,7 +4,7 @@ import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
 import {dataFromPosition, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal} from "./helpers";
 import { checkSides, currentBlock, setCurrentBlock } from "./main";
-import {load, models} from "./rederObject";
+import {models} from "./rederObject";
 import {compressNormals} from "three/examples/jsm/utils/GeometryCompressionUtils.js";
 
 
@@ -44,14 +44,21 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
   for(const [idx, el] of currentColumn.entries()){
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
+    console.log(`${oldSize}`);
     const width = sizeSettings[0];
     const newPath = `${directory}${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
     const model = models[newPath];
     if(model){
       const clone = model.scene.clone();
+      clone.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material = child.material.clone();
+        }
+      });
       clone.name = newPath;
       clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+      clone.children[0].children[0].children[1].material.color.set(el.children[0].children[0].children[1].material.color);
       group.add(clone);
 
       const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
@@ -129,8 +136,14 @@ export const changeRowSize = async function (group, map, sizeSettings) {
     const model = models[newPath];
     if(model){
       const clone = model.scene.clone();
+      clone.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material = child.material.clone();
+        }
+      });
       clone.name = newPath;
       clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+      clone.children[0].children[0].children[1].material.color.set(el.children[0].children[0].children[1].material.color);
       group.add(clone);
 
       const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
@@ -194,8 +207,14 @@ export const changeDepth = async function(group, map, sizeSettings){
     const model = models[newPath];
     if(model){
       const clone = model.scene.clone();
+      clone.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material = child.material.clone();
+        }
+      });
       clone.name = newPath;
       clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+      clone.children[0].children[0].children[1].material.color.set(el.children[0].children[0].children[1].material.color);
       group.add(clone);
 
       const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));

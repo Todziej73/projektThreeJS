@@ -10,11 +10,6 @@ const loader = new GLTFLoader(manager);
 
 
 
-const load = async function(path){
-    return await loader.loadAsync(path);
-}
-
-
 //prelaod all the models
 const widths = [229, 329, 374, 420, 479, 523, 729];
 const depths = [329, 374];
@@ -42,7 +37,6 @@ modelPaths.forEach((path) => {
     });
 });
 
-console.log(models);
 
 
 const progressBarContainer = document.querySelector('.progressbar');
@@ -63,6 +57,9 @@ manager.onLoad = function () {
     overlay.classList.add('hidden');
     progressBarContainer.classList.add('hidden');
 };
+
+
+// prototype custom text loading bar
 
 
 
@@ -98,4 +95,4 @@ const loadText = function(text, material = new THREE.MeshStandardMaterial({ colo
 
 
 
-export{ load, loadText, models};
+export{loadText, models};

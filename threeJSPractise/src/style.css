@@ -18,7 +18,9 @@ html{
 }
 
 body{
-  width: fit-content;
+  width: 100dvh;
+  height: 100dvh;
+  display: flex;
 }
 
 .none{
@@ -63,15 +65,14 @@ body{
 
 /* configure size */
 .configure-tabs{
-  position: absolute;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   padding: 1.8rem 2rem;
   gap: 2rem;
   border-bottom-right-radius: 8px;
-  width: 25%;
-  max-width: 32rem;
+  height: fit-content;
+  max-width: 45rem;
 }
 
 .select-tab-container{
@@ -248,3 +249,28 @@ body{
   text-align: center;
   font-size: 1.6rem;
 }
+
+/* delete btn */
+
+.deleteModelBtn{
+  padding: 1.8rem 2rem;
+}
+
+.deleteModelBtn svg{
+  transition: 0.3s;
+  cursor: pointer;
+  fill: #555;
+  cursor: not-allowed;
+  width: 30px;
+  height: 30px;
+}
+
+.active-btn svg{
+  fill: #333;
+  cursor: pointer;
+}
+
+.active-btn svg:hover{
+  transform: rotate(20deg);
+}
+
