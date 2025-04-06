@@ -264,8 +264,9 @@ window.addEventListener('click', function (e) {
       
       //selecting color on the panel
       const clickedElColor = '#' + currentBlock.children[0].children[0].children[1].material.color.getHexString();
-      const allColorInputs = document.querySelectorAll('.color');
-      allColorInputs.forEach(el => el.classList.remove('.color--active'));
+      const allColorInputs = document.querySelectorAll('.main-color-picker .inputs .color');
+      allColorInputs.forEach(el => el.classList.remove('color--active'));
+      console.log(clickedElColor);
       document.querySelector(`.color[data-color="${clickedElColor}"]`).classList.add('color--active');
 
 
