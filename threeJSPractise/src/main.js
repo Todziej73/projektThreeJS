@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
-import {load, loadText} from './rederObject.js';
+import {load, loadText, models} from './rederObject.js';
 import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
 import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
@@ -73,7 +73,7 @@ scene.add(meshGroup);
 export const cubesPositions = new Map();
 
 //* adds new elements
-const addCube = function (side) {
+export const addCube = function (side) {
 
   let data = {
     y_index: 0,
@@ -107,74 +107,128 @@ const addCube = function (side) {
 
   const directory = withLegs ? "Legged/" : "Normal/";
   const modelName = `${width}x${depth}x${height}.glb`;
-  const modelPath = directory + modelName;
+  const modelPath = `${directory}${modelName}`;
   // load model on scene
-  // console.log(modelPath);
 
-  load(modelPath).then(function (gltf) {
-    gltf.scene.name = modelName;
-    onObjectLoaded(gltf, data, side);
-  }, function (error) {
-    console.error(error);
-  });
+  const model = models[modelPath];
+  // console.log(models, modelPath)
+  if(model){
+    const clone = model.scene.clone();
+    clone.name = modelName;
+    let selectAfter = data.x_index == 0 && data.y_index == 0;
+    const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
+
+
+
+    let positions, currentBlockPoints;
+    if (currentBlock !== undefined) {
+      currentBlockPoints = generatePoints(currentBlock)
+    }
+
+    if (side == 0) positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.028, currentBlock.position.z]; // UP
+    else if (side == 1) positions = [currentBlockPoints.left.x - getModelSize(clone).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z]; // LEFT
+    else if (side == 2) positions = [currentBlockPoints.right.x + getModelSize(clone).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z]; // RIGHT
+    else if (side == -1) positions = [0, 0, 0]; // THE DEFAULT ONE
+    else {
+      console.error("AddCube function had problem with deciding positions|sides");
+      return;
+    }
+
+    clone.position.set(...positions);
+    cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
+      ...data
+    });
+
+    meshGroup.add(clone)
+
+    if (selectAfter) {
+      currentBlock = clone;
+      updateActiveVisibler();
+      createAddBtns(generatePoints(currentBlock));
+    }
+
+
+    if (meshGroup.children.length == 1)
+      createAddBtns(generatePoints(currentBlock));
+
+    if (meshGroup.children.length > 1) {
+      checkSides(currentBlock);
+    }
+
+    // changeObjectColor(object, currentColor);
+    // changeFrameColor(object, currentFrameColor);
+    DIMENSIONS.updateDimensions();
+
+  }else{
+    console.log("Can't load model")
+  }
+
+
+
+  // load(modelPath).then(function (gltf) {
+  //   gltf.scene.name = modelName;
+  //   onObjectLoaded(gltf, data, side);
+  // }, function (error) {
+  //   console.error(error);
+  // });
 
 }
 
 
 //* when the model is loaded adds it to the scene and to the map
-const onObjectLoaded = function (gltf, data, side) {
-
-  const object = gltf.scene;
-
-  // -- 1. setup position and map<position, data> value
-
-  let selectAfter = data.x_index == 0 && data.y_index == 0;
-  const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
-
-
-
-  let positions, currentBlockPoints;
-  if (currentBlock !== undefined) {
-    currentBlockPoints = generatePoints(currentBlock)
-  }
-
-  if (side == 0) positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.028, currentBlock.position.z]; // UP
-  else if (side == 1) positions = [currentBlockPoints.left.x - getModelSize(object).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z]; // LEFT
-  else if (side == 2) positions = [currentBlockPoints.right.x + getModelSize(object).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z]; // RIGHT
-  else if (side == -1) positions = [0, 0, 0]; // THE DEFAULT ONE
-  else {
-    console.error("AddCube function had problem with deciding positions|sides");
-    return;
-  }
-
-  object.position.set(...positions);
-
-  cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
-    ...data
-  });
-
-  meshGroup.add(object)
-  // console.log(meshGroup.children);
-  // console.log(object);
-
-  if (selectAfter) {
-    currentBlock = object;
-    updateActiveVisibler();
-    createAddBtns(generatePoints(currentBlock));
-  }
-
-
-  if (meshGroup.children.length == 1)
-    createAddBtns(generatePoints(currentBlock));
-
-  if (meshGroup.children.length > 1) {
-    checkSides(currentBlock);
-  }
-
-  // changeObjectColor(object, currentColor);
-  // changeFrameColor(object, currentFrameColor);
-  DIMENSIONS.updateDimensions();
-}
+// const onObjectLoaded = function (gltf, data, side) {
+//
+//   const object = gltf.scene;
+//
+//   // -- 1. setup position and map<position, data> value
+//
+//   let selectAfter = data.x_index == 0 && data.y_index == 0;
+//   const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
+//
+//
+//
+//   let positions, currentBlockPoints;
+//   if (currentBlock !== undefined) {
+//     currentBlockPoints = generatePoints(currentBlock)
+//   }
+//
+//   if (side == 0) positions = [currentBlock.position.x, currentBlockPoints.top.y - 0.028, currentBlock.position.z]; // UP
+//   else if (side == 1) positions = [currentBlockPoints.left.x - getModelSize(object).x / 2 + borderCollapse, currentBlock.position.y, currentBlock.position.z]; // LEFT
+//   else if (side == 2) positions = [currentBlockPoints.right.x + getModelSize(object).x / 2 - borderCollapse, currentBlock.position.y, currentBlock.position.z]; // RIGHT
+//   else if (side == -1) positions = [0, 0, 0]; // THE DEFAULT ONE
+//   else {
+//     console.error("AddCube function had problem with deciding positions|sides");
+//     return;
+//   }
+//
+//   object.position.set(...positions);
+//
+//   cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
+//     ...data
+//   });
+//
+//   meshGroup.add(object)
+//   // console.log(meshGroup.children);
+//   // console.log(object);
+//
+//   if (selectAfter) {
+//     currentBlock = object;
+//     updateActiveVisibler();
+//     createAddBtns(generatePoints(currentBlock));
+//   }
+//
+//
+//   if (meshGroup.children.length == 1)
+//     createAddBtns(generatePoints(currentBlock));
+//
+//   if (meshGroup.children.length > 1) {
+//     checkSides(currentBlock);
+//   }
+//
+//   // changeObjectColor(object, currentColor);
+//   // changeFrameColor(object, currentFrameColor);
+//   DIMENSIONS.updateDimensions();
+// }
 
 
 
@@ -340,7 +394,7 @@ depthInputsEl.addEventListener('click', async function (e) {
     e.target.classList.add('size-option--active');
     measurments[1] = Number(e.target.dataset.size);
     // console.log(meshGroup.children);
-    await changeDepth(meshGroup, cubesPositions, measurments);
+    changeDepth(meshGroup, cubesPositions, measurments);
   }
 });
 
@@ -350,7 +404,7 @@ heightInputsEl.addEventListener('click', async function (e) {
     showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[2] = Number(e.target.dataset.size);
-    await changeRowSize(meshGroup, cubesPositions, measurments);
+    changeRowSize(meshGroup, cubesPositions, measurments);
   }
 });
 
@@ -359,7 +413,7 @@ widthInputsEl.addEventListener('click', async function (e) {
     showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
     e.target.classList.add('size-option--active');
     measurments[0] = Number(e.target.dataset.size);
-    await changeColumnSize(meshGroup, cubesPositions, measurments);
+    changeColumnSize(meshGroup, cubesPositions, measurments);
   }
 });
 
@@ -386,7 +440,7 @@ const getPredictedSize = function (x_index, y_index) {
 
 
 //* loads the first element
-addCube(-1);
+// addCube(-1);
 DIMENSIONS.setDimensionsVisiblity(true);
 
 
@@ -404,14 +458,14 @@ export {
 
 
 //* DEBUG
-window.scene = scene;
-window.updateDimensions = DIMENSIONS.updateDimensions;
-window.select = select;
-window.meshGroup = meshGroup;
-window.cubesPositions = cubesPositions;
-window.getSizeParametersFromModel = getSizeParametersFromModel;
-
-window.updateDimensions = DIMENSIONS.updateDimensions;
-window.extremeValues = extremeValues;
-window.loadText = loadText;
-window.extremeInArray = extremeInArray;
+// window.scene = scene;
+// window.updateDimensions = DIMENSIONS.updateDimensions;
+// window.select = select;
+// window.meshGroup = meshGroup;
+// window.cubesPositions = cubesPositions;
+// window.getSizeParametersFromModel = getSizeParametersFromModel;
+//
+// window.updateDimensions = DIMENSIONS.updateDimensions;
+// window.extremeValues = extremeValues;
+// window.loadText = loadText;
+// window.extremeInArray = extremeInArray;

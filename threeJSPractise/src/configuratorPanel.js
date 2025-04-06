@@ -4,7 +4,9 @@ import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
 import {dataFromPosition, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal} from "./helpers";
 import { checkSides, currentBlock, setCurrentBlock } from "./main";
-import {load} from "./rederObject";
+import {load, models} from "./rederObject";
+import {compressNormals} from "three/examples/jsm/utils/GeometryCompressionUtils.js";
+
 
 
 //! switching the tabs
@@ -43,36 +45,33 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
     const width = sizeSettings[0];
-    const newPath = `${width}x${oldSize.depth}x${oldSize.height}.glb`;
+    const newPath = `${directory}${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
+    const model = models[newPath];
+    if(model){
+      const clone = model.scene.clone();
+      clone.name = newPath;
+      clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+      group.add(clone);
 
-
-    await load(directory + newPath).then(function (gltf) {
-      const object = gltf.scene;
-      object.name = newPath;
-      group.add(object);
-      
-      object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
-
-      const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
+      const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
       const value = map.get(key);
       if(value.x_index === currentBlockGridPosition.x_index && value.y_index === currentBlockGridPosition.y_index){
-        setCurrentBlock(object);
-        updateActiveVisibler(object)
-        createAddBtns(generatePoints(object));
-        checkSides(object);
+        setCurrentBlock(clone);
+        updateActiveVisibler(clone)
+        createAddBtns(generatePoints(clone));
+        checkSides(clone);
 
       }
 
-      const newWidth = getModelSize(object).x;
+      const newWidth = getModelSize(clone).x;
       if(idx === 0){
         adjustColmuns(otherColumns, map, getModelSize(currentColumn[0]).x, newWidth, currentBlock.position);
       }
 
-    }, function (error) {
-      console.error(error);
-    });
-
+    }else {
+      console.log("Can't load model")
+    }
     
     group.remove(el);
     
@@ -125,31 +124,33 @@ export const changeRowSize = async function (group, map, sizeSettings) {
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
     const oldSize = getSizeParametersFromModel(el.name);
     const height = sizeSettings[2];
-    const newPath = `${oldSize.width}x${oldSize.depth}x${height}.glb`;
-  
-    
+    const newPath = `${directory}${oldSize.width}x${oldSize.depth}x${height}.glb`;
 
-    await load(directory + newPath).then(function (gltf) {
-      const object = gltf.scene;
-      group.add(object)
-      object.name = newPath;
-      object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+    const model = models[newPath];
+    if(model){
+      const clone = model.scene.clone();
+      clone.name = newPath;
+      clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+      group.add(clone);
 
-      const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
+      const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
       const value = map.get(key);
       if(value.x_index === currentBlockGridPosition.x_index && value.y_index === currentBlockGridPosition.y_index){
-        setCurrentBlock(object);
-        updateActiveVisibler(object)
-        createAddBtns(generatePoints(object));
-        checkSides(object);
+        setCurrentBlock(clone);
+        updateActiveVisibler(clone)
+        createAddBtns(generatePoints(clone));
+        checkSides(clone);
+
       }
 
-      const newHeight = getModelSize(object).y;
-      if(idx === 0)  adjustRows(otherRows, map, getModelSize(currentRow[0]).y, newHeight, currentBlock.position.y);
-      
-    }, function (error) {
-      console.error(error);
-    });
+      const newHeight = getModelSize(clone).y;
+      if(idx === 0){
+        adjustRows(otherRows, map, getModelSize(currentRow[0]).y, newHeight, currentBlock.position.y);
+      }
+
+    }else {
+      console.log("Can't load model")
+    }
 
     group.remove(el);
   };
@@ -188,29 +189,28 @@ export const changeDepth = async function(group, map, sizeSettings){
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
     const oldSize = getSizeParametersFromModel(el.name);
     const depth = sizeSettings[1];
-    const newPath = `${oldSize.width}x${depth}x${oldSize.height}.glb`;
+    const newPath = `${directory}${oldSize.width}x${depth}x${oldSize.height}.glb`;
 
+    const model = models[newPath];
+    if(model){
+      const clone = model.scene.clone();
+      clone.name = newPath;
+      clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+      group.add(clone);
 
-    await load(directory + newPath).then(function (gltf) {
-      const object = gltf.scene;
-      group.add(object)
-      object.name = newPath;
-      object.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
-
-      const key = JSON.stringify(Object.values(object.position).map((el) => el = roundToDecimal(el)));
+      const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
       const value = map.get(key);
       if(value.x_index === currentBlockGridPosition.x_index && value.y_index === currentBlockGridPosition.y_index){
-        setCurrentBlock(object);
-        updateActiveVisibler(object)
-        createAddBtns(generatePoints(object));
-        checkSides(object);
+        setCurrentBlock(clone);
+        updateActiveVisibler(clone)
+        createAddBtns(generatePoints(clone));
+        checkSides(clone);
+
       }
 
-      
-      
-    }, function (error) {
-      console.error(error);
-    });
+    }else {
+      console.log("Can't load model")
+    }
     group.remove(el);    
   };
   updateDimensions();

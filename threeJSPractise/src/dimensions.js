@@ -227,6 +227,7 @@ const TextEdgesHelper = {
     },
 
     getText: function(object, edge){
+        console.log(object.name);
         const size = getSizeParametersFromModel(object.name);
         const printTexts = {
             w: `${size.width} mm`,
