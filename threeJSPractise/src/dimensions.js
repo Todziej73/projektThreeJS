@@ -77,8 +77,6 @@ const uDFront = function(){
     const first = generatePoints(extremeInArray(bottomRow).min_x_Object).left;
     const last = generatePoints(extremeInArray(bottomRow).max_x_Object).right;
     const scaleX = last.x + first.x;
-    // console.log(last);
-    // console.log(first);
     
     const geometry = new THREE.BoxGeometry(scaleX);
     const tempObj = new THREE.Mesh(geometry);
@@ -147,12 +145,10 @@ const uDHeight = function(){
         text.rotateY(Math.PI / 4);
         text.rotateZ(Math.PI / 2);
         const pos = new THREE.Vector3(first.left.x, elPoints.left.y, getModelSize(firstObject).z / 2);
-        console.log(pos);
         text.position.x = pos.x;
         text.position.y = pos.y;
         text.position.z = pos.z;
         text.position.add(offset);
-        console.log(text.position);
         
         miniGroup.add(text);
         // -=-=-=-
@@ -227,13 +223,15 @@ const TextEdgesHelper = {
     },
 
     getText: function(object, edge){
-        console.log(object.name);
         const size = getSizeParametersFromModel(object.name);
         const printTexts = {
             w: `${size.width} mm`,
             h: `${size.height} mm`,
             d: `${size.depth} mm`,
         };
+
+        console.log(size);
+        
 
         if(edge == EDGES.FrontWidthTop || edge == EDGES.FrontWidthBottom) return printTexts.w;
         else if(edge == EDGES.FrontHeightLeft || edge == EDGES.FrontHeightRight) return printTexts.h;

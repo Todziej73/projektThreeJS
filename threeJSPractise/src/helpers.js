@@ -75,7 +75,8 @@ export const generatePoints = function (object) {
  */
 export const getSizeParametersFromModel = function (name) {
   // np. 729x383x222.glb => [729, 383, 222]
-  const params = name.split('x');
+  const onlyname = name.split("/").pop();
+  const params = onlyname.split('x');
   return {
     width: parseInt(params[0]),
     depth: parseInt(params[1]),

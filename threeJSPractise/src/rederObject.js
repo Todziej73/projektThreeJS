@@ -42,6 +42,9 @@ modelPaths.forEach((path) => {
     });
 });
 
+console.log(models);
+
+
 const progressBarContainer = document.querySelector('.progressbar');
 const progressBar = document.querySelector('.progress');
 const loadedModels = document.querySelector('.loaded');
@@ -60,6 +63,8 @@ manager.onLoad = function () {
     overlay.classList.add('hidden');
     progressBarContainer.classList.add('hidden');
 };
+
+
 
 
 // 3D FONT/TEXT LOADER
