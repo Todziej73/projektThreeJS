@@ -245,6 +245,7 @@ deleteModelBtn.addEventListener('click', function(){
   if(currentBlock && canDelete){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
+   DIMENSIONS.updateDimensions();
   }
 });
 
