@@ -163,6 +163,8 @@ export const addCube = function (side) {
     // changeObjectColor(object, currentColor);
     // changeFrameColor(object, currentFrameColor);
     DIMENSIONS.updateDimensions();
+    changeObjectColor(clone, currentColor);
+    changeFrameColor(clone, currentFrameColor);
 
   }else{
     console.log("Can't load model")
@@ -245,6 +247,7 @@ deleteModelBtn.addEventListener('click', function(){
   if(currentBlock && canDelete){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
+   DIMENSIONS.updateDimensions();
   }
 });
 
@@ -353,31 +356,37 @@ const showActiveBtn = function (arr) {
 }
 
 depthInputsEl.addEventListener('click', async function (e) {
-  if (e.target.classList.contains('size-option')) {
-    showActiveBtn(document.querySelectorAll('.select-size--depth .inputs *'))
-    e.target.classList.add('size-option--active');
-    measurments[1] = Number(e.target.dataset.size);
-    // console.log(meshGroup.children);
-    changeDepth(meshGroup, cubesPositions, measurments);
+  if(currentBlock){
+    if (e.target.classList.contains('size-option')) {
+      showActiveBtn(document.querySelectorAll('.select-size--depth .inputs *'))
+      e.target.classList.add('size-option--active');
+      measurments[1] = Number(e.target.dataset.size);
+      // console.log(meshGroup.children);
+      changeDepth(meshGroup, cubesPositions, measurments);
+    }
   }
 });
 
 
 heightInputsEl.addEventListener('click', async function (e) {
-  if (e.target.classList.contains('size-option')) {
-    showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
-    e.target.classList.add('size-option--active');
-    measurments[2] = Number(e.target.dataset.size);
-    changeRowSize(meshGroup, cubesPositions, measurments);
+  if(currentBlock){
+    if (e.target.classList.contains('size-option')) {
+      showActiveBtn(document.querySelectorAll('.select-size--height .inputs *'))
+      e.target.classList.add('size-option--active');
+      measurments[2] = Number(e.target.dataset.size);
+      changeRowSize(meshGroup, cubesPositions, measurments);
+    }
   }
 });
 
 widthInputsEl.addEventListener('click', async function (e) {
-  if (e.target.classList.contains('size-option')) {
-    showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
-    e.target.classList.add('size-option--active');
-    measurments[0] = Number(e.target.dataset.size);
-    changeColumnSize(meshGroup, cubesPositions, measurments);
+  if(currentBlock){
+    if (e.target.classList.contains('size-option')) {
+      showActiveBtn(document.querySelectorAll('.select-size--width .inputs *'))
+      e.target.classList.add('size-option--active');
+      measurments[0] = Number(e.target.dataset.size);
+      changeColumnSize(meshGroup, cubesPositions, measurments);
+    }
   }
 });
 

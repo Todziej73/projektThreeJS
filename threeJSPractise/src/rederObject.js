@@ -39,27 +39,26 @@ modelPaths.forEach((path) => {
 
 
 
-const progressBarContainer = document.querySelector('.progressbar');
-const progressBar = document.querySelector('.progress');
-const loadedModels = document.querySelector('.loaded');
+const fill = document.querySelector('.fill');
+const text = document.querySelector('.outline');
 const overlay = document.querySelector('.overlay');
+const percentage = document.querySelector('.percentage');
+
 manager.onProgress = function (url, itemsLoaded, itemsTotal) {
     const progress = (itemsLoaded / itemsTotal) * 100;
-    progressBar.style.width = `${progress}%`;
-    loadedModels.textContent = itemsLoaded;
+    fill.style.width = `${progress}%`;
+    percentage.textContent = Math.round(progress) + '%'
 };
 
 manager.onLoad = function () {
     console.log('All the models were correctly loaded!');
     addCube(-1)
-    progressBar.style.borderTopRightRadius = '100px';
-    progressBar.style.borderBottomRightRadius = '100px';
     overlay.classList.add('hidden');
-    progressBarContainer.classList.add('hidden');
+    fill.classList.add('hidden');
+    text.classList.add('hidden');
+    percentage.classList.add('hidden');
 };
 
-
-// prototype custom text loading bar
 
 
 

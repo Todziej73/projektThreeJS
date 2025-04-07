@@ -259,7 +259,7 @@ body{
 .deleteModelBtn svg{
   transition: 0.3s;
   cursor: pointer;
-  fill: #555;
+  fill: #999;
   cursor: not-allowed;
   width: 30px;
   height: 30px;
@@ -274,3 +274,42 @@ body{
   transform: rotate(20deg);
 }
 
+/* PROTOTYPE */
+
+.progressBarMainText{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 50%;
+  z-index: 99;
+  font-size: 8dvw;
+  line-height: 1;
+  color: transparent;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.progressBarMainText .outline{
+  -webkit-text-stroke: 4px #f05621; 
+}
+
+.fill{
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: no-wrap;
+  width: 0%;
+  height: 100%;
+  color: #f05621;
+  -webkit-text-stroke: 0;
+  animation: none;
+  pointer-events: none;
+}
+
+.percentage{
+  text-align: center;
+  font-size: 2.4rem;
+  color: #f05621;
+  font-weight: bold;
+}
