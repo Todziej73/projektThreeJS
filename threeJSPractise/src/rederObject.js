@@ -95,21 +95,6 @@ const loadText = function(text, material = new THREE.MeshStandardMaterial({ colo
 };
 
 
-manager.onProgress = function (url, itemsLoaded, itemsTotal) {
-    const progress = (itemsLoaded / itemsTotal) * 100;
-    progressBar.style.width = `${progress}%`;
-    loadedModels.textContent = itemsLoaded;
-    allLoaded.textContent = itemsTotal;
-};
-
-manager.onLoad = function () {
-    console.log('All the models were correctly loaded!');
-    addCube(-1);
-    progressBar.style.borderTopRightRadius = '100px';
-    progressBar.style.borderBottomRightRadius = '100px';
-    overlay.classList.add('hidden');
-    progressBarContainer.classList.add('hidden');
-};
 
 
 

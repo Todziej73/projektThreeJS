@@ -12,7 +12,7 @@ canvas{
 }
 
 html{
-  font-family: "Rethink Sans", serif;
+  font-family:"Chakra Petch", sans-serif;
   font-size: 62.5%;
   color: #333;
 }
@@ -291,6 +291,7 @@ body{
 
 .progressBarMainText .outline{
   -webkit-text-stroke: 4px #f05621; 
+  letter-spacing: 1px;
 }
 
 .fill{
