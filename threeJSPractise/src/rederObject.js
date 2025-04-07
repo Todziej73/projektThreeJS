@@ -30,6 +30,8 @@ folders.forEach(folder => {
     });
 });
 
+
+
 modelPaths.forEach((path) => {
     const name = path;
     loader.load(path, (gltf) => {
@@ -65,12 +67,12 @@ manager.onLoad = function () {
 
 // 3D FONT/TEXT LOADER
 
-const fontLoader = new FontLoader();
 let font;
+const fontLoader = new FontLoader(manager);
 fontLoader.load("/fonts/Rethink Sans_Regular.json", (loadedFont) => {
     font = loadedFont;
     console.log("--= Font was correctly assigned! =--");
-})
+});
 
 
 /**
@@ -91,6 +93,25 @@ const loadText = function(text, material = new THREE.MeshStandardMaterial({ colo
 
     return textMesh;
 };
+
+
+manager.onProgress = function (url, itemsLoaded, itemsTotal) {
+    const progress = (itemsLoaded / itemsTotal) * 100;
+    progressBar.style.width = `${progress}%`;
+    loadedModels.textContent = itemsLoaded;
+    allLoaded.textContent = itemsTotal;
+};
+
+manager.onLoad = function () {
+    console.log('All the models were correctly loaded!');
+    addCube(-1);
+    progressBar.style.borderTopRightRadius = '100px';
+    progressBar.style.borderBottomRightRadius = '100px';
+    overlay.classList.add('hidden');
+    progressBarContainer.classList.add('hidden');
+};
+
+
 
 
 
