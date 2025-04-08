@@ -227,7 +227,6 @@ document.addEventListener("pointermove", function (e) {
     intersects = raycaster.intersectObjects(scene.children);
     
     
-    
     if (intersects.length > 0 && expansionHandles.children.includes(intersects[0].object)) {
       document.querySelector('body').style.cursor = 'pointer';
       intersects[0].object.material.opacity = 0.8;
@@ -258,7 +257,6 @@ window.addEventListener('click', function (e) {
   if (intersects.length > 0) {
     
     const clickedEl = intersects[0].object;
-
     if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
       currentBlock = clickedEl.parent.parent.parent;
       updateActiveVisibler();

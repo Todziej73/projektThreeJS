@@ -2,8 +2,8 @@ canvas{
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -99;
-  background-size: cover;
+  z-index: 10;
+  pointer-events: all;
 }
 
 *{
@@ -23,41 +23,6 @@ body{
   display: flex;
 }
 
-.none{
-  display: none;
-}
-
-.configureContainer{
-  position: absolute;
-  padding: 1.2rem;
-  background-color: #efefef;
-  border-bottom-right-radius: 12px;
-}
-
-
-
-.settingsEl{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.settingsEl h3{
-  font-size: 1.8rem;
-}
-
-.inputColor{
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.inputColor:hover{
-  border: 2px solid #333;
-}
-
 
 
 /* configure tab */
@@ -73,6 +38,7 @@ body{
   border-bottom-right-radius: 8px;
   height: fit-content;
   max-width: 45rem;
+  z-index: 12;
 }
 
 .select-tab-container{
