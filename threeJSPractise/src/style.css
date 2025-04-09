@@ -220,6 +220,8 @@ body{
 
 .deleteModelBtn{
   padding: 1.8rem 2rem;
+  z-index: 12;
+
 }
 
 .deleteModelBtn svg{
@@ -258,6 +260,8 @@ body{
 .progressBarMainText .outline{
   -webkit-text-stroke: 4px #f05621; 
   letter-spacing: 1px;
+  position: relative;
+  
 }
 
 .fill{
