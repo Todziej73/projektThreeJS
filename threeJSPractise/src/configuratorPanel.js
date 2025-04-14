@@ -2,8 +2,8 @@
 import { updateActiveVisibler } from "./activeVisibler";
 import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
-import {dataFromPosition, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal} from "./helpers";
-import { checkSides, currentBlock, setCurrentBlock } from "./main";
+import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal, select} from "./helpers";
+import { checkSides, cubesPositions, currentBlock, meshGroup, setCurrentBlock } from "./main";
 import {models} from "./rederObject";
 import {compressNormals} from "three/examples/jsm/utils/GeometryCompressionUtils.js";
 
@@ -28,7 +28,9 @@ tabBtnsContainer.addEventListener('click', function (e) {
 
 
 export const changeColumnSize = async function (group, map, sizeSettings) {
-  const currentColumn = group.children.filter((child) => roundToDecimal(child.position.x) == roundToDecimal(currentBlock.position.x));
+  const data = dataFromPositionVector(cubesPositions, currentBlock.position);
+  const currentColumn = select(cubesPositions, meshGroup, data.x_index);
+  
   const otherModels = group.children.filter((child) => !currentColumn.includes(child));
   const otherColumns = new Map();
   otherModels.forEach(function (el) {
@@ -44,7 +46,7 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
   for(const [idx, el] of currentColumn.entries()){
     const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
     const oldSize = getSizeParametersFromModel(el.name);
-    console.log(`${oldSize}`);
+    // console.log(`${oldSize}`);
     const width = sizeSettings[0];
     const newPath = `${directory}${width}x${oldSize.depth}x${oldSize.height}.glb`;
 
@@ -115,7 +117,8 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 
 export const changeRowSize = async function (group, map, sizeSettings) {
 
-  const currentRow = group.children.filter((child) => roundToDecimal(child.position.y) == roundToDecimal(currentBlock.position.y));
+  const data = dataFromPositionVector(cubesPositions, currentBlock.position);
+  const currentRow = select(cubesPositions, meshGroup, null, data.y_index);
   const otherModels = group.children.filter((child) => !currentRow.includes(child) && roundToDecimal(child.position.y) > roundToDecimal(currentRow[0].position.y));
   const otherRows = new Map();
   otherModels.forEach(function (el) {

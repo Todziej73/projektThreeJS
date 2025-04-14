@@ -7,6 +7,7 @@ import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,
 import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
+import './debug.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -143,7 +144,7 @@ export const addCube = function (side) {
     cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
       ...data
     });
-    console.log(cubesPositions);
+    // console.log(cubesPositions);
     meshGroup.add(clone)
 
     if (selectAfter) {
@@ -167,7 +168,7 @@ export const addCube = function (side) {
     changeFrameColor(clone, currentFrameColor);
 
   }else{
-    console.log("Can't load model")
+    console.log("Can't load model");
   }
 
 
@@ -421,22 +422,5 @@ export {
   generatePoints,
   getModelSize,
   scene,
-  meshGroup
+  meshGroup,
 };
-
-
-
-
-
-//* DEBUG
-// window.scene = scene;
-// window.updateDimensions = DIMENSIONS.updateDimensions;
-// window.select = select;
-// window.meshGroup = meshGroup;
-// window.cubesPositions = cubesPositions;
-// window.getSizeParametersFromModel = getSizeParametersFromModel;
-//
-// window.updateDimensions = DIMENSIONS.updateDimensions;
-// window.extremeValues = extremeValues;
-// window.loadText = loadText;
-// window.extremeInArray = extremeInArray;
