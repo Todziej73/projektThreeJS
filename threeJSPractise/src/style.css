@@ -250,7 +250,6 @@ body{
   top: 40%;
   left: 50%;
   z-index: 99;
-  font-size: 8dvw;
   line-height: 1;
   color: transparent;
   font-weight: bold;
@@ -258,9 +257,9 @@ body{
 }
 
 .progressBarMainText .outline{
+  font-size: 22dvh;
   -webkit-text-stroke: 4px #f05621; 
   letter-spacing: 1px;
-  position: relative;
   
 }
 
@@ -269,11 +268,11 @@ body{
   top: 0;
   left: 0;
   overflow: hidden;
+  font-size: 22dvh;
   white-space: no-wrap;
   width: 0%;
   height: 100%;
   color: #f05621;
-  -webkit-text-stroke: 0;
   animation: none;
   pointer-events: none;
 }
