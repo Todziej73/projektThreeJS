@@ -9,26 +9,29 @@ const manager = new THREE.LoadingManager();
 const loader = new GLTFLoader(manager);
 
 
-
 //prelaod all the models
 const widths = [229, 329, 374, 420, 479, 523, 729];
 const depths = [329, 374];
 const heights = [79, 154, 229, 329, 374, 420];
 
-const folders = ['Normal', 'Legged'];
+const modules = ['', 'F', 'FB', 'FBLR', 'FBLRTB']
+const type = ['Normal', 'Legged'];
 
 const modelPaths = [];
 const models = {};
 
-folders.forEach(folder => {
-    widths.forEach(w => {
-        depths.forEach(d => {
-            heights.forEach(h => {
-                modelPaths.push(`${folder}/${w}x${d}x${h}.glb`);
+modules.forEach(mod => {
+    type.forEach(type => {
+        widths.forEach(w => {
+            depths.forEach(d => {
+                heights.forEach(h => {
+                    const path = `klagem/module_${mod}/${type}/${w}x${d}x${h}.glb`;                    
+                    modelPaths.push(path);
+                });
             });
         });
     });
-});
+})
 
 
 
@@ -36,8 +39,12 @@ modelPaths.forEach((path) => {
     const name = path;
     loader.load(path, (gltf) => {
         models[name] = gltf;
+    }, undefined, err => {
+        console.log(`🟥 Error: ${path}`);
     });
 });
+
+
 
 
 

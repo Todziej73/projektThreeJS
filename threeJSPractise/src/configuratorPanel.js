@@ -2,7 +2,7 @@
 import { updateActiveVisibler } from "./activeVisibler";
 import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
-import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,getSizeParametersFromModel,roundToDecimal, select} from "./helpers";
+import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,getParametersFromModel,roundToDecimal, select} from "./helpers";
 import { checkSides, cubesPositions, currentBlock, meshGroup, setCurrentBlock } from "./main";
 import {models} from "./rederObject";
 import {compressNormals} from "three/examples/jsm/utils/GeometryCompressionUtils.js";
@@ -44,13 +44,16 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
   for(const [idx, el] of currentColumn.entries()){
-    const directory = el.position.y == 0 ? 'Legged/' : "Normal/"
-    const oldSize = getSizeParametersFromModel(el.name);
+    const directory = el.position.y == 0 ? 'Legged' : "Normal"
+    const params = getParametersFromModel(el.name);
     // console.log(`${oldSize}`);
     const width = sizeSettings[0];
-    const newPath = `${directory}${width}x${oldSize.depth}x${oldSize.height}.glb`;
+    const newPath = `klagem/${params.module}/${directory}/${width}x${params.depth}x${params.height}.glb`;
+    
 
+    
     const model = models[newPath];
+    
     if(model){
       const clone = model.scene.clone();
       clone.traverse((child) => {
@@ -131,10 +134,10 @@ export const changeRowSize = async function (group, map, sizeSettings) {
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   //delete old and load new elements
   for(const [idx, el] of currentRow.entries()){
-    const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
-    const oldSize = getSizeParametersFromModel(el.name);
+    const directory = el.position.y == 0 ? 'Legged' : "Normal";
+    const params = getParametersFromModel(el.name);
     const height = sizeSettings[2];
-    const newPath = `${directory}${oldSize.width}x${oldSize.depth}x${height}.glb`;
+    const newPath = `klagem/${params.module}/${directory}/${params.width}x${params.depth}x${height}.glb`;
 
     const model = models[newPath];
     if(model){
@@ -202,10 +205,10 @@ export const changeDepth = async function(group, map, sizeSettings){
   const currentBlockGridPosition = dataFromPosition(map, currentBlock.position.x, currentBlock.position.y, currentBlock.position.z);
   const modelsToChange = group.children.map(el => el);
   for(const el of modelsToChange){    
-    const directory = el.position.y == 0 ? 'Legged/' : "Normal/";
-    const oldSize = getSizeParametersFromModel(el.name);
+    const directory = el.position.y == 0 ? 'Legged' : "Normal";
+    const params = getParametersFromModel(el.name);
     const depth = sizeSettings[1];
-    const newPath = `${directory}${oldSize.width}x${depth}x${oldSize.height}.glb`;
+    const newPath = `klagem/${params.module}/${directory}/${params.width}x${depth}x${params.height}.glb`;
 
     const model = models[newPath];
     if(model){
