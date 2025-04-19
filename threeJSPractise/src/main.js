@@ -166,7 +166,7 @@ export const addCube = function (side) {
     DIMENSIONS.updateDimensions();
     changeObjectColor(clone, currentColor);
     changeFrameColor(clone, currentFrameColor);
-
+    canDelete(currentBlock)
   }else{
     console.log("Can't load model");
   }
@@ -242,9 +242,22 @@ document.addEventListener("pointermove", function (e) {
 });
 
 const deleteModelBtn = document.querySelector('.deleteModelBtn');
-let canDelete = false;
+function canDelete(currentBlock) {
+  const blockAbove = !checkPosition(currentBlock.position)[0];
+  const blockToLeft = !checkPosition(currentBlock.position)[1];
+  const blockToRight = !checkPosition(currentBlock.position)[2];
+
+  if ((currentBlock.position.y === 0 && !blockAbove && blockToLeft && blockToRight) || meshGroup.children.length === 1 || (blockAbove)) {
+    deleteModelBtn.classList.remove('active-btn');
+  } else {
+    deleteModelBtn.classList.add('active-btn');
+  }
+}
+
+
+
 deleteModelBtn.addEventListener('click', function(){
-  if(currentBlock && canDelete){
+  if(currentBlock && deleteModelBtn.classList.contains('active-btn')){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
    DIMENSIONS.updateDimensions();
@@ -280,13 +293,7 @@ window.addEventListener('click', function (e) {
       allColorInputs.forEach(el => el.classList.remove('color--active'));
       document.querySelector(`.color[data-color="${clickedElColor}"]`).classList.add('color--active');
 
-      if(meshGroup.children.length > 1 && checkPosition(currentBlock.position)[0]){
-        canDelete = true;
-        deleteModelBtn.classList.add('active-btn');
-      }else{
-        deleteModelBtn.classList.remove('active-btn');
-        canDelete = false;
-      }
+      canDelete(currentBlock);
 
       checkSides(currentBlock);
     } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
@@ -424,3 +431,4 @@ export {
   scene,
   meshGroup,
 };
+
