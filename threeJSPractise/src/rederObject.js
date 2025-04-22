@@ -52,14 +52,16 @@ manager.onProgress = function (url, itemsLoaded, itemsTotal) {
     percentage.textContent = Math.round(progress) + '%'
 };
 
-manager.onLoad = function () {
-    console.log('All the models were correctly loaded!');
-    addCube(-1)
-    overlay.classList.add('hidden');
-    fill.classList.add('hidden');
-    text.classList.add('hidden');
-    percentage.classList.add('hidden');
-};
+window.addEventListener('load', () => {
+    manager.onLoad = function () {
+        console.log('All the models were correctly loaded!');
+        addCube(-1);
+        overlay.classList.add('hidden');
+        fill.classList.add('hidden');
+        text.classList.add('hidden');
+        percentage.classList.add('hidden');
+    };
+});
 
 
 
@@ -69,7 +71,7 @@ manager.onLoad = function () {
 
 let font;
 const fontLoader = new FontLoader(manager);
-fontLoader.load("/fonts/Rethink Sans_Regular.json", (loadedFont) => {
+fontLoader.load("./fonts/Rethink Sans_Regular.json", (loadedFont) => {
     font = loadedFont;
     console.log("--= Font was correctly assigned! =--");
 });

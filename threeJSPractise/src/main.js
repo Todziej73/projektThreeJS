@@ -242,6 +242,7 @@ document.addEventListener("pointermove", function (e) {
 });
 
 const deleteModelBtn = document.querySelector('.deleteModelBtn');
+
 function canDelete(currentBlock) {
   const blockAbove = !checkPosition(currentBlock.position)[0];
   const blockToLeft = !checkPosition(currentBlock.position)[1];

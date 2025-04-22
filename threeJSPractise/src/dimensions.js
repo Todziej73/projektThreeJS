@@ -1,7 +1,6 @@
 import { cubesPositions, generatePoints, scene, meshGroup } from "./main";
 import * as THREE from 'three';
 import { loadText } from "./rederObject";
-import { changeColumnSize } from "./configuratorPanel";
 import { getSizeParametersFromModel, select, extremeValues, getModelSize, extremeInArray, dataFromPosition, dataFromPositionVector } from "./helpers";
 
 
