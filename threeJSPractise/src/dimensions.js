@@ -1,7 +1,8 @@
 import { cubesPositions, generatePoints, scene, meshGroup } from "./main";
 import * as THREE from 'three';
 import { loadText } from "./rederObject";
-import { getSizeParametersFromModel, select, extremeValues, getModelSize, extremeInArray, dataFromPosition, dataFromPositionVector } from "./helpers";
+import { changeColumnSize } from "./configuratorPanel";
+import { getParametersFromModel, select, extremeValues, getModelSize, extremeInArray, dataFromPosition, dataFromPositionVector } from "./helpers";
 
 
 const dimensionsGroup = new THREE.Group();
@@ -70,7 +71,7 @@ const uDFront = function(){
     
     let modelXSizeName = 0;
     bottomRow.forEach(el => {        
-        modelXSizeName += getSizeParametersFromModel(el.name).width;
+        modelXSizeName += getParametersFromModel(el.name).width;
     });    
     
     const first = generatePoints(extremeInArray(bottomRow).min_x_Object).left;
@@ -151,7 +152,7 @@ const uDHeight = function(){
         
         miniGroup.add(text);
         // -=-=-=-
-        modelYSizeName += getSizeParametersFromModel(el.name).height;
+        modelYSizeName += getParametersFromModel(el.name).height;
     });
 
     // -=-=-=-=-=-=-
@@ -222,7 +223,7 @@ const TextEdgesHelper = {
     },
 
     getText: function(object, edge){
-        const size = getSizeParametersFromModel(object.name);
+        const size = getParametersFromModel(object.name);
         const printTexts = {
             w: `${size.width} mm`,
             h: `${size.height} mm`,

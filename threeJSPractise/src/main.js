@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
 import {models} from './rederObject.js';
-import {dataFromPosition,generatePoints,getModelSize,getSizeParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
+import {dataFromPosition,generatePoints,getModelSize,getParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
 import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
@@ -106,9 +106,9 @@ export const addCube = function (side) {
   const height = predictedSize.height == undefined ? 154 : predictedSize.height;
   const depth = predictedSize.depth == undefined ? 329 : predictedSize.depth;
 
-  const directory = withLegs ? "Legged/" : "Normal/";
+  const directory = withLegs ? "Legged" : "Normal";
   const modelName = `${width}x${depth}x${height}.glb`;
-  const modelPath = `${directory}${modelName}`;
+  const modelPath = `klagem/module_FBLR/${directory}/${modelName}`;
   // load model on scene
 
   const model = models[modelPath];
@@ -120,7 +120,7 @@ export const addCube = function (side) {
         child.material = child.material.clone();
       }
     });
-    clone.name = modelName;
+    clone.name = modelPath;
     let selectAfter = data.x_index == 0 && data.y_index == 0;
     const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
 
@@ -279,7 +279,7 @@ window.addEventListener('click', function (e) {
 
 
       //updating the panel to show te current dimensions 
-      const modelSize = getSizeParametersFromModel(currentBlock.name);
+      const modelSize = getParametersFromModel(currentBlock.name);
       const allInputs = document.querySelectorAll('.size-option');
       allInputs.forEach(el => el.classList.remove('size-option--active'));
 
@@ -402,12 +402,12 @@ widthInputsEl.addEventListener('click', async function (e) {
 const getPredictedSize = function (x_index, y_index) {
   let width = undefined;
   let height = undefined;
-  let depth = meshGroup.children.length > 0 ? getSizeParametersFromModel(meshGroup.children[0].name).depth : undefined;
+  let depth = meshGroup.children.length > 0 ? getParametersFromModel(meshGroup.children[0].name).depth : undefined;
 
   const column = select(cubesPositions, meshGroup, x_index);
   const row = select(cubesPositions, meshGroup, null, y_index);
-  if (column.length > 0) width = getSizeParametersFromModel(column[0].name).width;
-  if (row.length > 0) height = getSizeParametersFromModel(row[0].name).height;
+  if (column.length > 0) width = getParametersFromModel(column[0].name).width;
+  if (row.length > 0) height = getParametersFromModel(row[0].name).height;
 
   return {
     width: width,
@@ -433,3 +433,7 @@ export {
   meshGroup,
 };
 
+
+
+
+window.cubesPositions = cubesPositions;

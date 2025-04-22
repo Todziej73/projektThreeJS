@@ -73,11 +73,15 @@ export const generatePoints = function (object) {
  *
  * @param {string} name
  */
-export const getSizeParametersFromModel = function (name) {
-  // np. 729x383x222.glb => [729, 383, 222]
-  const onlyname = name.split("/").pop();
+export const getParametersFromModel = function (name) {
+  // np. klagem/module_F/Legged/729x383x222.glb => [729, 383, 222]
+  const splitted = name.split("/");
+  const onlyname = splitted[splitted.length - 1];
   const params = onlyname.split('x');
+  
   return {
+    module: splitted[1],
+    type: splitted[2],
     width: parseInt(params[0]),
     depth: parseInt(params[1]),
     height: parseInt(params[2].split(".")[0]),
