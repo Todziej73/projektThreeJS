@@ -101,7 +101,7 @@ const loadAllQueue = async function(){
     while(queue.length > 0){
         const total = queue.length + loaded;
         const progress = ((loaded / total) * 100).toPrecision(2);
-        console.log(`${loaded}/${total} --> ${progress}%`);
+        // console.log(`${loaded}/${total} --> ${progress}%`);
         await loadNextInQueue();
         loaded++;
     }
@@ -116,7 +116,11 @@ const prioritizeModel = (path) => {
     modelPaths.unshift(path);
 };
 
-
+/**
+ * 
+ * @param {string} path 
+ * @returns { Promise<import('three/addons/loaders/GLTFLoader.js').GLTF> }
+ */
 const getModel = async function(path){
     if(!models[path]){
         prioritizeModel(path);

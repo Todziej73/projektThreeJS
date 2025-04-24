@@ -2,11 +2,10 @@
 import { updateActiveVisibler } from "./activeVisibler";
 import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
-import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,getParametersFromModel,roundToDecimal, select} from "./helpers";
+import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,getParametersFromModel,roundToDecimal, select, modelToClone} from "./helpers";
 import { checkSides, cubesPositions, currentBlock, meshGroup, setCurrentBlock } from "./main";
 import {getModel} from "./rederObject";
-import {compressNormals} from "three/examples/jsm/utils/GeometryCompressionUtils.js";
-
+import * as THREE from 'three';
 
 
 //! switching the tabs
@@ -24,7 +23,6 @@ tabBtnsContainer.addEventListener('click', function (e) {
     e.target.classList.add('tab--active');
   }
 })
-
 
 
 export const changeColumnSize = async function (group, map, sizeSettings) {
@@ -55,15 +53,7 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
     const model = await getModel(newPath);
     
     if(model){
-      const clone = model.scene.clone();
-      clone.traverse((child) => {
-        if (child.isMesh && child.material) {
-          child.material = child.material.clone();
-        }
-      });
-      clone.name = newPath;
-      clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
-      clone.children[0].children[0].children[1].material.color.set(el.children[0].children[0].children[1].material.color);
+      const clone = modelToClone(model, newPath, el);
       group.add(clone);
 
       const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
@@ -116,8 +106,6 @@ function adjustColmuns(otherColumns, map, oldWidth, newWidth, position) {
 }
 
 
-
-
 export const changeRowSize = async function (group, map, sizeSettings) {
 
   const data = dataFromPositionVector(cubesPositions, currentBlock.position);
@@ -141,15 +129,7 @@ export const changeRowSize = async function (group, map, sizeSettings) {
 
     const model = await getModel(newPath);
     if(model){
-      const clone = model.scene.clone();
-      clone.traverse((child) => {
-        if (child.isMesh && child.material) {
-          child.material = child.material.clone();
-        }
-      });
-      clone.name = newPath;
-      clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
-      clone.children[0].children[0].children[1].material.color.set(el.children[0].children[0].children[1].material.color);
+      const clone = modelToClone(model, newPath, el);
       group.add(clone);
 
       const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
@@ -177,7 +157,6 @@ export const changeRowSize = async function (group, map, sizeSettings) {
   updateDimensions();
 
 }
-
 
 
 function adjustRows(otherRows, map, oldHeight, newHeight, posY) {
@@ -212,15 +191,7 @@ export const changeDepth = async function(group, map, sizeSettings){
 
     const model = await getModel(newPath);
     if(model){
-      const clone = model.scene.clone();
-      clone.traverse((child) => {
-        if (child.isMesh && child.material) {
-          child.material = child.material.clone();
-        }
-      });
-      clone.name = newPath;
-      clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
-      clone.children[0].children[0].children[1].material.color.set(el.children[0].children[0].children[1].material.color);
+      const clone = modelToClone(model, newPath, el);
       group.add(clone);
 
       const key = JSON.stringify(Object.values(clone.position).map((el) => el = roundToDecimal(el)));
@@ -240,3 +211,32 @@ export const changeDepth = async function(group, map, sizeSettings){
   };
   updateDimensions();
 }
+
+
+
+// -------=== SWITCHING THE WALLS ===-------
+/**
+ * @param { THREE.Object3D } block
+ * @param { string } wallType
+ */
+const changeWall = async function(block, wallType){
+  if(!block) return;
+
+  const blockData = getParametersFromModel(block.name);
+  const searchedPath = `klagem/module_${wallType}/${blockData.type}/${blockData.width}x${blockData.depth}x${blockData.height}.glb`;
+  const replaceModel = await getModel(searchedPath);
+  const replaceBlock = modelToClone(replaceModel, searchedPath, block);
+  replaceBlock.position.x = block.position.x;
+  replaceBlock.position.y = block.position.y;
+  replaceBlock.position.z = block.position.z;
+  meshGroup.remove(block);
+  meshGroup.add(replaceBlock);
+}
+
+
+
+document.querySelectorAll(".structure-option").forEach(btn => {
+  
+  const val = btn.getAttribute("value");
+  btn.addEventListener('click', function(){ changeWall(currentBlock, val); });
+});

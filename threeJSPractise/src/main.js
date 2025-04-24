@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
 import {getModel} from './rederObject.js';
-import {dataFromPosition,generatePoints,getModelSize,getParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
+import {dataFromPosition,generatePoints,getModelSize,getParametersFromModel,roundToDecimal,select,modelToClone} from './helpers.js';
 import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
@@ -107,20 +107,15 @@ export const addCube = async function (side) {
   const depth = predictedSize.depth == undefined ? 329 : predictedSize.depth;
 
   const directory = withLegs ? "Legged" : "Normal";
+  const module = `${currentBlock !== undefined ? getParametersFromModel(currentBlock.name).module : "module_"}`;
   const modelName = `${width}x${depth}x${height}.glb`;
-  const modelPath = `klagem/module_/${directory}/${modelName}`;
+  const modelPath = `klagem/${module}/${directory}/${modelName}`;
   // load model on scene
 
   const model = await getModel(modelPath);
   // console.log(models, modelPath)
   if(model){
-    const clone = model.scene.clone();
-    clone.traverse((child) => {
-      if (child.isMesh && child.material) {
-        child.material = child.material.clone();
-      }
-    });
-    clone.name = modelPath;
+    const clone = modelToClone(model, modelPath);
     let selectAfter = data.x_index == 0 && data.y_index == 0;
     const borderCollapse = data.y_index == 0 ? 0.04 : 0.028;
 
@@ -170,11 +165,6 @@ export const addCube = async function (side) {
   }else{
     console.log("Can't load model");
   }
-
-
-
-
-
 }
 
 
@@ -182,14 +172,13 @@ export const addCube = async function (side) {
 
 
 
-const changeObjectColor = function (object, targetColor) {
-
+export const changeObjectColor = function (object, targetColor) {
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[1];
   meshToChange.material.color = targetColorVector;
 }
 
-const changeFrameColor = function (object, targetColor) {
+export const changeFrameColor = function (object, targetColor) {
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[0];
   meshToChange.material.color = targetColorVector;
@@ -437,3 +426,5 @@ export {
 
 
 window.cubesPositions = cubesPositions;
+window.currentBlock = currentBlock;
+window.meshGroup = meshGroup;

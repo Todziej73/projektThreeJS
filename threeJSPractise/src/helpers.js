@@ -1,8 +1,7 @@
 'use strict'
 
 import * as THREE from 'three';
-import { cubesPositions } from './main';
-
+import { changeFrameColor, changeObjectColor, cubesPositions, currentBlock, setCurrentBlock } from './main';
 
 export const roundToDecimal = function (num) {
   return Math.round(num * 1000) / 1000;
@@ -179,3 +178,63 @@ export const extremeInArray = function(array) {
   return { min_x, max_x, min_x_Object, max_x_Object, min_y, max_y, min_y_Object, max_y_Object };
 };
 
+/**
+ * 
+ * @param { import('three/examples/jsm/loaders/GLTFLoader.js').GLTF } model - GLTF model
+ * @param { string } pathName - Path of the model, it will be used as a name of a clone (clone.name = pathName)
+ * @param { THREE.Object3D } el - [optional] Element that it is based off. It's used to determine clone's position and color
+ * @returns { THREE.Object3D }
+ */
+export const modelToClone = function(model, pathName, el = null){
+  const clone = model.scene.clone();
+  const parameters = getParametersFromModel(pathName);
+  const isfblrtb = parameters.module.split('_')[1] == "FBLRTB"; // exception for this exact module (cause it has no walls)
+
+  
+  if(isfblrtb && parameters.type != "Legged"){
+    const newgroup = new THREE.Group();
+    const transport = clone.children[0].children[0];
+    console.log('Transport: ', transport);
+    
+    clone.children[0].remove(transport);
+    clone.children[0].add(newgroup);
+    newgroup.add(transport);
+    console.log('Clone: ', clone);
+    
+  }
+
+  const meshes = clone.children[0].children[0];
+
+
+  while(meshes.children.length <= 2)
+    meshes.add(new THREE.Mesh());
+
+  if(isfblrtb && parameters.type == "Legged"){ 
+      const moved = meshes.children.splice(1, 1)[0];
+      meshes.add(moved);
+  }
+
+  console.log(meshes);
+  
+
+  clone.traverse((child) => {
+    if (child.isMesh && child.material) {
+      child.material = child.material.clone();
+    }
+  });
+  clone.name = pathName;
+
+  if(el){
+    const objectColor = el.children[0].children[0].children[1].material.color;
+    const frameColor = el.children[0].children[0].children[0].material.color;
+    clone.position.set(roundToDecimal(el.position.x), roundToDecimal(el.position.y), roundToDecimal(el.position.z));
+    changeObjectColor(clone, objectColor);
+    changeFrameColor(clone, frameColor);
+    if(currentBlock == el)
+      setCurrentBlock(clone);
+  }
+
+  
+  
+  return clone;
+}
