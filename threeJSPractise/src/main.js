@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
-import {models} from './rederObject.js';
+import {getModel} from './rederObject.js';
 import {dataFromPosition,generatePoints,getModelSize,getParametersFromModel,roundToDecimal,select,extremeValues,extremeInArray} from './helpers.js';
 import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
@@ -74,7 +74,7 @@ scene.add(meshGroup);
 export const cubesPositions = new Map();
 
 //* adds new elements
-export const addCube = function (side) {
+export const addCube = async function (side) {
 
   let data = {
     y_index: 0,
@@ -108,10 +108,10 @@ export const addCube = function (side) {
 
   const directory = withLegs ? "Legged" : "Normal";
   const modelName = `${width}x${depth}x${height}.glb`;
-  const modelPath = `klagem/module_FBLR/${directory}/${modelName}`;
+  const modelPath = `klagem/module_/${directory}/${modelName}`;
   // load model on scene
 
-  const model = models[modelPath];
+  const model = await getModel(modelPath);
   // console.log(models, modelPath)
   if(model){
     const clone = model.scene.clone();

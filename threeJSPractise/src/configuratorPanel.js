@@ -4,7 +4,7 @@ import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
 import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,getParametersFromModel,roundToDecimal, select} from "./helpers";
 import { checkSides, cubesPositions, currentBlock, meshGroup, setCurrentBlock } from "./main";
-import {models} from "./rederObject";
+import {getModel} from "./rederObject";
 import {compressNormals} from "three/examples/jsm/utils/GeometryCompressionUtils.js";
 
 
@@ -52,7 +52,7 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
     
 
     
-    const model = models[newPath];
+    const model = await getModel(newPath);
     
     if(model){
       const clone = model.scene.clone();
@@ -139,7 +139,7 @@ export const changeRowSize = async function (group, map, sizeSettings) {
     const height = sizeSettings[2];
     const newPath = `klagem/${params.module}/${directory}/${params.width}x${params.depth}x${height}.glb`;
 
-    const model = models[newPath];
+    const model = await getModel(newPath);
     if(model){
       const clone = model.scene.clone();
       clone.traverse((child) => {
@@ -210,7 +210,7 @@ export const changeDepth = async function(group, map, sizeSettings){
     const depth = sizeSettings[1];
     const newPath = `klagem/${params.module}/${directory}/${params.width}x${depth}x${params.height}.glb`;
 
-    const model = models[newPath];
+    const model = await getModel(newPath);
     if(model){
       const clone = model.scene.clone();
       clone.traverse((child) => {

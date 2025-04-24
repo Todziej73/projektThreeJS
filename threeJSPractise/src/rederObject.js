@@ -5,79 +5,13 @@ import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import * as THREE from 'three';
 import {addCube} from "./main.js";
 
-const manager = new THREE.LoadingManager();
-const loader = new GLTFLoader(manager);
+const mustManager = new THREE.LoadingManager();
 
 
-//prelaod all the models
-const widths = [229, 329, 374, 420, 479, 523, 729];
-const depths = [329, 374];
-const heights = [79, 154, 229, 329, 374, 420];
-
-const modules = ['', 'F', 'FB', 'FBLR', 'FBLRTB']
-const type = ['Normal', 'Legged'];
-
-const modelPaths = [];
-const models = {};
-
-modules.forEach(mod => {
-    type.forEach(type => {
-        widths.forEach(w => {
-            depths.forEach(d => {
-                heights.forEach(h => {
-                    const path = `klagem/module_${mod}/${type}/${w}x${d}x${h}.glb`;                    
-                    modelPaths.push(path);
-                });
-            });
-        });
-    });
-})
-
-
-
-modelPaths.forEach((path) => {
-    const name = path;
-    loader.load(path, (gltf) => {
-        models[name] = gltf;
-    }, undefined, err => {
-        console.log(`🟥 Error: ${path}`);
-    });
-});
-
-
-
-
-
-const fill = document.querySelector('.fill');
-const text = document.querySelector('.outline');
-const overlay = document.querySelector('.overlay');
-const percentage = document.querySelector('.percentage');
-
-manager.onProgress = function (url, itemsLoaded, itemsTotal) {
-    const progress = (itemsLoaded / itemsTotal) * 100;
-    fill.style.width = `${progress}%`;
-    percentage.textContent = Math.round(progress) + '%'
-};
-
-window.addEventListener('load', () => {
-    manager.onLoad = function () {
-        console.log('All the models were correctly loaded!');
-        addCube(-1);
-        overlay.classList.add('hidden');
-        fill.classList.add('hidden');
-        text.classList.add('hidden');
-        percentage.classList.add('hidden');
-    };
-});
-
-
-
-
-
-// 3D FONT/TEXT LOADER
+// 3D FONT/TEXT LOADER -- must
 
 let font;
-const fontLoader = new FontLoader(manager);
+const fontLoader = new FontLoader(mustManager);
 fontLoader.load("./fonts/Rethink Sans_Regular.json", (loadedFont) => {
     font = loadedFont;
     console.log("--= Font was correctly assigned! =--");
@@ -104,9 +38,117 @@ const loadText = function(text, material = new THREE.MeshStandardMaterial({ colo
 };
 
 
+window.addEventListener('load', async () => {
+    mustManager.onLoad = async function () {
+        console.log('Ready to work (MUSTLOADER)!');
+        await addCube(-1);
+        overlay.classList.add('hidden');
+        fill.classList.add('hidden');
+        text.classList.add('hidden');
+        percentage.classList.add('hidden');
+    };
+});
+
+
+
+
+// PRELOADING all the models -- optional
+
+const loader = new GLTFLoader();
+
+
+const widths = [229, 329, 374, 420, 479, 523, 729];
+const depths = [329, 374];
+const heights = [79, 154, 229, 329, 374, 420];
+
+const modules = ['', 'F', 'FB', 'FBLR', 'FBLRTB']
+const type = ['Normal', 'Legged'];
+
+const queue = [];
+const modelPaths = [];
+const models = {};
+
+modules.forEach(mod => {
+    type.forEach(type => {
+        widths.forEach(w => {
+            depths.forEach(d => {
+                heights.forEach(h => {
+                    const path = `klagem/module_${mod}/${type}/${w}x${d}x${h}.glb`;                    
+                    modelPaths.push(path);
+                    queue.push(path);
+                });
+            });
+        });
+    });
+})
+
+const loadNextInQueue = async function(){
+    if(queue.length <= 0) return;
+    const toLoad = queue[0];
+    queue.splice(0, 1);
+
+    const model = await loader.loadAsync(toLoad)
+    .catch((reason) => {
+        console.log(`🟥 Error: ${path} | Reason: `, reason);
+        return;
+    });
+
+    models[toLoad] = model;
+}
+
+const loadAllQueue = async function(){
+    let loaded = 0;
+    while(queue.length > 0){
+        const total = queue.length + loaded;
+        const progress = ((loaded / total) * 100).toPrecision(2);
+        console.log(`${loaded}/${total} --> ${progress}%`);
+        await loadNextInQueue();
+        loaded++;
+    }
+}
+
+
+const prioritizeModel = (path) => {
+    const index = modelPaths.indexOf(path);
+    if (index > -1) {
+        modelPaths.splice(index, 1);
+    }
+    modelPaths.unshift(path);
+};
+
+
+const getModel = async function(path){
+    if(!models[path]){
+        prioritizeModel(path);
+        models[path] = await loader.loadAsync(path);
+    }
+
+    return models[path];
+}
+
+
+
+const fill = document.querySelector('.fill');
+const text = document.querySelector('.outline');
+const overlay = document.querySelector('.overlay');
+const percentage = document.querySelector('.percentage');
+
+mustManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+    const progress = (itemsLoaded / itemsTotal) * 100;
+    fill.style.width = `${progress}%`;
+    percentage.textContent = Math.round(progress) + '%';
+};
 
 
 
 
 
-export{loadText, models};
+
+loadAllQueue();
+
+
+
+
+
+
+export{loadText, getModel};
