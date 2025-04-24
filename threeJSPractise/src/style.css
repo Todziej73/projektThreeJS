@@ -97,25 +97,37 @@ body{
   width: 2.5rem;
   text-align: center;
   cursor: pointer;
-  transition: 0.1s;
+  transition: 0.3s;
+  background: linear-gradient(#dee3e9, #dee3e9);
+  background-color: transparent;
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
 }
 
 .size-option--active{
-  background-color: #333;
+  background: linear-gradient(#333, #333) !important;
+  background-size: 100% 100%;  
   color: #fff;
 }
 
 .size-option:hover:not(.size-option--active){
-  background-color: #dee3e9;
+  background-size: 100% 100%;  
 }
 
 /* configure structure */
 
 
 .structure-option img{
-  height: 4.8rem;
+  height: 4.4rem;
   cursor: pointer;
+  transition: all 0.3s;
 }
+
+.structure-option img:hover{
+  transform: scale(1.1);
+}
+
+
 
 
 /* configure color */
