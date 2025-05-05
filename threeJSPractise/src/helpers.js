@@ -214,7 +214,7 @@ export const modelToClone = function(model, pathName, el = null){
       meshes.add(moved);
   }
 
-  console.log(meshes);
+  // console.log(meshes);
   
 
   clone.traverse((child) => {

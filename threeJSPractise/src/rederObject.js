@@ -4,6 +4,8 @@ import { Font, FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import * as THREE from 'three';
 import {addCube} from "./main.js";
+import { _timerStart, _timerStop } from './debug.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 const mustManager = new THREE.LoadingManager();
 
@@ -12,7 +14,7 @@ const mustManager = new THREE.LoadingManager();
 
 let font;
 const fontLoader = new FontLoader(mustManager);
-fontLoader.load("./fonts/Rethink Sans_Regular.json", (loadedFont) => {
+fontLoader.load("fonts/Rethink Sans_Regular.json", (loadedFont) => {
     font = loadedFont;
     console.log("--= Font was correctly assigned! =--");
 });
@@ -54,7 +56,11 @@ window.addEventListener('load', async () => {
 
 // PRELOADING all the models -- optional
 
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("/draco/");
 const loader = new GLTFLoader();
+loader.setDRACOLoader(dracoLoader);
+
 
 
 const widths = [229, 329, 374, 420, 479, 523, 729];
@@ -75,7 +81,7 @@ modules.forEach(mod => {
                 heights.forEach(h => {
                     const path = `klagem/module_${mod}/${type}/${w}x${d}x${h}.glb`;                    
                     modelPaths.push(path);
-                    queue.push(path);
+                    queue.push(path);                    
                 });
             });
         });
@@ -89,7 +95,7 @@ const loadNextInQueue = async function(){
 
     const model = await loader.loadAsync(toLoad)
     .catch((reason) => {
-        console.log(`🟥 Error: ${path} | Reason: `, reason);
+        console.log(`🟥 Error: ${toLoad} | Reason: `, reason);
         return;
     });
 
@@ -98,6 +104,7 @@ const loadNextInQueue = async function(){
 
 const loadAllQueue = async function(){
     let loaded = 0;
+    _timerStop();
     while(queue.length > 0){
         const total = queue.length + loaded;
         const progress = ((loaded / total) * 100).toPrecision(2);
@@ -105,8 +112,9 @@ const loadAllQueue = async function(){
         await loadNextInQueue();
         loaded++;
     }
+    const tookTime = _timerStop();
+    console.log(`Loading all models took about: ${Math.round(tookTime)} seconds`);
 }
-
 
 const prioritizeModel = (path) => {
     const index = modelPaths.indexOf(path);
