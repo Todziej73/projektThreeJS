@@ -14,7 +14,7 @@ const mustManager = new THREE.LoadingManager();
 
 let font;
 const fontLoader = new FontLoader(mustManager);
-fontLoader.load("public/fonts/Rethink Sans_Regular.json", (loadedFont) => {
+fontLoader.load("fonts/Rethink Sans_Regular.json", (loadedFont) => {
     font = loadedFont;
     console.log("--= Font was correctly assigned! =--");
 });
