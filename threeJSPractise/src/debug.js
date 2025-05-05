@@ -20,9 +20,26 @@ const _startChangingSizes = function(cd = 50, iterations = 10){
     window.setTimeout(function(){_startChangingSizes(cd, iterations-1)}, cd);
 }
 
+// EASY TIMER
+const INTERVALTIME = 0.01;
+let interval;
+let timeStart = 0;
+let time = 0;
+export const _timerStart = function(){
+    if(interval)
+        return;
+    interval = setInterval(()=>{time += INTERVALTIME;}, INTERVALTIME);
+    timeStart = time;
+}
+export const _timerStop = function(){
+    if(!interval)
+        return 0;
 
-
-
+    clearInterval(interval);
+    interval = null;
+    const tookTime = time - timeStart;
+    return tookTime;
+}
 
 
 //* DEBUG
