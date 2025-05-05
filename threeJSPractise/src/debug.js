@@ -44,3 +44,5 @@ export const _timerStop = function(){
 
 //* DEBUG
 window._startChangingSizes = _startChangingSizes;
+window._timerStart = _timerStart;
+window._timerStop = _timerStop;

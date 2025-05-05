@@ -104,7 +104,7 @@ const loadNextInQueue = async function(){
 
 const loadAllQueue = async function(){
     let loaded = 0;
-    _timerStop();
+    _timerStart();
     while(queue.length > 0){
         const total = queue.length + loaded;
         const progress = ((loaded / total) * 100).toPrecision(2);
