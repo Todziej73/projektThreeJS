@@ -57,7 +57,7 @@ window.addEventListener('load', async () => {
 // PRELOADING all the models -- optional
 
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath("/draco/");
+dracoLoader.setDecoderPath("draco/");
 const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
 
