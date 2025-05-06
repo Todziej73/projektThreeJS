@@ -40,17 +40,16 @@ const loadText = function(text, material = new THREE.MeshStandardMaterial({ colo
 };
 
 
-window.addEventListener('load', async () => {
-    mustManager.onLoad = async function () {
-        console.log('Ready to work (MUSTLOADER)!');
-        await addCube(-1);
-        overlay.classList.add('hidden');
-        fill.classList.add('hidden');
-        text.classList.add('hidden');
-        percentage.classList.add('hidden');
-    };
-});
-
+mustManager.onLoad = async function () {
+    console.log('Ready to work (MUSTLOADER)!');
+    await addCube(-1).catch(err => {
+        location.reload();
+    });
+    overlay.classList.add('hidden');
+    fill.classList.add('hidden');
+    text.classList.add('hidden');
+    percentage.classList.add('hidden');
+};
 
 
 
@@ -104,7 +103,7 @@ const loadNextInQueue = async function(){
 
 const loadAllQueue = async function(){
     let loaded = 0;
-    _timerStop();
+    _timerStart();
     while(queue.length > 0){
         const total = queue.length + loaded;
         const progress = ((loaded / total) * 100).toPrecision(2);
