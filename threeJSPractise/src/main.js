@@ -22,9 +22,9 @@ export const setCurrentBlock = function (object) {
   currentBlock = object
 };
 
-
 let currentColor = '#ebc027';
 let currentFrameColor = '#0e0e10';
+
 
 scene.add(expansionHandles);
 
@@ -58,6 +58,8 @@ const checkPosition = function (positionObj) {
   return addOption;
 }
 
+
+
 //* checks if there are any elements next to the current block (clicked) if so then the functions removes the unnecassary arrows (btns that add new blocks)
 export const checkSides = function (curentBlock) {
   const addOption = checkPosition(curentBlock.position);
@@ -66,6 +68,7 @@ export const checkSides = function (curentBlock) {
     toggleAddBtn(expansionHandles.children[i], addOption[i], !addOption[i]);
   }
 }
+
 
 
 
@@ -255,6 +258,44 @@ deleteModelBtn.addEventListener('click', function(){
 });
 
 
+const resetBtn = document.querySelector('.resetBtn');
+const confirmResetContainer = document.querySelector('.resetConfirmContainer');
+const overlay = document.querySelector('.overlay');
+const confirmResetBtn = document.querySelector('.confirmResetBtn');
+const cancelResetBtn = document.querySelector('.cancelResetBtn');
+
+resetBtn.addEventListener('click', function(){
+  confirmResetContainer.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+});
+
+const hideConfirmContainer = function(){
+  confirmResetContainer.classList.add('hidden');
+  overlay.classList.add('hidden');
+}
+
+
+confirmResetBtn.addEventListener('click', function(){
+  meshGroup.children.slice().forEach(function(child){
+    meshGroup.remove(child);
+
+    if (child.geometry) child.geometry.dispose();
+    if (child.material) {
+      if (Array.isArray(child.material)) {
+        child.material.forEach(m => m.dispose());
+      } else {
+        child.material.dispose();
+      }
+    }
+  });
+  hideConfirmContainer();
+  addCube(-1);
+});
+
+
+
+cancelResetBtn.addEventListener('click', hideConfirmContainer);
+overlay.addEventListener('click', hideConfirmContainer);
 
 
 window.addEventListener('click', function (e) {
@@ -421,8 +462,6 @@ export {
   scene,
   meshGroup,
 };
-
-
 
 
 window.cubesPositions = cubesPositions;

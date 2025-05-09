@@ -42,14 +42,17 @@ const loadText = function(text, material = new THREE.MeshStandardMaterial({ colo
 
 mustManager.onLoad = async function () {
     console.log('Ready to work (MUSTLOADER)!');
-    await addCube(-1).catch(err => {
-        location.reload();
-    });
+    try{
+        await addCube(-1);
+    }
+    catch(err){
+        console.log(err);
+    }
     overlay.classList.add('hidden');
     fill.classList.add('hidden');
     text.classList.add('hidden');
     percentage.classList.add('hidden');
-};
+}
 
 
 

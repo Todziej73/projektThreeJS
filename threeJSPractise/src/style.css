@@ -37,8 +37,9 @@ body{
   gap: 2rem;
   border-bottom-right-radius: 8px;
   height: fit-content;
-  max-width: 45rem;
+  max-width: 38rem;
   z-index: 12;
+  width: 30dvw;
 }
 
 .select-tab-container{
@@ -102,6 +103,7 @@ body{
   background-color: transparent;
   background-size: 0% 100%;
   background-repeat: no-repeat;
+  border-radius: 3px;
 }
 
 .size-option--active{
@@ -239,9 +241,20 @@ body{
 
 /* delete btn */
 
-.deleteModelBtn{
+.deleteModelBtn, .resetBtn{
   padding: 1.8rem 2rem;
   z-index: 12;
+}
+
+.resetBtn{
+  padding: 1.8rem 0rem;
+}
+
+.resetBtn svg{
+  transition: 0.5s;
+  cursor: pointer;
+  fill: #333;
+  width: 3rem;
 
 }
 
@@ -250,9 +263,8 @@ body{
   cursor: pointer;
   fill: #999;
   cursor: not-allowed;
-  width: 30px;
-  height: 30px;
 }
+
 
 .active-btn svg{
   fill: #333;
@@ -262,6 +274,49 @@ body{
 .active-btn svg:hover{
   transform: rotate(20deg);
 }
+
+.resetBtn svg:hover{
+  transform: rotate(-360deg);
+}
+
+.resetConfirmContainer{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 50%;
+  z-index: 99;
+  background-color: #fff;
+  padding: 1.2rem;
+  border-radius: 8px;
+  font-size: 1.4rem;
+}
+
+.resetConfirmContainer h3{
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+
+.resetConfirmContainer .btns{
+  display: flex;
+  margin-top: 2.4rem;
+  gap: 1.6rem;
+}
+
+.confirmResetBtn, .cancelResetBtn{
+  padding: 0.4rem 0.6rem;
+  font-weight: 600;
+  cursor: pointer;border-radius: 4px;
+}
+
+.confirmResetBtn{
+  background-color: #f05621;
+  color: #fff;
+}
+
+.cancelResetBtn{
+  background-color: #c5c7c4;
+}
+
 
 /* PROTOTYPE */
 

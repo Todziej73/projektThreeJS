@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/three": "^0.173.0",
-    "vite": "^6.2.3"
+    "vite": "^6.3.5"
   },
   "dependencies": {
     "@gltf-transform/core": "^4.1.3",
