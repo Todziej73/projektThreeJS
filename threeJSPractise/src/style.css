@@ -244,6 +244,7 @@ body{
 .deleteModelBtn, .resetBtn{
   padding: 1.8rem 2rem;
   z-index: 12;
+  height: fit-content;
 }
 
 .resetBtn{
@@ -277,6 +278,16 @@ body{
 
 .resetBtn svg:hover{
   transform: rotate(-360deg);
+}
+
+@keyframes showResetContainer {
+  0%{
+    top: -100%;
+  }
+
+  100%{
+    top: 40%;
+  }
 }
 
 .resetConfirmContainer{
@@ -358,4 +369,81 @@ body{
   font-size: 2.4rem;
   color: #f05621;
   font-weight: bold;
+}
+
+
+/* tutorial */
+
+@keyframes showTutorial {
+  0%{
+    bottom: -20%;
+  }
+  100%{
+    bottom: 0%;
+  }
+}
+
+.tutorialContainer{
+  z-index: 12;
+  position: fixed;
+  bottom: 0%;
+  left: 0%;
+  padding: 1.6rem;
+  background-color: #fff;
+  border-top-right-radius: 8px;
+}
+
+.tutorialContainer .tutorialHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.tutorialContainer .tutorialHeader svg{
+  width: 24px;
+  cursor: pointer;
+}
+
+.tutorialContainer .tutorialHeader svg:hover{
+  fill: #f05621;
+}
+
+.tutorialContainer svg{
+  width: 28px;
+}
+
+.tutorialContainer h4{
+  font-size: 1.8rem;
+}
+
+.tutorialContainer ul{
+  list-style: none;
+}
+
+.tutorialContainer ul{
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.tutorialContainer ul li{
+  display: flex;
+  align-items: center;
+}
+
+.openTuturialBtn{
+  z-index: 12;
+  position: fixed;
+  bottom: 0%;
+  left: 0%;
+  font-size: 1.6rem;
+  padding: 1rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.openTuturialBtn:hover{
+  color: #f05621;
 }

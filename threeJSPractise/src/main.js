@@ -142,7 +142,7 @@ export const addCube = async function (side) {
     cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
       ...data
     });
-    // console.log(cubesPositions);
+    // console.log(cubesPositions)
     meshGroup.add(clone)
 
     if (selectAfter) {
@@ -257,7 +257,7 @@ deleteModelBtn.addEventListener('click', function(){
   }
 });
 
-
+//* RESET THE CONFIGURATION
 const resetBtn = document.querySelector('.resetBtn');
 const confirmResetContainer = document.querySelector('.resetConfirmContainer');
 const overlay = document.querySelector('.overlay');
@@ -266,6 +266,7 @@ const cancelResetBtn = document.querySelector('.cancelResetBtn');
 
 resetBtn.addEventListener('click', function(){
   confirmResetContainer.classList.remove('hidden');
+  confirmResetContainer.style.animation = 'showResetContainer 0.5s forwards ease';
   overlay.classList.remove('hidden');
 });
 
@@ -273,6 +274,10 @@ const hideConfirmContainer = function(){
   confirmResetContainer.classList.add('hidden');
   overlay.classList.add('hidden');
 }
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && !confirmResetContainer.classList.contains('hidden')) hideConfirmContainer();
+});
 
 
 confirmResetBtn.addEventListener('click', function(){
@@ -289,13 +294,29 @@ confirmResetBtn.addEventListener('click', function(){
     }
   });
   hideConfirmContainer();
+  cubesPositions.clear()
+  currentColor = '#ebc027';
   addCube(-1);
 });
 
-
-
 cancelResetBtn.addEventListener('click', hideConfirmContainer);
 overlay.addEventListener('click', hideConfirmContainer);
+
+//* HIDE THE TUTORIAL
+
+const closeTutorialBtn = document.querySelector('.tutorialHeader svg');
+const tutorialContainer = document.querySelector('.tutorialContainer');
+const openTutorialBtn = document.querySelector('.openTuturialBtn');
+
+closeTutorialBtn.addEventListener('click', function(){
+  tutorialContainer.classList.add('hidden')
+});
+
+openTutorialBtn.addEventListener('click', function(){
+  tutorialContainer.classList.remove('hidden');
+  tutorialContainer.style.animation = 'showTutorial 0.5s ease';
+})
+
 
 
 window.addEventListener('click', function (e) {
@@ -392,6 +413,8 @@ const showActiveBtn = function (arr) {
   });
 }
 
+
+
 depthInputsEl.addEventListener('click', async function (e) {
   if(currentBlock){
     if (e.target.classList.contains('size-option')) {
@@ -401,6 +424,8 @@ depthInputsEl.addEventListener('click', async function (e) {
       // console.log(meshGroup.children);
       changeDepth(meshGroup, cubesPositions, measurments);
     }
+  }else{
+    alert("Nie wybrano żadnego elementu");
   }
 });
 
@@ -413,6 +438,8 @@ heightInputsEl.addEventListener('click', async function (e) {
       measurments[2] = Number(e.target.dataset.size);
       changeRowSize(meshGroup, cubesPositions, measurments);
     }
+  }else{
+    alert("Nie wybrano żadnego elementu");
   }
 });
 
@@ -424,6 +451,8 @@ widthInputsEl.addEventListener('click', async function (e) {
       measurments[0] = Number(e.target.dataset.size);
       changeColumnSize(meshGroup, cubesPositions, measurments);
     }
+  }else{
+    alert("Nie wybrano żadnego elementu");
   }
 });
 

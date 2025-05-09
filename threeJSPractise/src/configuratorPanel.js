@@ -220,7 +220,10 @@ export const changeDepth = async function(group, map, sizeSettings){
  * @param { string } wallType
  */
 const changeWall = async function(block, wallType){
-  if(!block) return;
+  if(!block){
+    alert("Nie wybrano żadnego elementu");
+    return;
+  }
 
   const blockData = getParametersFromModel(block.name);
   const searchedPath = `klagem/module_${wallType}/${blockData.type}/${blockData.width}x${blockData.depth}x${blockData.height}.glb`;
