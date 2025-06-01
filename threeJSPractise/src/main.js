@@ -45,7 +45,12 @@ const hasValue = function (map, posX, posY) {
 }
 
 //* helper function - checks if on the given position exist any models 
-const checkPosition = function (positionObj) {
+/**
+ * 
+ * @param {THREE.Vector3} positionObj 
+ * @returns {[boolean, boolean, boolean]} [TOP, LEFT, RIGHT]
+ */
+export const checkPosition = function (positionObj) {
   let addOption = [true, true, true];
   const currentData = dataFromPosition(cubesPositions, ...Object.values(positionObj));
 
@@ -481,6 +486,7 @@ const getPredictedSize = function (x_index, y_index) {
 //* loads the first element
 // addCube(-1);
 DIMENSIONS.setDimensionsVisiblity(true);
+document.querySelector('div[data-color="#262626"]').click();
 
 
 //* EXPORTS

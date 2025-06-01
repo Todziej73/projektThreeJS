@@ -1,0 +1,439 @@
+component,original_component,color,price,profil1,profil2,profile_width,profile_height,profile_depth
+feet,KLAGEM FOOT2,9005,104,,,,,
+feet,KLAGEM FOOT2,bronze,107,,,,,
+feet,KLAGEM FOOT2,gold,107,,,,,
+other,UCHWYT STAŁY,,73,,,,,
+knee,KK_003_lacznik 3,9005,87,,,,,
+knee,KK_004_lacznik 4,9005,89,,,,,
+knee,KK_005_lacznik 5,9005,91,,,,,
+profile,KP_009_profil 65,9005,37,,,65.0,,
+profile,KP_001_profil 79,9005,37,,,79.0,,
+profile,KP_002_profil 154,9005,37,,,154.0,,
+profile,KP_003_profil 229,9005,40,,,229.0,,
+profile,KP_004_profil 329,9005,43,,,329.0,,
+profile,KP_005_profil 374,9005,45,,,374.0,,
+profile,KP_010_profil 420,9005,46,,,420.0,,
+profile,KP_006_profil 479,9005,52,,,479.0,,
+profile,KP_007_profil 523,9005,48,,,523.0,,
+profile,KP_008_profil 729,9005,49,,,729.0,,
+knee,KK_003_lacznik 3,bronze,90,,,,,
+knee,KK_004_lacznik 4,bronze,92,,,,,
+knee,KK_005_lacznik 5,bronze,94,,,,,
+profile,KP_009_profil 65,bronze,40,,,65.0,,
+profile,KP_001_profil 79,bronze,40,,,79.0,,
+profile,KP_002_profil 154,bronze,40,,,154.0,,
+profile,KP_003_profil 229,bronze,44,,,229.0,,
+profile,KP_004_profil 329,bronze,47,,,329.0,,
+profile,KP_005_profil 374,bronze,49,,,374.0,,
+profile,KP_010_profil 420,bronze,50,,,420.0,,
+profile,KP_006_profil 479,bronze,55,,,479.0,,
+profile,KP_007_profil 523,bronze,52,,,523.0,,
+profile,KP_008_profil 729,bronze,52,,,729.0,,
+knee,KK_003_lacznik 3,gold,90,,,,,
+knee,KK_004_lacznik 4,gold,92,,,,,
+knee,KK_005_lacznik 5,gold,94,,,,,
+profile,KP_009_profil 65,gold,40,,,65.0,,
+profile,KP_001_profil 79,gold,40,,,79.0,,
+profile,KP_002_profil 154,gold,40,,,154.0,,
+profile,KP_003_profil 229,gold,44,,,229.0,,
+profile,KP_004_profil 329,gold,47,,,329.0,,
+profile,KP_005_profil 374,gold,49,,,374.0,,
+profile,KP_010_profil 420,gold,50,,,420.0,,
+profile,KP_006_profil 479,gold,55,,,479.0,,
+profile,KP_007_profil 523,gold,52,,,523.0,,
+profile,KP_008_profil 729,gold,52,,,729.0,,
+shelf,KSP_001_10x258x108,PC mat,97,229,79.0,,,
+shelf,KSP_002_10x258x183,PC mat,128,229,154.0,,,
+shelf,KSP_003_10x258x258,PC mat,160,229,229.0,,,
+shelf,KSP_004_10x258x358,PC mat,202,229,329.0,,,
+shelf,KSP_005_10x258x403,PC mat,221,229,374.0,,,
+shelf,KSP_006_10x258x449,PC mat,240,229,420.0,,,
+shelf,KSP_007_10x358x108,PC mat,121,329,79.0,,,
+shelf,KSP_008_10x358x183,PC mat,162,329,154.0,,,
+shelf,KSP_009_10x358x358,PC mat,256,329,329.0,,,
+shelf,KSP_010_10x358x403,PC mat,280,329,374.0,,,
+shelf,KSP_011_10x358x449,PC mat,305,329,420.0,,,
+shelf,KSP_012_10x403x108,PC mat,134,374,79.0,,,
+shelf,KSP_013_10x403x183,PC mat,177,374,154.0,,,
+shelf,KSP_014_10x403x358,PC mat,280,374,329.0,,,
+shelf,KSP_015_10x403x403,PC mat,307,374,374.0,,,
+shelf,KSP_016_10x403x449,PC mat,333,374,420.0,,,
+shelf,KSP_017_10x449x108,PC mat,144,420,79.0,,,
+shelf,KSP_018_10x449x183,PC mat,193,420,154.0,,,
+shelf,KSP_019_10x449x449,PC mat,362,420,420.0,,,
+shelf,KSP_020_10x508x108,PC mat,160,479,79.0,,,
+shelf,KSP_021_10x508x183,PC mat,212,479,154.0,,,
+shelf,KSP_022_10x108x758,PC mat,13,79,729.0,,,
+shelf,KSP_023_10x183x758,PC mat,13,154,729.0,,,
+shelf,KSP_024_10x258x758,PC mat,13,229,729.0,,,
+shelf,KSP_025_10x358x758,PC mat,13,329,729.0,,,
+shelf,KSP_026_10x403x758,PC mat,13,374,729.0,,,
+shelf,KSP_027_10x449x758,PC mat,13,420,729.0,,,
+shelf,KSP_028_10x258x386,PC mat,13,229,357.0,,,
+shelf,KSP_029_10x358x552,PC mat,13,329,523.0,,,
+shelf,KSP_030_10x258x552,PC mat,13,229,523.0,,,
+shelf,KSP_031_10x258x369,PC mat,13,229,340.0,,,
+shelf,KSP_032_10x247x508,PC mat,13,218,479.0,,,
+shelf,KSP_033_10x108x108,PC mat,13,79,79.0,,,
+shelf,KSP_034_10x258x508,PC mat,13,229,479.0,,,
+shelf,KSP_001_10x258x108,PC polysk,113,229,79.0,,,
+shelf,KSP_002_10x258x183,PC polysk,156,229,154.0,,,
+shelf,KSP_003_10x258x258,PC polysk,198,229,229.0,,,
+shelf,KSP_004_10x258x358,PC polysk,256,229,329.0,,,
+shelf,KSP_005_10x258x403,PC polysk,282,229,374.0,,,
+shelf,KSP_006_10x258x449,PC polysk,308,229,420.0,,,
+shelf,KSP_007_10x358x108,PC polysk,144,329,79.0,,,
+shelf,KSP_008_10x358x183,PC polysk,200,329,154.0,,,
+shelf,KSP_009_10x358x358,PC polysk,329,329,329.0,,,
+shelf,KSP_010_10x358x403,PC polysk,362,329,374.0,,,
+shelf,KSP_011_10x358x449,PC polysk,397,329,420.0,,,
+shelf,KSP_012_10x403x108,PC polysk,158,374,79.0,,,
+shelf,KSP_013_10x403x183,PC polysk,219,374,154.0,,,
+shelf,KSP_014_10x403x358,PC polysk,362,374,329.0,,,
+shelf,KSP_015_10x403x403,PC polysk,399,374,374.0,,,
+shelf,KSP_016_10x403x449,PC polysk,438,374,420.0,,,
+shelf,KSP_017_10x449x108,PC polysk,172,420,79.0,,,
+shelf,KSP_018_10x449x183,PC polysk,240,420,154.0,,,
+shelf,KSP_019_10x449x449,PC polysk,479,420,420.0,,,
+shelf,KSP_020_10x508x108,PC polysk,191,479,79.0,,,
+shelf,KSP_021_10x508x183,PC polysk,266,479,154.0,,,
+shelf,KSP_022_10x108x758,PC polysk,13,79,729.0,,,
+shelf,KSP_023_10x183x758,PC polysk,13,154,729.0,,,
+shelf,KSP_024_10x258x758,PC polysk,13,229,729.0,,,
+shelf,KSP_025_10x358x758,PC polysk,13,329,729.0,,,
+shelf,KSP_026_10x403x758,PC polysk,13,374,729.0,,,
+shelf,KSP_027_10x449x758,PC polysk,13,420,729.0,,,
+shelf,KSP_028_10x258x386,PC polysk,13,229,357.0,,,
+shelf,KSP_029_10x358x552,PC polysk,13,329,523.0,,,
+shelf,KSP_030_10x258x552,PC polysk,13,229,523.0,,,
+shelf,KSP_031_10x258x369,PC polysk,13,229,340.0,,,
+shelf,KSP_032_10x247x508,PC polysk,13,218,479.0,,,
+shelf,KSP_033_10x108x108,PC polysk,13,79,79.0,,,
+shelf,KSP_034_10x258x508,PC polysk,13,229,479.0,,,
+shelf,KSP_001_10x258x108,fornir dab mat,114,229,79.0,,,
+shelf,KSP_002_10x258x183,fornir dab mat,158,229,154.0,,,
+shelf,KSP_003_10x258x258,fornir dab mat,202,229,229.0,,,
+shelf,KSP_004_10x258x358,fornir dab mat,261,229,329.0,,,
+shelf,KSP_005_10x258x403,fornir dab mat,287,229,374.0,,,
+shelf,KSP_006_10x258x449,fornir dab mat,314,229,420.0,,,
+shelf,KSP_007_10x358x108,fornir dab mat,146,329,79.0,,,
+shelf,KSP_008_10x358x183,fornir dab mat,203,329,154.0,,,
+shelf,KSP_009_10x358x358,fornir dab mat,338,329,329.0,,,
+shelf,KSP_010_10x358x403,fornir dab mat,371,329,374.0,,,
+shelf,KSP_011_10x358x449,fornir dab mat,406,329,420.0,,,
+shelf,KSP_012_10x403x108,fornir dab mat,162,374,79.0,,,
+shelf,KSP_013_10x403x183,fornir dab mat,224,374,154.0,,,
+shelf,KSP_014_10x403x358,fornir dab mat,371,374,329.0,,,
+shelf,KSP_015_10x403x403,fornir dab mat,410,374,374.0,,,
+shelf,KSP_016_10x403x449,fornir dab mat,448,374,420.0,,,
+shelf,KSP_017_10x449x108,fornir dab mat,176,420,79.0,,,
+shelf,KSP_018_10x449x183,fornir dab mat,245,420,154.0,,,
+shelf,KSP_019_10x449x449,fornir dab mat,492,420,420.0,,,
+shelf,KSP_020_10x508x108,fornir dab mat,195,479,79.0,,,
+shelf,KSP_021_10x508x183,fornir dab mat,272,479,154.0,,,
+shelf,KSP_022_10x108x758,fornir dab mat,13,79,729.0,,,
+shelf,KSP_023_10x183x758,fornir dab mat,13,154,729.0,,,
+shelf,KSP_024_10x258x758,fornir dab mat,13,229,729.0,,,
+shelf,KSP_025_10x358x758,fornir dab mat,13,329,729.0,,,
+shelf,KSP_026_10x403x758,fornir dab mat,13,374,729.0,,,
+shelf,KSP_027_10x449x758,fornir dab mat,13,420,729.0,,,
+shelf,KSP_028_10x258x386,fornir dab mat,13,229,357.0,,,
+shelf,KSP_029_10x358x552,fornir dab mat,13,329,523.0,,,
+shelf,KSP_030_10x258x552,fornir dab mat,13,229,523.0,,,
+shelf,KSP_031_10x258x369,fornir dab mat,13,229,340.0,,,
+shelf,KSP_032_10x247x508,fornir dab mat,13,218,479.0,,,
+shelf,KSP_033_10x108x108,fornir dab mat,13,79,79.0,,,
+shelf,KSP_034_10x258x508,fornir dab mat,13,229,479.0,,,
+shelf,KSP_001_10x258x108,fornir orzech mat,120,229,79.0,,,
+shelf,KSP_002_10x258x183,fornir orzech mat,167,229,154.0,,,
+shelf,KSP_003_10x258x258,fornir orzech mat,212,229,229.0,,,
+shelf,KSP_004_10x258x358,fornir orzech mat,275,229,329.0,,,
+shelf,KSP_005_10x258x403,fornir orzech mat,303,229,374.0,,,
+shelf,KSP_006_10x258x449,fornir orzech mat,333,229,420.0,,,
+shelf,KSP_007_10x358x108,fornir orzech mat,153,329,79.0,,,
+shelf,KSP_008_10x358x183,fornir orzech mat,214,329,154.0,,,
+shelf,KSP_009_10x358x358,fornir orzech mat,357,329,329.0,,,
+shelf,KSP_010_10x358x403,fornir orzech mat,394,329,374.0,,,
+shelf,KSP_011_10x358x449,fornir orzech mat,432,329,420.0,,,
+shelf,KSP_012_10x403x108,fornir orzech mat,169,374,79.0,,,
+shelf,KSP_013_10x403x183,fornir orzech mat,235,374,154.0,,,
+shelf,KSP_014_10x403x358,fornir orzech mat,394,374,329.0,,,
+shelf,KSP_015_10x403x403,fornir orzech mat,436,374,374.0,,,
+shelf,KSP_016_10x403x449,fornir orzech mat,476,374,420.0,,,
+shelf,KSP_017_10x449x108,fornir orzech mat,183,420,79.0,,,
+shelf,KSP_018_10x449x183,fornir orzech mat,258,420,154.0,,,
+shelf,KSP_019_10x449x449,fornir orzech mat,523,420,420.0,,,
+shelf,KSP_020_10x508x108,fornir orzech mat,203,479,79.0,,,
+shelf,KSP_021_10x508x183,fornir orzech mat,286,479,154.0,,,
+shelf,KSP_022_10x108x758,fornir orzech mat,13,79,729.0,,,
+shelf,KSP_023_10x183x758,fornir orzech mat,13,154,729.0,,,
+shelf,KSP_024_10x258x758,fornir orzech mat,13,229,729.0,,,
+shelf,KSP_025_10x358x758,fornir orzech mat,13,329,729.0,,,
+shelf,KSP_026_10x403x758,fornir orzech mat,13,374,729.0,,,
+shelf,KSP_027_10x449x758,fornir orzech mat,13,420,729.0,,,
+shelf,KSP_028_10x258x386,fornir orzech mat,13,229,357.0,,,
+shelf,KSP_029_10x358x552,fornir orzech mat,13,329,523.0,,,
+shelf,KSP_030_10x258x552,fornir orzech mat,13,229,523.0,,,
+shelf,KSP_031_10x258x369,fornir orzech mat,13,229,340.0,,,
+shelf,KSP_032_10x247x508,fornir orzech mat,13,218,479.0,,,
+shelf,KSP_033_10x108x108,fornir orzech mat,13,79,79.0,,,
+shelf,KSP_034_10x258x508,fornir orzech mat,13,229,479.0,,,
+shelf,KSP_001_10x258x108,fornir orzech polysk,163,229,79.0,,,
+shelf,KSP_002_10x258x183,fornir orzech polysk,242,229,154.0,,,
+shelf,KSP_003_10x258x258,fornir orzech polysk,321,229,229.0,,,
+shelf,KSP_004_10x258x358,fornir orzech polysk,425,229,329.0,,,
+shelf,KSP_005_10x258x403,fornir orzech polysk,471,229,374.0,,,
+shelf,KSP_006_10x258x449,fornir orzech polysk,520,229,420.0,,,
+shelf,KSP_007_10x358x108,fornir orzech polysk,216,329,79.0,,,
+shelf,KSP_008_10x358x183,fornir orzech polysk,321,329,154.0,,,
+shelf,KSP_009_10x358x358,fornir orzech polysk,565,329,329.0,,,
+shelf,KSP_010_10x358x403,fornir orzech polysk,628,329,374.0,,,
+shelf,KSP_011_10x358x449,fornir orzech polysk,691,329,420.0,,,
+shelf,KSP_012_10x403x108,fornir orzech polysk,238,374,79.0,,,
+shelf,KSP_013_10x403x183,fornir orzech polysk,355,374,154.0,,,
+shelf,KSP_014_10x403x358,fornir orzech polysk,628,374,329.0,,,
+shelf,KSP_015_10x403x403,fornir orzech polysk,698,374,374.0,,,
+shelf,KSP_016_10x403x449,fornir orzech polysk,769,374,420.0,,,
+shelf,KSP_017_10x449x108,fornir orzech polysk,261,420,79.0,,,
+shelf,KSP_018_10x449x183,fornir orzech polysk,390,420,154.0,,,
+shelf,KSP_019_10x449x449,fornir orzech polysk,848,420,420.0,,,
+shelf,KSP_020_10x508x108,fornir orzech polysk,291,479,79.0,,,
+shelf,KSP_021_10x508x183,fornir orzech polysk,436,479,154.0,,,
+shelf,KSP_022_10x108x758,fornir orzech polysk,13,79,729.0,,,
+shelf,KSP_023_10x183x758,fornir orzech polysk,13,154,729.0,,,
+shelf,KSP_024_10x258x758,fornir orzech polysk,13,229,729.0,,,
+shelf,KSP_025_10x358x758,fornir orzech polysk,13,329,729.0,,,
+shelf,KSP_026_10x403x758,fornir orzech polysk,13,374,729.0,,,
+shelf,KSP_027_10x449x758,fornir orzech polysk,13,420,729.0,,,
+shelf,KSP_028_10x258x386,fornir orzech polysk,13,229,357.0,,,
+shelf,KSP_029_10x358x552,fornir orzech polysk,13,329,523.0,,,
+shelf,KSP_030_10x258x552,fornir orzech polysk,13,229,523.0,,,
+shelf,KSP_031_10x258x369,fornir orzech polysk,13,229,340.0,,,
+shelf,KSP_032_10x247x508,fornir orzech polysk,13,218,479.0,,,
+shelf,KSP_033_10x108x108,fornir orzech polysk,15,79,79.0,,,
+shelf,KSP_034_10x258x508,fornir orzech polysk,17,229,479.0,,,
+wall,KSPO_001_12x362x262,PC mat,202,329,229.0,,,
+wall,KSPO_002_12x362x362,PC mat,256,329,329.0,,,
+wall,KSPO_003_12x362x407,PC mat,280,329,374.0,,,
+wall,KSPO_004_12x362x453,PC mat,305,329,420.0,,,
+wall,KSPO_005_12x362x512,PC mat,336,329,479.0,,,
+wall,KSPO_006_12x362x556,PC mat,359,329,523.0,,,
+wall,KSPO_007_12x362x762,PC mat,471,329,729.0,,,
+wall,KSPO_008_12x407x262,PC mat,221,374,229.0,,,
+wall,KSPO_009_12x407x407,PC mat,307,374,374.0,,,
+wall,KSPO_010_12x407x453,PC mat,333,374,420.0,,,
+wall,KSPO_011_12x407x512,PC mat,368,374,479.0,,,
+wall,KSPO_012_12x407x556,PC mat,394,374,523.0,,,
+wall,KSPO_013_12x407x762,PC mat,514,374,729.0,,,
+wall,KSPO_014_12x362x556,PC mat,13,329,523.0,,,
+wall,KSPO_015_12x407x373,PC mat,13,374,340.0,,,
+wall,KSPO_016_12x362x112,PC mat,13,329,86.0,,,
+wall,KSPO_017_12x362x625,PC mat,13,329,592.0,,,
+wall,KSPO_001_12x362x262,PC polysk,256,329,229.0,,,
+wall,KSPO_002_12x362x362,PC polysk,329,329,329.0,,,
+wall,KSPO_003_12x362x407,PC polysk,362,329,374.0,,,
+wall,KSPO_004_12x362x453,PC polysk,397,329,420.0,,,
+wall,KSPO_005_12x362x512,PC polysk,441,329,479.0,,,
+wall,KSPO_006_12x362x556,PC polysk,474,329,523.0,,,
+wall,KSPO_007_12x362x762,PC polysk,626,329,729.0,,,
+wall,KSPO_008_12x407x262,PC polysk,282,374,229.0,,,
+wall,KSPO_009_12x407x407,PC polysk,399,374,374.0,,,
+wall,KSPO_010_12x407x453,PC polysk,438,374,420.0,,,
+wall,KSPO_011_12x407x512,PC polysk,486,374,479.0,,,
+wall,KSPO_012_12x407x556,PC polysk,521,374,523.0,,,
+wall,KSPO_013_12x407x762,PC polysk,691,374,729.0,,,
+wall,KSPO_014_12x362x556,PC polysk,13,329,523.0,,,
+wall,KSPO_015_12x407x373,PC polysk,13,374,340.0,,,
+wall,KSPO_016_12x362x112,PC polysk,13,329,86.0,,,
+wall,KSPO_017_12x362x625,PC polysk,13,329,592.0,,,
+wall,KSPO_001_12x362x262,fornir dab mat,261,329,229.0,,,
+wall,KSPO_002_12x362x362,fornir dab mat,338,329,329.0,,,
+wall,KSPO_003_12x362x407,fornir dab mat,371,329,374.0,,,
+wall,KSPO_004_12x362x453,fornir dab mat,406,329,420.0,,,
+wall,KSPO_005_12x362x512,fornir dab mat,451,329,479.0,,,
+wall,KSPO_006_12x362x556,fornir dab mat,485,329,523.0,,,
+wall,KSPO_007_12x362x762,fornir dab mat,642,329,729.0,,,
+wall,KSPO_008_12x407x262,fornir dab mat,287,374,229.0,,,
+wall,KSPO_009_12x407x407,fornir dab mat,410,374,374.0,,,
+wall,KSPO_010_12x407x453,fornir dab mat,448,374,420.0,,,
+wall,KSPO_011_12x407x512,fornir dab mat,499,374,479.0,,,
+wall,KSPO_012_12x407x556,fornir dab mat,535,374,523.0,,,
+wall,KSPO_013_12x407x762,fornir dab mat,708,374,729.0,,,
+wall,KSPO_014_12x362x556,fornir dab mat,13,329,523.0,,,
+wall,KSPO_015_12x407x373,fornir dab mat,13,374,340.0,,,
+wall,KSPO_016_12x362x112,fornir dab mat,13,329,86.0,,,
+wall,KSPO_017_12x362x625,fornir dab mat,13,329,592.0,,,
+wall,KSPO_001_12x362x262,fornir orzech mat,275,329,229.0,,,
+wall,KSPO_002_12x362x362,fornir orzech mat,357,329,329.0,,,
+wall,KSPO_003_12x362x407,fornir orzech mat,394,329,374.0,,,
+wall,KSPO_004_12x362x453,fornir orzech mat,432,329,420.0,,,
+wall,KSPO_005_12x362x512,fornir orzech mat,481,329,479.0,,,
+wall,KSPO_006_12x362x556,fornir orzech mat,516,329,523.0,,,
+wall,KSPO_007_12x362x762,fornir orzech mat,686,329,729.0,,,
+wall,KSPO_008_12x407x262,fornir orzech mat,303,374,229.0,,,
+wall,KSPO_009_12x407x407,fornir orzech mat,446,374,374.0,,,
+wall,KSPO_010_12x407x453,fornir orzech mat,476,374,420.0,,,
+wall,KSPO_011_12x407x512,fornir orzech mat,530,374,479.0,,,
+wall,KSPO_012_12x407x556,fornir orzech mat,570,374,523.0,,,
+wall,KSPO_013_12x407x762,fornir orzech mat,757,374,729.0,,,
+wall,KSPO_014_12x362x556,fornir orzech mat,13,329,523.0,,,
+wall,KSPO_015_12x407x373,fornir orzech mat,13,374,340.0,,,
+wall,KSPO_016_12x362x112,fornir orzech mat,13,329,86.0,,,
+wall,KSPO_017_12x362x625,fornir orzech mat,13,329,592.0,,,
+wall,KSPO_001_12x362x262,fornir orzech polysk,425,329,229.0,,,
+wall,KSPO_002_12x362x362,fornir orzech polysk,565,329,329.0,,,
+wall,KSPO_003_12x362x407,fornir orzech polysk,628,329,374.0,,,
+wall,KSPO_004_12x362x453,fornir orzech polysk,691,329,420.0,,,
+wall,KSPO_005_12x362x512,fornir orzech polysk,775,329,479.0,,,
+wall,KSPO_006_12x362x556,fornir orzech polysk,836,329,523.0,,,
+wall,KSPO_007_12x362x762,fornir orzech polysk,1122,329,729.0,,,
+wall,KSPO_008_12x407x262,fornir orzech polysk,471,374,229.0,,,
+wall,KSPO_009_12x407x407,fornir orzech polysk,698,374,374.0,,,
+wall,KSPO_010_12x407x453,fornir orzech polysk,769,374,420.0,,,
+wall,KSPO_011_12x407x512,fornir orzech polysk,860,374,479.0,,,
+wall,KSPO_012_12x407x556,fornir orzech polysk,928,374,523.0,,,
+wall,KSPO_013_12x407x762,fornir orzech polysk,1250,374,729.0,,,
+wall,KSPO_014_12x362x556,fornir orzech polysk,13,329,523.0,,,
+wall,KSPO_015_12x407x373,fornir orzech polysk,13,374,340.0,,,
+wall,KSPO_016_12x362x112,fornir orzech polysk,13,329,86.0,,,
+wall,KSPO_017_12x362x625,fornir orzech polysk,13,329,592.0,,,
+drawer,KSZ_001,PC mat,1005,x,,229.0,154,329
+drawer,KSZ_002,PC mat,1049,x,,329.0,154,329
+drawer,KSZ_003,PC mat,1068,x,,374.0,154,329
+drawer,KSZ_004,PC mat,1087,x,,420.0,154,329
+drawer,KSZ_005,PC mat,1112,x,,479.0,154,329
+drawer,KSZ_006,PC mat,1131,x,,523.0,154,329
+drawer,KSZ_007,PC mat,1220,x,,729.0,154,329
+drawer,KSZ_008,PC mat,1044,x,,229.0,229,329
+drawer,KSZ_009,PC mat,1096,x,,329.0,229,329
+drawer,KSZ_010,PC mat,1119,x,,374.0,229,329
+drawer,KSZ_011,PC mat,1143,x,,420.0,229,329
+drawer,KSZ_012,PC mat,1175,x,,479.0,229,329
+drawer,KSZ_013,PC mat,1197,x,,523.0,229,329
+drawer,KSZ_014,PC mat,1307,x,,729.0,229,329
+drawer,KSZ_015,PC mat,1079,x,,229.0,229,329
+drawer,KSZ_016,PC mat,1140,x,,329.0,329,329
+drawer,KSZ_017,PC mat,1168,x,,374.0,374,329
+drawer,KSZ_018,PC mat,1196,x,,420.0,420,329
+drawer,KSZ_019,PC mat,1230,x,,479.0,479,329
+drawer,KSZ_020,PC mat,1257,x,,523.0,523,329
+drawer,KSZ_021,PC mat,1382,x,,729.0,729,329
+drawer,KSZ_022,PC mat,1129,x,,229.0,420,329
+drawer,KSZ_023,PC mat,1201,x,,329.0,420,329
+drawer,KSZ_024,PC mat,1234,x,,374.0,420,329
+drawer,KSZ_025,PC mat,1267,x,,420.0,420,329
+drawer,KSZ_026,PC mat,1311,x,,479.0,420,329
+drawer,KSZ_027,PC mat,1342,x,,523.0,420,329
+drawer,KSZ_028,PC mat,1492,x,,729.0,420,329
+drawer,KSZ_001,PC polysk,1005,x,,229.0,154,329
+drawer,KSZ_002,PC polysk,1049,x,,329.0,154,329
+drawer,KSZ_003,PC polysk,1068,x,,374.0,154,329
+drawer,KSZ_004,PC polysk,1087,x,,420.0,154,329
+drawer,KSZ_005,PC polysk,1112,x,,479.0,154,329
+drawer,KSZ_006,PC polysk,1131,x,,523.0,154,329
+drawer,KSZ_007,PC polysk,1220,x,,729.0,154,329
+drawer,KSZ_008,PC polysk,1044,x,,229.0,229,329
+drawer,KSZ_009,PC polysk,1096,x,,329.0,229,329
+drawer,KSZ_010,PC polysk,1119,x,,374.0,229,329
+drawer,KSZ_011,PC polysk,1143,x,,420.0,229,329
+drawer,KSZ_012,PC polysk,1175,x,,479.0,229,329
+drawer,KSZ_013,PC polysk,1197,x,,523.0,229,329
+drawer,KSZ_014,PC polysk,1307,x,,729.0,229,329
+drawer,KSZ_015,PC polysk,1079,x,,229.0,229,329
+drawer,KSZ_016,PC polysk,1140,x,,329.0,329,329
+drawer,KSZ_017,PC polysk,1168,x,,374.0,374,329
+drawer,KSZ_018,PC polysk,1196,x,,420.0,420,329
+drawer,KSZ_019,PC polysk,1230,x,,479.0,479,329
+drawer,KSZ_020,PC polysk,1257,x,,523.0,523,329
+drawer,KSZ_021,PC polysk,1382,x,,729.0,729,329
+drawer,KSZ_022,PC polysk,1129,x,,229.0,420,329
+drawer,KSZ_023,PC polysk,1201,x,,329.0,420,329
+drawer,KSZ_024,PC polysk,1234,x,,374.0,420,329
+drawer,KSZ_025,PC polysk,1267,x,,420.0,420,329
+drawer,KSZ_026,PC polysk,1311,x,,479.0,420,329
+drawer,KSZ_027,PC polysk,1342,x,,523.0,420,329
+drawer,KSZ_028,PC polysk,1492,x,,729.0,420,329
+drawer,KSZ_001,fornir dab mat,1005,x,,229.0,154,329
+drawer,KSZ_002,fornir dab mat,1049,x,,329.0,154,329
+drawer,KSZ_003,fornir dab mat,1068,x,,374.0,154,329
+drawer,KSZ_004,fornir dab mat,1087,x,,420.0,154,329
+drawer,KSZ_005,fornir dab mat,1112,x,,479.0,154,329
+drawer,KSZ_006,fornir dab mat,1131,x,,523.0,154,329
+drawer,KSZ_007,fornir dab mat,1220,x,,729.0,154,329
+drawer,KSZ_008,fornir dab mat,1044,x,,229.0,229,329
+drawer,KSZ_009,fornir dab mat,1096,x,,329.0,229,329
+drawer,KSZ_010,fornir dab mat,1119,x,,374.0,229,329
+drawer,KSZ_011,fornir dab mat,1143,x,,420.0,229,329
+drawer,KSZ_012,fornir dab mat,1175,x,,479.0,229,329
+drawer,KSZ_013,fornir dab mat,1197,x,,523.0,229,329
+drawer,KSZ_014,fornir dab mat,1307,x,,729.0,229,329
+drawer,KSZ_015,fornir dab mat,1079,x,,229.0,229,329
+drawer,KSZ_016,fornir dab mat,1140,x,,329.0,329,329
+drawer,KSZ_017,fornir dab mat,1168,x,,374.0,374,329
+drawer,KSZ_018,fornir dab mat,1196,x,,420.0,420,329
+drawer,KSZ_019,fornir dab mat,1230,x,,479.0,479,329
+drawer,KSZ_020,fornir dab mat,1257,x,,523.0,523,329
+drawer,KSZ_021,fornir dab mat,1382,x,,729.0,729,329
+drawer,KSZ_022,fornir dab mat,1129,x,,229.0,420,329
+drawer,KSZ_023,fornir dab mat,1201,x,,329.0,420,329
+drawer,KSZ_024,fornir dab mat,1234,x,,374.0,420,329
+drawer,KSZ_025,fornir dab mat,1267,x,,420.0,420,329
+drawer,KSZ_026,fornir dab mat,1311,x,,479.0,420,329
+drawer,KSZ_027,fornir dab mat,1342,x,,523.0,420,329
+drawer,KSZ_028,fornir dab mat,1492,x,,729.0,420,329
+drawer,KSZ_001,fornir orzech mat,1005,x,,229.0,154,329
+drawer,KSZ_002,fornir orzech mat,1049,x,,329.0,154,329
+drawer,KSZ_003,fornir orzech mat,1068,x,,374.0,154,329
+drawer,KSZ_004,fornir orzech mat,1087,x,,420.0,154,329
+drawer,KSZ_005,fornir orzech mat,1112,x,,479.0,154,329
+drawer,KSZ_006,fornir orzech mat,1131,x,,523.0,154,329
+drawer,KSZ_007,fornir orzech mat,1220,x,,729.0,154,329
+drawer,KSZ_008,fornir orzech mat,1044,x,,229.0,229,329
+drawer,KSZ_009,fornir orzech mat,1096,x,,329.0,229,329
+drawer,KSZ_010,fornir orzech mat,1119,x,,374.0,229,329
+drawer,KSZ_011,fornir orzech mat,1143,x,,420.0,229,329
+drawer,KSZ_012,fornir orzech mat,1175,x,,479.0,229,329
+drawer,KSZ_013,fornir orzech mat,1197,x,,523.0,229,329
+drawer,KSZ_014,fornir orzech mat,1307,x,,729.0,229,329
+drawer,KSZ_015,fornir orzech mat,1079,x,,229.0,229,329
+drawer,KSZ_016,fornir orzech mat,1140,x,,329.0,329,329
+drawer,KSZ_017,fornir orzech mat,1168,x,,374.0,374,329
+drawer,KSZ_018,fornir orzech mat,1196,x,,420.0,420,329
+drawer,KSZ_019,fornir orzech mat,1230,x,,479.0,479,329
+drawer,KSZ_020,fornir orzech mat,1257,x,,523.0,523,329
+drawer,KSZ_021,fornir orzech mat,1382,x,,729.0,729,329
+drawer,KSZ_022,fornir orzech mat,1129,x,,229.0,420,329
+drawer,KSZ_023,fornir orzech mat,1201,x,,329.0,420,329
+drawer,KSZ_024,fornir orzech mat,1234,x,,374.0,420,329
+drawer,KSZ_025,fornir orzech mat,1267,x,,420.0,420,329
+drawer,KSZ_026,fornir orzech mat,1311,x,,479.0,420,329
+drawer,KSZ_027,fornir orzech mat,1342,x,,523.0,420,329
+drawer,KSZ_028,fornir orzech mat,1492,x,,729.0,420,329
+drawer,KSZ_001,fornir orzech polysk,1005,x,,229.0,154,329
+drawer,KSZ_002,fornir orzech polysk,1049,x,,329.0,154,329
+drawer,KSZ_003,fornir orzech polysk,1068,x,,374.0,154,329
+drawer,KSZ_004,fornir orzech polysk,1087,x,,420.0,154,329
+drawer,KSZ_005,fornir orzech polysk,1112,x,,479.0,154,329
+drawer,KSZ_006,fornir orzech polysk,1131,x,,523.0,154,329
+drawer,KSZ_007,fornir orzech polysk,1220,x,,729.0,154,329
+drawer,KSZ_008,fornir orzech polysk,1044,x,,229.0,229,329
+drawer,KSZ_009,fornir orzech polysk,1096,x,,329.0,229,329
+drawer,KSZ_010,fornir orzech polysk,1119,x,,374.0,229,329
+drawer,KSZ_011,fornir orzech polysk,1143,x,,420.0,229,329
+drawer,KSZ_012,fornir orzech polysk,1175,x,,479.0,229,329
+drawer,KSZ_013,fornir orzech polysk,1197,x,,523.0,229,329
+drawer,KSZ_014,fornir orzech polysk,1307,x,,729.0,229,329
+drawer,KSZ_015,fornir orzech polysk,1079,x,,229.0,229,329
+drawer,KSZ_016,fornir orzech polysk,1140,x,,329.0,329,329
+drawer,KSZ_017,fornir orzech polysk,1168,x,,374.0,374,329
+drawer,KSZ_018,fornir orzech polysk,1196,x,,420.0,420,329
+drawer,KSZ_019,fornir orzech polysk,1230,x,,479.0,479,329
+drawer,KSZ_020,fornir orzech polysk,1257,x,,523.0,523,329
+drawer,KSZ_021,fornir orzech polysk,1382,x,,729.0,729,329
+drawer,KSZ_022,fornir orzech polysk,1129,x,,229.0,420,329
+drawer,KSZ_023,fornir orzech polysk,1201,x,,329.0,420,329
+drawer,KSZ_024,fornir orzech polysk,1234,x,,374.0,420,329
+drawer,KSZ_025,fornir orzech polysk,1267,x,,420.0,420,329
+drawer,KSZ_026,fornir orzech polysk,1311,x,,479.0,420,329
+drawer,KSZ_027,fornir orzech polysk,1342,x,,523.0,420,329
+drawer,KSZ_028,fornir orzech polysk,1492,x,,729.0,420,329

@@ -1,7 +1,8 @@
 'use strict'
 
 import * as THREE from 'three';
-import { changeFrameColor, changeObjectColor, cubesPositions, currentBlock, setCurrentBlock } from './main';
+import { changeFrameColor, changeObjectColor, checkPosition, cubesPositions, currentBlock, setCurrentBlock } from './main';
+import { color } from 'three/src/nodes/TSL.js';
 
 export const roundToDecimal = function (num) {
   return Math.round(num * 1000) / 1000;
@@ -237,4 +238,68 @@ export const modelToClone = function(model, pathName, el = null){
   
   
   return clone;
+}
+
+/**
+ * 
+ * @param {THREE.Mesh} object 
+ * @returns {THREE.Color}
+ */
+export const getFrameColor = function(object){
+  const meshToChange = object.children[0].children[0].children[0];
+  return meshToChange.material.color;
+}
+
+/**
+ * 
+ * @param {THREE.Mesh} object 
+ * @returns {THREE.Color}
+ */
+export const getObjectColor = function(object){
+  const meshToChange = object.children[0].children[0].children[1];
+  return meshToChange.material.color;
+}
+
+/**
+ * 
+ * @param {string} name 
+ */
+export const nameToColor = function(name) {
+  const colorMap = new Map();
+  colorMap.set('gold', 16766720);
+  colorMap.set('9005', 2500134);
+  colorMap.set('bronze', 13467442);
+
+  if (colorMap.has(name)) {
+    const hex = colorMap.get(name);
+    return new THREE.Color().setHex(hex);
+  }
+
+  return new THREE.Color(0, 0, 0);
+};
+
+/**
+ * 
+ * @param {THREE.Mesh} object 
+ */
+export const checkConnections = function(object){
+  const parameters = getParametersFromModel(object.name);
+  const checkPos = checkPosition(object.position);
+  const blockOnTop = checkPos[0];
+  const blockOnLeft = checkPos[1];
+  const blockOnRight = checkPos[2];
+  const blockOnBottom = parameters.type == 'Legged';
+
+  const leftTopSides = blockOnTop + blockOnLeft + 3;
+  const rightTopSides = blockOnTop + blockOnRight + 3;
+  const leftBottomSides = blockOnBottom + blockOnLeft + 3;
+  const rightBottomSides = blockOnBottom + blockOnRight + 3;
+  
+
+  return {
+    'leftTopSides': leftTopSides,
+    'rightTopSides': rightTopSides,
+    'leftBottomSides': leftBottomSides,
+    'rightBottomSides': rightBottomSides
+  }
 }
