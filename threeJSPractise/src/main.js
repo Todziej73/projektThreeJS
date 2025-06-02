@@ -8,6 +8,7 @@ import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 import './debug.js';
+import { getFullPrice } from './prices.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -24,7 +25,7 @@ export const setCurrentBlock = function (object) {
 
 let currentColor = '#ebc027';
 let currentFrameColor = '#0e0e10';
-
+const price = document.querySelector('.price');
 
 scene.add(expansionHandles);
 
@@ -170,6 +171,7 @@ export const addCube = async function (side) {
     changeObjectColor(clone, currentColor);
     changeFrameColor(clone, currentFrameColor);
     canDelete(currentBlock)
+    price.textContent = getFullPrice() + "zł";
   }else{
     console.log("Can't load model");
   }
@@ -259,6 +261,7 @@ deleteModelBtn.addEventListener('click', function(){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
    DIMENSIONS.updateDimensions();
+    price.textContent = getFullPrice() + "zł";
   }
 });
 
@@ -302,6 +305,7 @@ confirmResetBtn.addEventListener('click', function(){
   cubesPositions.clear()
   currentColor = '#ebc027';
   addCube(-1);
+  price.textContent = getFullPrice() + "zł";
 });
 
 cancelResetBtn.addEventListener('click', hideConfirmContainer);
@@ -405,6 +409,7 @@ frameColorInputs.addEventListener('click', function (e) {
       changeFrameColor(obj, clickedEl.dataset.color);
     })
     currentFrameColor = clickedEl.dataset.color;
+    price.textContent = getFullPrice() + "zł";
   }
 })
 

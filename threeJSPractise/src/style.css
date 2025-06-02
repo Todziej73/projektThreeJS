@@ -447,3 +447,20 @@ body{
 .openTuturialBtn:hover{
   color: #f05621;
 }
+
+/* price container */
+
+
+.price-container{
+  position: fixed;
+  z-index: 12;
+  top: 0%;
+  right: 0%;
+  padding: 1em 1.8rem;
+}
+
+.price{
+  font-size: 3rem;
+  text-align: center;
+  font-weight: bold;
+}

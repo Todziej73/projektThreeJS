@@ -224,7 +224,7 @@ const getBoxPrice = function(object){
 }
 
 
-const getFullPrice = function(countDuplicates = false){
+export const getFullPrice = function(countDuplicates = false){
     var fullPrice = 0;
     for(const obj of meshGroup.children){
         

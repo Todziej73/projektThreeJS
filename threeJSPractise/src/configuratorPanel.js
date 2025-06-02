@@ -12,7 +12,7 @@ import * as THREE from 'three';
 
 const tabBtnsContainer = document.querySelector('.select-tab-container');
 const tabs = document.querySelectorAll('.configure-tab');
-
+const price = document.querySelector('.price')
 tabBtnsContainer.addEventListener('click', function (e) {
   if (e.target.classList.contains('open-tab-btn')) {
     const tab = document.querySelector('.' + e.target.dataset.tab);
@@ -80,6 +80,7 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
   };
 
   updateDimensions();
+  price.textContent = getFullPrice() + "zł";
 }
 
 
@@ -155,7 +156,7 @@ export const changeRowSize = async function (group, map, sizeSettings) {
   };
 
   updateDimensions();
-
+  price.textContent = getFullPrice() + "zł";
 }
 
 
@@ -210,6 +211,7 @@ export const changeDepth = async function(group, map, sizeSettings){
     group.remove(el);    
   };
   updateDimensions();
+  price.textContent = getFullPrice() + "zł";
 }
 
 
@@ -234,6 +236,7 @@ const changeWall = async function(block, wallType){
   replaceBlock.position.z = block.position.z;
   meshGroup.remove(block);
   meshGroup.add(replaceBlock);
+  price.textContent = getFullPrice() + "zł";
 }
 
 
