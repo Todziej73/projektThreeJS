@@ -6,7 +6,7 @@ import pricesText from '/src/prices.csv?raw';
 
 /**
  * @type {{
- *  drawers: [{width: number, height: number, depth: number, price: number}],
+ *  drawers: [{width: number, height: number, price: number}],
  *  walls: [{width: number, height: number, price: number, type: string}],
  *  feet: [{color: THREE.Color, price: number}],
  *  knees: [{color: THREE.Color, connects: number, price: number}],
@@ -25,18 +25,23 @@ const _PRICES = {
 function importPrices() {
     const rows = pricesText.split("\n");
     for(let i = 0; i < rows.length; i++){
-        rows[i] = rows[i].split(",");
+        rows[i] = rows[i].split(";");
     }
 
     
-    rows.forEach(r => {
-        if(r[0] == 'other') _PRICES.handle = {'price':parseFloat(r[3])};
-        else if(r[0] == 'feet') _PRICES.feet.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3])});
-        else if(r[0] == 'profile') _PRICES.profiles.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'len':parseInt(r[6])});
-        else if(r[0] == 'knee') _PRICES.knees.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'connects': parseInt(r[1].split('lacznik ')[1])});
-        else if(r[0] == 'drawer') _PRICES.drawers.push({'depth':parseInt(r[8]), 'height':parseInt(r[7]), 'width':parseInt(r[6]), 'price':parseFloat(r[3])});
-        else if(r[0] == 'wall' || r[0] == 'shelf') _PRICES.walls.push({'width':parseInt(r[4]), 'height':parseInt(r[5]), 'price':parseFloat(r[3])});
-    });
+    for(const r of rows){
+        if(r.length < 6) continue;       
+
+        const compareName = r[0].split(" ")[0].toLowerCase();
+        const compareType = r[1].split(" ")[0].toLowerCase();
+
+        if(compareName == 'uchwyt') _PRICES.handle = {'price':parseFloat(r[3])};
+        else if(compareType == 'foot') _PRICES.feet.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3])});
+        else if(compareType == 'profil') _PRICES.profiles.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'len':parseInt(r[1].split(" ")[1])});
+        else if(compareType == 'kolano') _PRICES.knees.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'connects': parseInt(r[1].split(" ")[1])});
+        else if(compareType == 'szuflada') _PRICES.drawers.push({'height':parseInt(r[7]), 'width':parseInt(r[6]), 'price':parseFloat(r[3])});
+        else if(compareType == 'ściana' || compareType == 'półka') _PRICES.walls.push({'width':parseInt(r[4]), 'height':parseInt(r[5]), 'price':parseFloat(r[3])});
+    };
     
 }
 
@@ -52,7 +57,7 @@ function importPrices() {
  */
 const getDrawerPrice = function(data){
     const drawer = _PRICES['drawers'].find(drawer =>
-        drawer.width == data.parameters.width && drawer.height == data.parameters.height && drawer.depth == data.parameters.depth
+        drawer.width == data.parameters.width && drawer.height == data.parameters.height
     );
 
     const drawerPrice = drawer.price;
