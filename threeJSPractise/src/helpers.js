@@ -303,3 +303,20 @@ export const checkConnections = function(object){
     'rightBottomSides': rightBottomSides
   }
 }
+
+/**
+ * 
+ * @param {THREE.Group} object 
+ */
+export const getFullObjectData = function(object){
+  const modelParameters = getParametersFromModel(object.name);
+  const frameColor = getFrameColor(object);
+  const objectColor = getObjectColor(object);
+  
+  const data = {
+      'parameters': modelParameters,
+      'colors': {'frameColor':frameColor, 'objectColor': objectColor}
+  }
+  
+  return data;
+}

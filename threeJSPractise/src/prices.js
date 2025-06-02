@@ -1,5 +1,5 @@
-import { checkConnections, getFrameColor, getObjectColor, getParametersFromModel, nameToColor } from "./helpers";
-import { checkSides, meshGroup } from "./main"
+import { checkConnections, getFrameColor, getFullObjectData, getObjectColor, getParametersFromModel, nameToColor } from "./helpers";
+import { checkPosition, checkSides, meshGroup } from "./main"
 import * as THREE from 'three';
 import pricesText from '/src/prices.csv?raw';
 
@@ -80,38 +80,44 @@ const getWallPrice = function(width, height){
  *    parameters: { width: number, height: number, depth: number, module: string, type: string },
  *    colors: { frameColor: THREE.Color, objectColor: THREE.Color }
  * }} data
- * @returns {number}
  */
 const getWallsPrice = function(data){
     const ml = data.parameters.module.replace("module_");
 
-    const horizontalWallsAmount = (ml.includes('TB') ? 0 : 2) // poziome 
-    const frontBackWallsAmount = (ml.includes('F') ? 0 : 1) + (ml.includes('B') ? 0 : 1) // pionowe Front Back 
-    const sideWallsAmount = (ml.includes('L') ? 0 : 1) + (ml.includes('R') ? 0 : 1) // pionowe Left Right 
+    const horizontalWallsAmount = (ml.includes('TB') ? 0 : 2); // poziome 
+    const frontBackWallsAmount = (ml.includes('F') ? 0 : 1) + (ml.includes('B') ? 0 : 1); // pionowe Front Back 
+    const sideWallsAmount = (ml.includes('L') ? 0 : 1) + (ml.includes('R') ? 0 : 1); // pionowe Left Right 
 
-// -- shelf
-    // (width = width, height = depth)
-    const horizontalWallsPrice = getWallPrice(data.parameters.width, data.parameters.depth) * horizontalWallsAmount;
+    // -- shelf
+    const horizontalWallsUnitPrice = getWallPrice(data.parameters.width, data.parameters.depth);
+    const horizontalWallsPrice = horizontalWallsUnitPrice * horizontalWallsAmount;
 
-// -- wall
-    // (width = width, height = height)
-    const frontBackWallsPrice = getWallPrice(data.parameters.width, data.parameters.height) * frontBackWallsAmount;
+    // -- wall
+    const frontBackWallsUnitPrice = getWallPrice(data.parameters.width, data.parameters.height);
+    const frontBackWallsPrice = frontBackWallsUnitPrice * frontBackWallsAmount;
 
-    // (width = depth, height = height)
-    const sideWallsPrice = getWallPrice(data.parameters.depth, data.parameters.height) * sideWallsAmount;
-
+    const sideWallsUnitPrice = getWallPrice(data.parameters.depth, data.parameters.height);
+    const sideWallsPrice = sideWallsUnitPrice * sideWallsAmount;
 
     const fullPrice = frontBackWallsPrice + horizontalWallsPrice + sideWallsPrice;
 
-    return fullPrice;
-}
+    return {
+        'fullPrice': fullPrice,
+        'frontBackWallsPrice': frontBackWallsPrice,
+        'frontBackWallsAmount': frontBackWallsAmount,
+        'sideWallsPrice': sideWallsPrice,
+        'sideWallsAmount': sideWallsAmount,
+        'horizontalWallsPrice': horizontalWallsPrice,
+        'horizontalWallsAmount': horizontalWallsAmount,
+    };
+};
+
 
 /**
  * @param {{
  *    parameters: { width: number, height: number, depth: number, module: string, type: string },
  *    colors: { frameColor: THREE.Color, objectColor: THREE.Color }
  * }} data
- * @returns {number}
  */
 const getKneesPrice = function(object, data){
     const connections = checkConnections(object);
@@ -131,7 +137,13 @@ const getKneesPrice = function(object, data){
 
     const fullPrice = topLeftPrice + bottomLeftPrice + topRightPrice + bottomRightPrice;
 
-    return fullPrice;
+    return {
+        "fullPrice": fullPrice,
+        "topLeftPrice": topLeftPrice,
+        "bottomLeftPrice": bottomLeftPrice,
+        "topRightPrice": topRightPrice,
+        "bottomRightPrice": bottomRightPrice 
+    };
 }
 
 /**
@@ -159,7 +171,6 @@ const getFeetPrice = function(data){
  *    parameters: { width: number, height: number, depth: number, module: string, type: string },
  *    colors: { frameColor: THREE.Color, objectColor: THREE.Color }
  * }} data
- * @returns {number}
  */
 const getProfilesPrice = function(data) {
     const frameColor = data.colors.frameColor.getHex();
@@ -179,29 +190,27 @@ const getProfilesPrice = function(data) {
     const dPrice = dProfile.price;
 
     const fullPrice = (hPrice * 4) + (wPrice * 4) + (dPrice * 4);
-    return fullPrice;
+    return {
+        "fullPrice": fullPrice,
+        "hPrice": hPrice,
+        "wPrice": wPrice,
+        "dPrice": dPrice
+    };
 };
 
 
 
 const getBoxPrice = function(object){
-    const modelParameters = getParametersFromModel(object.name);
-    const frameColor = getFrameColor(object);
-    const objectColor = getObjectColor(object);
-    
-    const data = {
-        'parameters': modelParameters,
-        'colors': {'frameColor':frameColor, 'objectColor': objectColor}
-    }    
+    const data = getFullObjectData(object);
 
     // price calcs
 
     const drawerPrice = data['parameters']['module'] == 'module_' ? getDrawerPrice(data) : 0;
     const handlePrice = data['parameters']['module'] == 'module_' ? _PRICES.handle.price : 0;
     const feetPrice = data['parameters']['type'] == 'Legged' ? getFeetPrice(data) : 0;
-    const profilesPrice = getProfilesPrice(data);
-    const kneesPrice = getKneesPrice(object, data);
-    const wallsPrice = getWallsPrice(data);
+    const profilesPrice = getProfilesPrice(data).fullPrice;
+    const kneesPrice = getKneesPrice(object, data).fullPrice;
+    const wallsPrice = getWallsPrice(data).fullPrice;
 
     const price = drawerPrice + feetPrice + profilesPrice + kneesPrice + handlePrice + wallsPrice;
 
@@ -210,11 +219,36 @@ const getBoxPrice = function(object){
 }
 
 
-const getFullPrice = function(){
+const getFullPrice = function(countDuplicates = false){
     var fullPrice = 0;
-    meshGroup.children.forEach(obj => {
+    for(const obj of meshGroup.children){
+        
         fullPrice += getBoxPrice(obj);
-    });
+
+        if(countDuplicates) continue;
+        const posChecked = checkPosition(obj.position);
+        const boxesAround = {
+            "top": !posChecked[0],
+            "bottom": getParametersFromModel(obj.name).type != "Legged",
+            "left": !posChecked[1],
+            "right": !posChecked[2]
+        };
+        const data = getFullObjectData(obj);
+        const profilesPrice = getProfilesPrice(data);
+        const kneesPrice = getKneesPrice(obj, data);
+        const wallsPrice = getWallsPrice(data);
+
+        if(boxesAround.bottom) fullPrice -= (profilesPrice.wPrice / 2) 
+            + (kneesPrice.bottomLeftPrice + kneesPrice.bottomRightPrice) 
+            + (wallsPrice.horizontalWallsAmount == 2 ? wallsPrice.horizontalWallsPrice / 2 : 0);
+
+        if(boxesAround.left) fullPrice -= (profilesPrice.dPrice / 2) 
+            + (profilesPrice.hPrice / 2) 
+            + (kneesPrice.topLeftPrice) 
+            + (wallsPrice.sideWallsAmount == 2 ? wallsPrice.sideWallsPrice / 2 : 0);
+
+
+    };
 
     return fullPrice;
 }
@@ -228,3 +262,4 @@ importPrices();
 window._PRICES = _PRICES;
 window.getBoxPrice = getBoxPrice;
 window.getFullPrice = getFullPrice;
+window.getWallPrice = getWallPrice;
