@@ -40,7 +40,7 @@ function importPrices() {
         else if(compareType == 'profil') _PRICES.profiles.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'len':parseInt(r[1].split(" ")[1])});
         else if(compareType == 'kolano') _PRICES.knees.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'connects': parseInt(r[1].split(" ")[1])});
         else if(compareType == 'szuflada') _PRICES.drawers.push({'height':parseInt(r[7]), 'width':parseInt(r[6]), 'price':parseFloat(r[3])});
-        else if(compareType == 'ściana' || compareType == 'półka') _PRICES.walls.push({'width':parseInt(r[4]), 'height':parseInt(r[5]), 'price':parseFloat(r[3])});
+        else if(["ściana", "półka"].includes(compareType) && r[2] == "PC mat") _PRICES.walls.push({'width':parseInt(r[4]), 'height':parseInt(r[5]), 'price':parseFloat(r[3]), 'type': compareType});
     };
     
 }
@@ -71,10 +71,20 @@ const getDrawerPrice = function(data){
  * @param {number} height 
  * @returns {number}
  */
-const getWallPrice = function(width, height){
-    const wallPrice = _PRICES['walls'].find(wall => 
-        wall.width == width && wall.height == height || wall.height == width && wall.width == height
-    ).price;
+const getWallPrice = function(width, height, type, debug = false){
+    const wall = _PRICES['walls'].find(wall => 
+        (wall.width == width && wall.height == height || wall.height == width && wall.width == height) && wall.type == type
+    );
+    if(!wall){
+        console.error(`${type} o wymiarach ${width}x${height} nie została znaleziona!`);
+        return;
+    }
+
+    const wallPrice = wall.price;
+    if(debug){
+        console.log(`${width}x${height} -> ${type}`);
+        console.log(wallPrice, wall.type);
+    }
 
     return wallPrice;
 }
@@ -86,7 +96,7 @@ const getWallPrice = function(width, height){
  *    colors: { frameColor: THREE.Color, objectColor: THREE.Color }
  * }} data
  */
-const getWallsPrice = function(data){
+const getWallsPrice = function(data, debug = false){
     const ml = data.parameters.module.replace("module_");
 
     const horizontalWallsAmount = (ml.includes('TB') ? 0 : 2); // poziome 
@@ -94,14 +104,14 @@ const getWallsPrice = function(data){
     const sideWallsAmount = (ml.includes('L') ? 0 : 1) + (ml.includes('R') ? 0 : 1); // pionowe Left Right 
 
     // -- shelf
-    const horizontalWallsUnitPrice = getWallPrice(data.parameters.width, data.parameters.depth);
+    const horizontalWallsUnitPrice = getWallPrice(data.parameters.width, data.parameters.depth, "półka", debug);
     const horizontalWallsPrice = horizontalWallsUnitPrice * horizontalWallsAmount;
 
     // -- wall
-    const frontBackWallsUnitPrice = getWallPrice(data.parameters.width, data.parameters.height);
+    const frontBackWallsUnitPrice = getWallPrice(data.parameters.width, data.parameters.height, "ściana", debug);
     const frontBackWallsPrice = frontBackWallsUnitPrice * frontBackWallsAmount;
 
-    const sideWallsUnitPrice = getWallPrice(data.parameters.depth, data.parameters.height);
+    const sideWallsUnitPrice = getWallPrice(data.parameters.depth, data.parameters.height, "ściana", debug);
     const sideWallsPrice = sideWallsUnitPrice * sideWallsAmount;
 
     const fullPrice = frontBackWallsPrice + horizontalWallsPrice + sideWallsPrice;
@@ -205,7 +215,7 @@ const getProfilesPrice = function(data) {
 
 
 
-const getBoxPrice = function(object){
+const getBoxPrice = function(object, countDuplicates = false){
     const data = getFullObjectData(object);
 
     // price calcs
@@ -217,46 +227,60 @@ const getBoxPrice = function(object){
     const kneesPrice = getKneesPrice(object, data).fullPrice;
     const wallsPrice = getWallsPrice(data).fullPrice;
 
-    const price = drawerPrice + feetPrice + profilesPrice + kneesPrice + handlePrice + wallsPrice;
+    let price = drawerPrice + feetPrice + profilesPrice + kneesPrice + handlePrice + wallsPrice;
 
+    if(countDuplicates) return price;
+    const posChecked = checkPosition(object.position);
+    const boxesAround = {
+        "top": !posChecked[0],
+        "bottom": getParametersFromModel(object.name).type != "Legged",
+        "left": !posChecked[1],
+        "right": !posChecked[2]
+    };
+
+    if(boxesAround.bottom) price -= (profilesPrice.wPrice / 2) 
+        + (kneesPrice.bottomLeftPrice + kneesPrice.bottomRightPrice) 
+        + (wallsPrice.horizontalWallsAmount == 2 ? wallsPrice.horizontalWallsPrice / 2 : 0);
+    if(boxesAround.left) price -= (profilesPrice.dPrice / 2) 
+        + (profilesPrice.hPrice / 2) 
+        + (kneesPrice.topLeftPrice) 
+        + (wallsPrice.sideWallsAmount == 2 ? wallsPrice.sideWallsPrice / 2 : 0);
     
     return price;
 }
 
 
-export const getFullPrice = function(countDuplicates = false){
+
+export const getFullPrice = function(countDuplicates = false, debug = true){
     var fullPrice = 0;
     for(const obj of meshGroup.children){
-        
-        fullPrice += getBoxPrice(obj);
-
-        if(countDuplicates) continue;
-        const posChecked = checkPosition(obj.position);
-        const boxesAround = {
-            "top": !posChecked[0],
-            "bottom": getParametersFromModel(obj.name).type != "Legged",
-            "left": !posChecked[1],
-            "right": !posChecked[2]
-        };
-        const data = getFullObjectData(obj);
-        const profilesPrice = getProfilesPrice(data);
-        const kneesPrice = getKneesPrice(obj, data);
-        const wallsPrice = getWallsPrice(data);
-
-        if(boxesAround.bottom) fullPrice -= (profilesPrice.wPrice / 2) 
-            + (kneesPrice.bottomLeftPrice + kneesPrice.bottomRightPrice) 
-            + (wallsPrice.horizontalWallsAmount == 2 ? wallsPrice.horizontalWallsPrice / 2 : 0);
-
-        if(boxesAround.left) fullPrice -= (profilesPrice.dPrice / 2) 
-            + (profilesPrice.hPrice / 2) 
-            + (kneesPrice.topLeftPrice) 
-            + (wallsPrice.sideWallsAmount == 2 ? wallsPrice.sideWallsPrice / 2 : 0);
-
-
+        fullPrice += getBoxPrice(obj, countDuplicates);
+        if(debug) priceDebug(obj, countDuplicates);
     };
 
     return fullPrice;
 }
+
+
+const priceDebug = function(object, countDuplicates = false){
+    const data = getFullObjectData(object);
+    const price = getBoxPrice(object, countDuplicates);
+    const profilesPrice = getProfilesPrice(data).fullPrice;
+    const kneesPrice = getKneesPrice(object, data).fullPrice;
+    const wallsPrice = getWallsPrice(data, true).fullPrice;
+    const drawerPrice = getDrawerPrice(data);
+    const feetPrice = getFeetPrice(data);
+    console.log("data: ",data);
+    console.log("-=-=-=-=-=-");
+    console.log('price: ', price);
+    console.log('profiles: ', profilesPrice);
+    console.log('knees: ', kneesPrice);
+    console.log('walls: ', wallsPrice);
+    console.log('drawer: ', drawerPrice);
+    console.log('feet: ', feetPrice);
+    console.log("-=-=-=-=-=-");
+}
+
 
 // -=-=-=-=-=-=-=-=-=-
 
@@ -268,3 +292,4 @@ window._PRICES = _PRICES;
 window.getBoxPrice = getBoxPrice;
 window.getFullPrice = getFullPrice;
 window.getWallPrice = getWallPrice;
+window.priceDebug = priceDebug;
