@@ -56,6 +56,7 @@ function importPrices() {
  * @returns {number}
  */
 const getDrawerPrice = function(data){
+    if(data['parameters']['module'] != 'module_') return 0;
     const drawer = _PRICES['drawers'].find(drawer =>
         drawer.width == data.parameters.width && drawer.height == data.parameters.height
     );
@@ -97,10 +98,10 @@ const getWallPrice = function(width, height, type, debug = false){
  * }} data
  */
 const getWallsPrice = function(data, debug = false){
-    const ml = data.parameters.module.replace("module_");
+    const ml = data.parameters.module.replace("module_", "");
 
     const horizontalWallsAmount = (ml.includes('TB') ? 0 : 2); // poziome 
-    const frontBackWallsAmount = (ml.includes('F') ? 0 : 1) + (ml.includes('B') ? 0 : 1); // pionowe Front Back 
+    const frontBackWallsAmount = (ml.includes('F') || ml == "" ? 0 : 1) + (ml.includes('B') ? 0 : 1); // pionowe Front Back 
     const sideWallsAmount = (ml.includes('L') ? 0 : 1) + (ml.includes('R') ? 0 : 1); // pionowe Left Right 
 
     // -- shelf
@@ -169,6 +170,7 @@ const getKneesPrice = function(object, data){
  * @returns {number}
  */
 const getFeetPrice = function(data){
+    if(data['parameters']['type'] != 'Legged') return 0;
     const feet = _PRICES['feet'].find(feet => 
         feet.color.getHex() === data.colors.frameColor.getHex()
     );
@@ -213,6 +215,11 @@ const getProfilesPrice = function(data) {
     };
 };
 
+const getHandlePrice = function(data){
+    if(data['parameters']['module'] != 'module_') return 0;
+
+    return _PRICES.handle.price;
+}
 
 
 const getBoxPrice = function(object, countDuplicates = false){
@@ -220,14 +227,14 @@ const getBoxPrice = function(object, countDuplicates = false){
 
     // price calcs
 
-    const drawerPrice = data['parameters']['module'] == 'module_' ? getDrawerPrice(data) : 0;
-    const handlePrice = data['parameters']['module'] == 'module_' ? _PRICES.handle.price : 0;
-    const feetPrice = data['parameters']['type'] == 'Legged' ? getFeetPrice(data) : 0;
-    const profilesPrice = getProfilesPrice(data).fullPrice;
-    const kneesPrice = getKneesPrice(object, data).fullPrice;
-    const wallsPrice = getWallsPrice(data).fullPrice;
+    const drawerPrice = getDrawerPrice(data);
+    const handlePrice =  getHandlePrice(data);
+    const feetPrice = getFeetPrice(data);
+    const profilesPrice = getProfilesPrice(data);
+    const kneesPrice = getKneesPrice(object, data);
+    const wallsPrice = getWallsPrice(data);
 
-    let price = drawerPrice + feetPrice + profilesPrice + kneesPrice + handlePrice + wallsPrice;
+    let price = drawerPrice + feetPrice + profilesPrice.fullPrice + kneesPrice.fullPrice + handlePrice + wallsPrice.fullPrice;
 
     if(countDuplicates) return price;
     const posChecked = checkPosition(object.position);
@@ -251,10 +258,11 @@ const getBoxPrice = function(object, countDuplicates = false){
 
 
 
-export const getFullPrice = function(countDuplicates = false, debug = true){
+export const getFullPrice = function(countDuplicates = false, debug = false){
     var fullPrice = 0;
     for(const obj of meshGroup.children){
         fullPrice += getBoxPrice(obj, countDuplicates);
+        
         if(debug) priceDebug(obj, countDuplicates);
     };
 
