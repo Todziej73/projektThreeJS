@@ -13,7 +13,8 @@ const setup = function () {
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,
-    alpha: true
+    alpha: true,
+    preserveDrawingBuffer: true
   });
 
   renderer.getContext('webgl', { failIfMajorPerformanceCaveat: false });

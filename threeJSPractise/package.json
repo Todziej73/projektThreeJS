@@ -19,6 +19,7 @@
     "draco": "^0.0.1",
     "globby": "^14.1.0",
     "gltf-pipeline": "^4.1.0",
+    "html2canvas": "^1.4.1",
     "three": "^0.173.0"
   }
 }
