@@ -9,7 +9,6 @@ import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 import './debug.js';
 import { getFullPrice } from './prices.js';
-import { connectBlocks } from './connections.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
