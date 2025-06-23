@@ -1,5 +1,6 @@
 'use strict'
 import { updateActiveVisibler } from "./activeVisibler";
+import { connectWithJoints } from "./connections";
 import { updateDimensions } from "./dimensions";
 import { createAddBtns } from "./expansionHandles";
 import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,getParametersFromModel,roundToDecimal, select, modelToClone} from "./helpers";
@@ -80,6 +81,7 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
   };
 
   updateDimensions();
+  await connectWithJoints();
   price.textContent = getFullPrice() + "zł";
 }
 
@@ -156,6 +158,8 @@ export const changeRowSize = async function (group, map, sizeSettings) {
   };
 
   updateDimensions();
+  await connectWithJoints();
+
   price.textContent = getFullPrice() + "zł";
 }
 
@@ -211,6 +215,8 @@ export const changeDepth = async function(group, map, sizeSettings){
     group.remove(el);    
   };
   updateDimensions();
+  await connectWithJoints();
+
   price.textContent = getFullPrice() + "zł";
 }
 

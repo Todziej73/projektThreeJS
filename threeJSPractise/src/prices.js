@@ -1,4 +1,4 @@
-import { checkConnections, getFrameColor, getFullObjectData, getObjectColor, getParametersFromModel, nameToColor } from "./helpers";
+import { boxesAround, checkConnections, getFrameColor, getFullObjectData, getObjectColor, getParametersFromModel, nameToColor } from "./helpers";
 import { checkPosition, checkSides, meshGroup } from "./main"
 import * as THREE from 'three';
 import pricesText from '/src/prices.csv?raw';
@@ -237,18 +237,12 @@ const getBoxPrice = function(object, countDuplicates = false){
     let price = drawerPrice + feetPrice + profilesPrice.fullPrice + kneesPrice.fullPrice + handlePrice + wallsPrice.fullPrice;
 
     if(countDuplicates) return price;
-    const posChecked = checkPosition(object.position);
-    const boxesAround = {
-        "top": !posChecked[0],
-        "bottom": getParametersFromModel(object.name).type != "Legged",
-        "left": !posChecked[1],
-        "right": !posChecked[2]
-    };
+    const bAround = boxesAround(object);
 
-    if(boxesAround.bottom) price -= (profilesPrice.wPrice / 2) 
+    if(bAround.bottom) price -= (profilesPrice.wPrice / 2) 
         + (kneesPrice.bottomLeftPrice + kneesPrice.bottomRightPrice) 
         + (wallsPrice.horizontalWallsAmount == 2 ? wallsPrice.horizontalWallsPrice / 2 : 0);
-    if(boxesAround.left) price -= (profilesPrice.dPrice / 2) 
+    if(bAround.left) price -= (profilesPrice.dPrice / 2) 
         + (profilesPrice.hPrice / 2) 
         + (kneesPrice.topLeftPrice) 
         + (wallsPrice.sideWallsAmount == 2 ? wallsPrice.sideWallsPrice / 2 : 0);

@@ -9,6 +9,7 @@ import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 import './debug.js';
 import { getFullPrice } from './prices.js';
+import { changeJointsColor, connectWithJoints, setJointsVisibility } from './connections.js';
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -35,7 +36,7 @@ const toggleAddBtn = function (addBtn, visible, layer) {
   addBtn.layers.set(layer);
 }
 
-const hasValue = function (map, posX, posY) {
+export const hasValue = function (map, posX, posY) {
   let has = false;
   map.forEach(function (el) {
     if (el.x_index === posX && el.y_index === posY) {
@@ -172,6 +173,9 @@ export const addCube = async function (side) {
     changeFrameColor(clone, currentFrameColor);
     canDelete(currentBlock)
     price.textContent = getFullPrice() + "zł";
+    await connectWithJoints();
+    
+    changeJointsColor(new THREE.Color(currentFrameColor));
   }else{
     console.log("Can't load model");
   }
@@ -257,12 +261,13 @@ function canDelete(currentBlock) {
 
 
 
-deleteModelBtn.addEventListener('click', function(){
+deleteModelBtn.addEventListener('click', async function(){
   if(currentBlock && deleteModelBtn.classList.contains('active-btn')){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
    DIMENSIONS.updateDimensions();
     price.textContent = getFullPrice() + "zł";
+    await connectWithJoints();
   }
 });
 
@@ -411,6 +416,7 @@ frameColorInputs.addEventListener('click', function (e) {
     })
     currentFrameColor = clickedEl.dataset.color;
     price.textContent = getFullPrice() + "zł";
+    changeJointsColor(new THREE.Color(currentFrameColor));
   }
 })
 
@@ -492,6 +498,7 @@ const getPredictedSize = function (x_index, y_index) {
 //* loads the first element
 // addCube(-1);
 DIMENSIONS.setDimensionsVisiblity(true);
+setJointsVisibility(true);
 document.querySelector('div[data-color="#262626"]').click();
 
 
@@ -503,8 +510,3 @@ export {
   scene,
   meshGroup,
 };
-
-
-window.cubesPositions = cubesPositions;
-window.currentBlock = currentBlock;
-window.meshGroup = meshGroup;

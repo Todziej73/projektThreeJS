@@ -6,6 +6,7 @@ import { getParametersFromModel, select, extremeValues, getModelSize, extremeInA
 
 
 const dimensionsGroup = new THREE.Group();
+dimensionsGroup.name = "DIMENSIONS_GROUP";
 
 
 
@@ -19,7 +20,7 @@ const TextOptions = {
 
 
 
-const setDimensionsVisiblity = async function(visible = true){
+const setDimensionsVisiblity = function(visible = true){
     if(!scene) return;
 
     if(visible) scene.add(dimensionsGroup);

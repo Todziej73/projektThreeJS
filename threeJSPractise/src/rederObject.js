@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Font, FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import * as THREE from 'three';
-import {addCube} from "./main.js";
+import {addCube} from "./main";
 import { _timerStart, _timerStop } from './debug.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
@@ -63,33 +63,6 @@ dracoLoader.setDecoderPath("draco/");
 const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
 
-
-
-const widths = [229, 329, 374, 420, 479, 523, 729];
-const depths = [329, 374];
-const heights = [79, 154, 229, 329, 374, 420];
-
-const modules = ['', 'F', 'FB', 'FBLR', 'FBLRTB']
-const type = ['Normal', 'Legged'];
-
-const queue = [];
-const modelPaths = [];
-const models = {};
-
-modules.forEach(mod => {
-    type.forEach(type => {
-        widths.forEach(w => {
-            depths.forEach(d => {
-                heights.forEach(h => {
-                    const path = `klagem/module_${mod}/${type}/${w}x${d}x${h}.glb`;                    
-                    modelPaths.push(path);
-                    queue.push(path);                    
-                });
-            });
-        });
-    });
-})
-
 const loadNextInQueue = async function(){
     if(queue.length <= 0) return;
     const toLoad = queue[0];
@@ -140,7 +113,10 @@ const getModel = async function(path){
     return models[path];
 }
 
-
+const pushQueue = function(path){
+    modelPaths.push(path);
+    queue.push(path);    
+}
 
 const fill = document.querySelector('.fill');
 const text = document.querySelector('.outline');
@@ -155,14 +131,43 @@ mustManager.onProgress = function (url, itemsLoaded, itemsTotal) {
 
 
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+const widths = [229, 329, 374, 420, 479, 523, 729];
+const depths = [329, 374];
+const heights = [79, 154, 229, 329, 374, 420];
+
+const modules = ['', 'F', 'FB', 'FBLR', 'FBLRTB']
+const type = ['Normal', 'Legged'];
+
+const queue = [];
+const modelPaths = [];
+const models = {};
+
+pushQueue("klagem/joints/Joint01.glb");
+pushQueue("klagem/joints/Joint02.glb");
+pushQueue("klagem/joints/Joint03.glb");
+pushQueue("klagem/joints/Joint04.glb");
+
+modules.forEach(mod => {
+    type.forEach(type => {
+        widths.forEach(w => {
+            depths.forEach(d => {
+                heights.forEach(h => {
+                    const path = `klagem/module_${mod}/${type}/${w}x${d}x${h}.glb`;                    
+                    pushQueue(path);    
+                });
+            });
+        });
+    });
+})
+
 
 
 
 loadAllQueue();
-
-
-
-
-
 
 export{loadText, getModel};

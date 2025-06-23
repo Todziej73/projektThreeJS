@@ -1,4 +1,6 @@
-import { meshGroup, setCurrentBlock } from "./main";
+import { changeJointsColor } from "./connections";
+import { meshGroup, scene, setCurrentBlock, cubesPositions, currentBlock } from "./main";
+import * as THREE from 'three';
 
 /**
  * | DEBUG FUNCTION | -> Rapidly changes size of random blocks
@@ -43,6 +45,14 @@ export const _timerStop = function(){
 
 
 //* DEBUG
-window._startChangingSizes = _startChangingSizes;
-window._timerStart = _timerStart;
-window._timerStop = _timerStop;
+window.onload = ()=>{
+    window.scene = scene;
+    window._startChangingSizes = _startChangingSizes;
+    window._timerStart = _timerStart;
+    window._timerStop = _timerStop;
+    window.cubesPositions = cubesPositions;
+    window.currentBlock = currentBlock;
+    window.meshGroup = meshGroup;
+    window.THREE = THREE;
+    window.changeJointsColor = changeJointsColor;
+};

@@ -1,7 +1,7 @@
 'use strict'
 
 import * as THREE from 'three';
-import { changeFrameColor, changeObjectColor, checkPosition, cubesPositions, currentBlock, setCurrentBlock } from './main';
+import { changeFrameColor, changeObjectColor, checkPosition, cubesPositions, currentBlock, hasValue, setCurrentBlock } from './main';
 import { color } from 'three/src/nodes/TSL.js';
 
 export const roundToDecimal = function (num) {
@@ -42,6 +42,11 @@ export const getModelSize = function (object) {
 };
 
 //* generate points based on the objects/ width height
+/**
+ * 
+ * @param {THREE.Mesh} object 
+ * @returns 
+ */
 export const generatePoints = function (object) {
   const objectSize = Object.values(getModelSize(object));
   const width = objectSize[0];
@@ -319,4 +324,36 @@ export const getFullObjectData = function(object){
   }
   
   return data;
+}
+
+/**
+ * 
+ * @param {THREE.Group} object 
+ */
+export const boxesAround = function(object){
+  let posChecked = [true, true, true];
+  const currentData = dataFromPositionVector(cubesPositions, object.position);
+  
+  if (hasValue(cubesPositions, currentData.x_index, currentData.y_index + 1)) posChecked[0] = false;
+  if (hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index)) posChecked[1] = false;
+  if (hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index)) posChecked[2] = false;
+  
+  const boxesAround = {
+      "top": !posChecked[0],
+      "bottom": getParametersFromModel(object.name).type != "Legged",
+      "left": !posChecked[1],
+      "right": !posChecked[2]
+  };
+
+  return boxesAround;
+}
+
+/**
+ * 
+ * @param {THREE.Vector2} vec2 
+ * @param {number} z 
+ * @returns 
+ */
+export const vec2toVec3 = function(vec2, z = 0) {
+  return new THREE.Vector3(vec2.x, vec2.y, z);
 }
