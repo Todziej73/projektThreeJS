@@ -1,7 +1,7 @@
 import { boxesAround, checkConnections, getFrameColor, getFullObjectData, getObjectColor, getParametersFromModel, nameToColor } from "./helpers";
 import { checkPosition, checkSides, meshGroup } from "./main"
 import * as THREE from 'three';
-import pricesText from '/src/prices.csv?raw';
+import pricesText from '/src/pricesV2.csv?raw';
 
 
 /**

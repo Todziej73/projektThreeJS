@@ -1,0 +1,543 @@
+nazwa;nazwa ogólna ;kolor;Cena brutto:;szerokosc profilu1;szerokosc profilu2;width;height
+KLAGEM FOOT2;Foot 2;9005;107 ;;;;
+KLAGEM FOOT2;Foot 2;bronze;112 ;;;;
+KLAGEM FOOT2;Foot 2;gold;112 ;;;;
+UCHWYT STAŁY;;;75 ;;;;
+KK_003_lacznik 3;Kolano 3;9005;90 ;;;;
+KK_004_lacznik 4;Kolano 4;9005;92 ;;;;
+KK_005_lacznik 5;Kolano 5;9005;94 ;;;;
+KP_009_profil 65;Profil 65;9005;39 ;;;;
+KP_001_profil 79;Profil 79;9005;39 ;;;;
+KP_002_profil 154;Profil 154;9005;39 ;;;;
+KP_003_profil 229;Profil 229;9005;42 ;;;;
+KP_004_profil 329;Profil 329;9005;45 ;;;;
+KP_005_profil 374;Profil 374;9005;48 ;;;;
+KP_010_profil 420;Profil 420;9005;49 ;;;;
+KP_006_profil 479;Profil 479;9005;54 ;;;;
+KP_007_profil 523;Profil 523;9005;50 ;;;;
+KP_008_profil 729;Profil 729;9005;51 ;;;;
+KK_003_lacznik 3;Kolano 3;bronze;94 ;;;;
+KK_004_lacznik 4;Kolano 4;bronze;96 ;;;;
+KK_005_lacznik 5;Kolano 5;bronze;98 ;;;;
+KP_009_profil 65;Profil 65;bronze;43 ;;;;
+KP_001_profil 79;Profil 79;bronze;43 ;;;;
+KP_002_profil 154;Profil 154;bronze;43 ;;;;
+KP_003_profil 229;Profil 229;bronze;47 ;;;;
+KP_004_profil 329;Profil 329;bronze;50 ;;;;
+KP_005_profil 374;Profil 374;bronze;52 ;;;;
+KP_010_profil 420;Profil 420;bronze;53 ;;;;
+KP_006_profil 479;Profil 479;bronze;58 ;;;;
+KP_007_profil 523;Profil 523;bronze;55 ;;;;
+KP_008_profil 729;Profil 729;bronze;56 ;;;;
+KK_003_lacznik 3;Kolano 3;gold;94 ;;;;
+KK_004_lacznik 4;Kolano 4;gold;96 ;;;;
+KK_005_lacznik 5;Kolano 5;gold;98 ;;;;
+KP_009_profil 65;Profil 65;gold;43 ;;;;
+KP_001_profil 79;Profil 79;gold;43 ;;;;
+KP_002_profil 154;Profil 154;gold;43 ;;;;
+KP_003_profil 229;Profil 229;gold;47 ;;;;
+KP_004_profil 329;Profil 329;gold;50 ;;;;
+KP_005_profil 374;Profil 374;gold;52 ;;;;
+KP_010_profil 420;Profil 420;gold;53 ;;;;
+KP_006_profil 479;Profil 479;gold;58 ;;;;
+KP_007_profil 523;Profil 523;gold;55 ;;;;
+KP_008_profil 729;Profil 729;gold;56 ;229;79;;
+KSP_001_10x258x108;ściana pionowa;PC mat;99 ;229;154;;
+KSP_002_10x258x183;ściana pionowa;PC mat;132 ;229;229;;
+KSP_003_10x258x258;ściana pionowa;PC mat;164 ;229;329;;
+KSP_004_10x258x358;ściana pionowa;PC mat;206 ;229;374;;
+KSP_005_10x258x403;ściana pionowa;PC mat;226 ;229;420;;
+KSP_006_10x258x449;ściana pionowa;PC mat;246 ;329;79;;
+KSP_007_10x358x108;ściana pionowa;PC mat;124 ;329;154;;
+KSP_008_10x358x183;ściana pionowa;PC mat;165 ;329;329;;
+KSP_009_10x358x358;ściana pionowa;PC mat;262 ;329;374;;
+KSP_010_10x358x403;ściana pionowa;PC mat;287 ;329;420;;
+KSP_011_10x358x449;ściana pionowa;PC mat;312 ;374;79;;
+KSP_012_10x403x108;ściana pionowa;PC mat;137 ;374;154;;
+KSP_013_10x403x183;ściana pionowa;PC mat;182 ;374;329;;
+KSP_014_10x403x358;ściana pionowa;PC mat;287 ;374;374;;
+KSP_015_10x403x403;ściana pionowa;PC mat;314 ;374;420;;
+KSP_016_10x403x449;ściana pionowa;PC mat;340 ;420;79;;
+KSP_017_10x449x108;ściana pionowa;PC mat;148 ;420;154;;
+KSP_018_10x449x183;ściana pionowa;PC mat;198 ;420;420;;
+KSP_019_10x449x449;ściana pionowa;PC mat;371 ;479;79;;
+KSP_020_10x508x108;ściana pionowa;PC mat;164 ;479;154;;
+KSP_021_10x508x183;ściana pionowa;PC mat;217 ;79;729;;
+KSP_022_10x108x758;ściana pionowa;PC mat;228 ;154;729;;
+KSP_023_10x183x758;ściana pionowa;PC mat;303 ;229;729;;
+KSP_024_10x258x758;ściana pionowa;PC mat;379 ;329;729;;
+KSP_025_10x358x758;ściana pionowa;PC mat;481 ;374;729;;
+KSP_026_10x403x758;ściana pionowa;PC mat;526 ;420;729;;
+KSP_028_10x258x386;ściana pionowa;PC mat;219 ;329;523;;
+KSP_029_10x358x552;ściana pionowa;PC mat;367 ;229;523;;
+KSP_033_10x108x108;ściana pionowa;PC mat;62 ;229;479;;
+KSP_040_10x258x508;ściana pionowa;PC mat;357 ;79;154;;
+KSP_041_10x79x154;ściana pionowa;PC mat;46 ;79;523;;
+KSP_042_10x79x523;ściana pionowa;PC mat;122 ;154;154;;
+KSP_043_10x154x154;ściana pionowa;PC mat;76 ;329;479;;
+KSP_044_10x329x479;ściana pionowa;PC mat;426 ;420;479;;
+KSP_045_10x420x479;ściana pionowa;PC mat;540 ;420;523;;
+KSP_046_10x420x523;ściana pionowa;PC mat;588 ;479;479;;
+KSP_047_10x479x479;ściana pionowa;PC mat;614 ;479;523;;
+KSP_048_10x479x523;ściana pionowa;PC mat;669 ;479;729;;
+KSP_049_10x479x729;ściana pionowa;PC mat;927 ;523;523;;
+KSP_050_10x523x523;ściana pionowa;PC mat;729 ;523;729;;
+KSP_051_10x523x729;ściana pionowa;PC mat;1 011 ;729;729;;
+KSP_052_10x729x729;ściana pionowa;PC mat;1 403 ;229;79;;
+KSP_001_10x258x108;ściana pionowa;PC polysk;116 ;229;154;;
+KSP_002_10x258x183;ściana pionowa;PC polysk;160 ;229;229;;
+KSP_003_10x258x258;ściana pionowa;PC polysk;203 ;229;329;;
+KSP_004_10x258x358;ściana pionowa;PC polysk;262 ;229;374;;
+KSP_005_10x258x403;ściana pionowa;PC polysk;289 ;229;420;;
+KSP_006_10x258x449;ściana pionowa;PC polysk;315 ;329;79;;
+KSP_007_10x358x108;ściana pionowa;PC polysk;148 ;329;154;;
+KSP_008_10x358x183;ściana pionowa;PC polysk;205 ;329;329;;
+KSP_009_10x358x358;ściana pionowa;PC polysk;337 ;329;374;;
+KSP_010_10x358x403;ściana pionowa;PC polysk;371 ;329;420;;
+KSP_011_10x358x449;ściana pionowa;PC polysk;406 ;374;79;;
+KSP_012_10x403x108;ściana pionowa;PC polysk;162 ;374;154;;
+KSP_013_10x403x183;ściana pionowa;PC polysk;224 ;374;329;;
+KSP_014_10x403x358;ściana pionowa;PC polysk;371 ;374;374;;
+KSP_015_10x403x403;ściana pionowa;PC polysk;408 ;374;420;;
+KSP_016_10x403x449;ściana pionowa;PC polysk;447 ;420;79;;
+KSP_017_10x449x108;ściana pionowa;PC polysk;176 ;420;154;;
+KSP_018_10x449x183;ściana pionowa;PC polysk;246 ;420;420;;
+KSP_019_10x449x449;ściana pionowa;PC polysk;490 ;479;79;;
+KSP_020_10x508x108;ściana pionowa;PC polysk;196 ;479;154;;
+KSP_021_10x508x183;ściana pionowa;PC polysk;272 ;79;729;;
+KSP_022_10x108x758;ściana pionowa;PC polysk;276 ;154;729;;
+KSP_023_10x183x758;ściana pionowa;PC polysk;385 ;229;729;;
+KSP_024_10x258x758;ściana pionowa;PC polysk;494 ;329;729;;
+KSP_025_10x358x758;ściana pionowa;PC polysk;640 ;374;729;;
+KSP_026_10x403x758;ściana pionowa;PC polysk;706 ;420;729;;
+KSP_027_10x449x758;ściana pionowa;PC polysk;774 ;229;357;;
+KSP_028_10x258x386;ściana pionowa;PC polysk;278 ;329;523;;
+KSP_029_10x358x552;ściana pionowa;PC polysk;485 ;229;523;;
+KSP_032_10x247x508;ściana pionowa;PC polysk;337 ;79;79;;
+KSP_033_10x108x108;ściana pionowa;PC polysk;67 ;229;479;;
+KSP_040_10x258x508;ściana pionowa;PC polysk;434 ;79;154;;
+KSP_041_10x79x154;ściana pionowa;PC polysk;53 ;79;523;;
+KSP_042_10x79x523;ściana pionowa;PC polysk;146 ;154;154;;
+KSP_043_10x154x154;ściana pionowa;PC polysk;90 ;329;479;;
+KSP_044_10x329x479;ściana pionowa;PC polysk;519 ;420;479;;
+KSP_045_10x420x479;ściana pionowa;PC polysk;658 ;420;523;;
+KSP_046_10x420x523;ściana pionowa;PC polysk;717 ;479;479;;
+KSP_047_10x479x479;ściana pionowa;PC polysk;749 ;479;523;;
+KSP_048_10x479x523;ściana pionowa;PC polysk;816 ;479;729;;
+KSP_049_10x479x729;ściana pionowa;PC polysk;1 132 ;523;523;;
+KSP_050_10x523x523;ściana pionowa;PC polysk;890 ;523;729;;
+KSP_051_10x523x729;ściana pionowa;PC polysk;1 235 ;729;729;;
+KSP_052_10x729x729;ściana pionowa;PC polysk;1 716 ;229;79;;
+KSP_001_10x258x108;ściana pionowa;fornir dab mat;117 ;229;154;;
+KSP_002_10x258x183;ściana pionowa;fornir dab mat;162 ;229;229;;
+KSP_003_10x258x258;ściana pionowa;fornir dab mat;206 ;229;329;;
+KSP_004_10x258x358;ściana pionowa;fornir dab mat;267 ;229;374;;
+KSP_005_10x258x403;ściana pionowa;fornir dab mat;294 ;229;420;;
+KSP_006_10x258x449;ściana pionowa;fornir dab mat;321 ;329;79;;
+KSP_007_10x358x108;ściana pionowa;fornir dab mat;149 ;329;154;;
+KSP_008_10x358x183;ściana pionowa;fornir dab mat;208 ;329;329;;
+KSP_009_10x358x358;ściana pionowa;fornir dab mat;346 ;329;374;;
+KSP_010_10x358x403;ściana pionowa;fornir dab mat;379 ;329;420;;
+KSP_011_10x358x449;ściana pionowa;fornir dab mat;415 ;374;79;;
+KSP_012_10x403x108;ściana pionowa;fornir dab mat;165 ;374;154;;
+KSP_013_10x403x183;ściana pionowa;fornir dab mat;230 ;374;329;;
+KSP_014_10x403x358;ściana pionowa;fornir dab mat;379 ;374;374;;
+KSP_015_10x403x403;ściana pionowa;fornir dab mat;419 ;374;420;;
+KSP_016_10x403x449;ściana pionowa;fornir dab mat;458 ;420;79;;
+KSP_017_10x449x108;ściana pionowa;fornir dab mat;180 ;420;154;;
+KSP_018_10x449x183;ściana pionowa;fornir dab mat;251 ;420;420;;
+KSP_019_10x449x449;ściana pionowa;fornir dab mat;503 ;479;79;;
+KSP_020_10x508x108;ściana pionowa;fornir dab mat;199 ;479;154;;
+KSP_021_10x508x183;ściana pionowa;fornir dab mat;278 ;79;729;;
+KSP_022_10x108x758;ściana pionowa;fornir dab mat;280 ;154;729;;
+KSP_023_10x183x758;ściana pionowa;fornir dab mat;394 ;229;729;;
+KSP_024_10x258x758;ściana pionowa;fornir dab mat;506 ;329;729;;
+KSP_025_10x358x758;ściana pionowa;fornir dab mat;656 ;374;729;;
+KSP_026_10x403x758;ściana pionowa;fornir dab mat;724 ;420;729;;
+KSP_028_10x258x386;ściana pionowa;fornir dab mat;283 ;329;523;;
+KSP_029_10x358x552;ściana pionowa;fornir dab mat;495 ;229;523;;
+KSP_032_10x247x508;ściana pionowa;fornir dab mat;346 ;79;79;;
+KSP_033_10x108x108;ściana pionowa;fornir dab mat;69 ;229;479;;
+KSP_040_10x258x508;ściana pionowa;fornir dab mat;439 ;79;154;;
+KSP_041_10x79x154;ściana pionowa;fornir dab mat;53 ;79;523;;
+KSP_042_10x79x523;ściana pionowa;fornir dab mat;148 ;154;154;;
+KSP_043_10x154x154;ściana pionowa;fornir dab mat;91 ;329;479;;
+KSP_044_10x329x479;ściana pionowa;fornir dab mat;525 ;420;479;;
+KSP_045_10x420x479;ściana pionowa;fornir dab mat;667 ;420;523;;
+KSP_046_10x420x523;ściana pionowa;fornir dab mat;727 ;479;479;;
+KSP_047_10x479x479;ściana pionowa;fornir dab mat;759 ;479;523;;
+KSP_048_10x479x523;ściana pionowa;fornir dab mat;827 ;479;729;;
+KSP_049_10x479x729;ściana pionowa;fornir dab mat;1 147 ;523;523;;
+KSP_050_10x523x523;ściana pionowa;fornir dab mat;902 ;523;729;;
+KSP_051_10x523x729;ściana pionowa;fornir dab mat;1 252 ;729;729;;
+KSP_052_10x729x729;ściana pionowa;fornir dab mat;1 739 ;229;79;;
+KSP_001_10x258x108;ściana pionowa;fornir orzech mat;123 ;229;154;;
+KSP_002_10x258x183;ściana pionowa;fornir orzech mat;171 ;229;229;;
+KSP_003_10x258x258;ściana pionowa;fornir orzech mat;217 ;229;329;;
+KSP_004_10x258x358;ściana pionowa;fornir orzech mat;281 ;229;374;;
+KSP_005_10x258x403;ściana pionowa;fornir orzech mat;310 ;229;420;;
+KSP_006_10x258x449;ściana pionowa;fornir orzech mat;340 ;329;79;;
+KSP_007_10x358x108;ściana pionowa;fornir orzech mat;157 ;329;154;;
+KSP_008_10x358x183;ściana pionowa;fornir orzech mat;219 ;329;329;;
+KSP_009_10x358x358;ściana pionowa;fornir orzech mat;365 ;329;374;;
+KSP_010_10x358x403;ściana pionowa;fornir orzech mat;403 ;329;420;;
+KSP_011_10x358x449;ściana pionowa;fornir orzech mat;442 ;374;79;;
+KSP_012_10x403x108;ściana pionowa;fornir orzech mat;173 ;374;154;;
+KSP_013_10x403x183;ściana pionowa;fornir orzech mat;240 ;374;329;;
+KSP_014_10x403x358;ściana pionowa;fornir orzech mat;403 ;374;374;;
+KSP_015_10x403x403;ściana pionowa;fornir orzech mat;445 ;374;420;;
+KSP_016_10x403x449;ściana pionowa;fornir orzech mat;487 ;420;79;;
+KSP_017_10x449x108;ściana pionowa;fornir orzech mat;187 ;420;154;;
+KSP_018_10x449x183;ściana pionowa;fornir orzech mat;264 ;420;420;;
+KSP_019_10x449x449;ściana pionowa;fornir orzech mat;535 ;479;79;;
+KSP_020_10x508x108;ściana pionowa;fornir orzech mat;208 ;479;154;;
+KSP_021_10x508x183;ściana pionowa;fornir orzech mat;292 ;79;729;;
+KSP_022_10x108x758;ściana pionowa;fornir orzech mat;294 ;154;729;;
+KSP_023_10x183x758;ściana pionowa;fornir orzech mat;415 ;229;729;;
+KSP_024_10x258x758;ściana pionowa;fornir orzech mat;538 ;329;729;;
+KSP_025_10x358x758;ściana pionowa;fornir orzech mat;701 ;374;729;;
+KSP_026_10x403x758;ściana pionowa;fornir orzech mat;774 ;420;729;;
+KSP_028_10x258x386;ściana pionowa;fornir orzech mat;299 ;329;523;;
+KSP_029_10x358x552;ściana pionowa;fornir orzech mat;528 ;229;523;;
+KSP_030_10x258x552;ściana pionowa;fornir orzech mat;406 ;229;340;;
+KSP_031_10x258x369;ściana pionowa;fornir orzech mat;289 ;218;479;;
+KSP_032_10x247x508;ściana pionowa;fornir orzech mat;365 ;79;79;;
+KSP_033_10x108x108;ściana pionowa;fornir orzech mat;71 ;229;479;;
+KSP_040_10x258x508;ściana pionowa;fornir orzech mat;462 ;79;154;;
+KSP_041_10x79x154;ściana pionowa;fornir orzech mat;55 ;79;523;;
+KSP_042_10x79x523;ściana pionowa;fornir orzech mat;155 ;154;154;;
+KSP_043_10x154x154;ściana pionowa;fornir orzech mat;95 ;329;479;;
+KSP_044_10x329x479;ściana pionowa;fornir orzech mat;553 ;420;479;;
+KSP_045_10x420x479;ściana pionowa;fornir orzech mat;702 ;420;523;;
+KSP_046_10x420x523;ściana pionowa;fornir orzech mat;765 ;479;479;;
+KSP_047_10x479x479;ściana pionowa;fornir orzech mat;799 ;479;523;;
+KSP_048_10x479x523;ściana pionowa;fornir orzech mat;871 ;479;729;;
+KSP_049_10x479x729;ściana pionowa;fornir orzech mat;1 208 ;523;523;;
+KSP_050_10x523x523;ściana pionowa;fornir orzech mat;949 ;523;729;;
+KSP_051_10x523x729;ściana pionowa;fornir orzech mat;1 318 ;729;729;;
+KSP_052_10x729x729;ściana pionowa;fornir orzech mat;1 832 ;229;79;;
+KSP_001_10x258x108;ściana pionowa;fornir orzech polysk;167 ;229;154;;
+KSP_002_10x258x183;ściana pionowa;fornir orzech polysk;248 ;229;229;;
+KSP_003_10x258x258;ściana pionowa;fornir orzech polysk;328 ;229;329;;
+KSP_004_10x258x358;ściana pionowa;fornir orzech polysk;435 ;229;374;;
+KSP_005_10x258x403;ściana pionowa;fornir orzech polysk;481 ;229;420;;
+KSP_006_10x258x449;ściana pionowa;fornir orzech polysk;531 ;329;79;;
+KSP_007_10x358x108;ściana pionowa;fornir orzech polysk;221 ;329;154;;
+KSP_008_10x358x183;ściana pionowa;fornir orzech polysk;328 ;329;329;;
+KSP_009_10x358x358;ściana pionowa;fornir orzech polysk;577 ;329;374;;
+KSP_010_10x358x403;ściana pionowa;fornir orzech polysk;642 ;329;420;;
+KSP_011_10x358x449;ściana pionowa;fornir orzech polysk;706 ;374;79;;
+KSP_012_10x403x108;ściana pionowa;fornir orzech polysk;244 ;374;154;;
+KSP_013_10x403x183;ściana pionowa;fornir orzech polysk;363 ;374;329;;
+KSP_014_10x403x358;ściana pionowa;fornir orzech polysk;642 ;374;374;;
+KSP_015_10x403x403;ściana pionowa;fornir orzech polysk;713 ;374;420;;
+KSP_016_10x403x449;ściana pionowa;fornir orzech polysk;786 ;420;79;;
+KSP_017_10x449x108;ściana pionowa;fornir orzech polysk;267 ;420;154;;
+KSP_018_10x449x183;ściana pionowa;fornir orzech polysk;399 ;420;420;;
+KSP_019_10x449x449;ściana pionowa;fornir orzech polysk;866 ;479;79;;
+KSP_020_10x508x108;ściana pionowa;fornir orzech polysk;297 ;479;154;;
+KSP_021_10x508x183;ściana pionowa;fornir orzech polysk;445 ;79;729;;
+KSP_022_10x108x758;ściana pionowa;fornir orzech polysk;428 ;154;729;;
+KSP_023_10x183x758;ściana pionowa;fornir orzech polysk;643 ;229;729;;
+KSP_024_10x258x758;ściana pionowa;fornir orzech polysk;859 ;329;729;;
+KSP_025_10x358x758;ściana pionowa;fornir orzech polysk;1 146 ;374;729;;
+KSP_026_10x403x758;ściana pionowa;fornir orzech polysk;1 277 ;420;729;;
+KSP_028_10x258x386;ściana pionowa;fornir orzech polysk;463 ;329;523;;
+KSP_029_10x358x552;ściana pionowa;fornir orzech polysk;854 ;229;523;;
+KSP_032_10x247x508;ściana pionowa;fornir orzech polysk;572 ;79;79;;
+KSP_033_10x108x108;ściana pionowa;fornir orzech polysk;91 ;229;479;;
+KSP_040_10x258x508;ściana pionowa;fornir orzech polysk;676 ;79;154;;
+KSP_041_10x79x154;ściana pionowa;fornir orzech polysk;75 ;79;523;;
+KSP_042_10x79x523;ściana pionowa;fornir orzech polysk;223 ;154;154;;
+KSP_043_10x154x154;ściana pionowa;fornir orzech polysk;134 ;329;479;;
+KSP_044_10x329x479;ściana pionowa;fornir orzech polysk;810 ;420;479;;
+KSP_045_10x420x479;ściana pionowa;fornir orzech polysk;1 031 ;420;523;;
+KSP_046_10x420x523;ściana pionowa;fornir orzech polysk;1 124 ;479;479;;
+KSP_047_10x479x479;ściana pionowa;fornir orzech polysk;1 174 ;479;523;;
+KSP_048_10x479x523;ściana pionowa;fornir orzech polysk;1 280 ;479;729;;
+KSP_049_10x479x729;ściana pionowa;fornir orzech polysk;1 779 ;523;523;;
+KSP_050_10x523x523;ściana pionowa;fornir orzech polysk;1 396 ;523;729;;
+KSP_051_10x523x729;ściana pionowa;fornir orzech polysk;1 941 ;729;729;;
+KSP_052_10x729x729;ściana pionowa;fornir orzech polysk;2 700 ;329;229;;
+KSP_057_10x523x374;ściana pionowa;PC mat;188;374;523;;
+KSP_058_10x523x154;ściana pionowa;PC mat;188;154;523;;
+KSP_055_10x479x374;ściana pionowa;PC mat;180 ;479;374;;
+KSPO_001_12x362x262;półka - poziom;PC mat;206 ;329;329;;
+KSPO_002_12x362x362;półka - poziom;PC mat;262 ;329;374;;
+KSPO_003_12x362x407;półka - poziom;PC mat;287 ;329;420;;
+KSPO_004_12x362x453;półka - poziom;PC mat;312 ;329;479;;
+KSPO_005_12x362x512;półka - poziom;PC mat;344 ;329;523;;
+KSPO_006_12x362x556;półka - poziom;PC mat;367 ;329;729;;
+KSPO_007_12x362x762;półka - poziom;PC mat;481 ;374;229;;
+KSPO_008_12x407x262;półka - poziom;PC mat;226 ;374;374;;
+KSPO_009_12x407x407;półka - poziom;PC mat;314 ;374;420;;
+KSPO_010_12x407x453;półka - poziom;PC mat;340 ;374;479;;
+KSPO_011_12x407x512;półka - poziom;PC mat;376 ;374;523;;
+KSPO_012_12x407x556;półka - poziom;PC mat;403 ;374;729;;
+KSPO_013_12x407x762;półka - poziom;PC mat;526 ;329;523;;
+KSPO_017_12x362x625;półka - poziom;PC mat;412 ;329;229;;
+KSPO_001_12x362x262;półka - poziom;PC polysk;262 ;329;329;;
+KSPO_002_12x362x362;półka - poziom;PC polysk;337 ;329;374;;
+KSPO_003_12x362x407;półka - poziom;PC polysk;371 ;329;420;;
+KSPO_004_12x362x453;półka - poziom;PC polysk;406 ;329;479;;
+KSPO_005_12x362x512;półka - poziom;PC polysk;451 ;329;523;;
+KSPO_006_12x362x556;półka - poziom;PC polysk;485 ;329;729;;
+KSPO_007_12x362x762;półka - poziom;PC polysk;640 ;374;229;;
+KSPO_008_12x407x262;półka - poziom;PC polysk;289 ;374;374;;
+KSPO_009_12x407x407;półka - poziom;PC polysk;408 ;374;420;;
+KSPO_010_12x407x453;półka - poziom;PC polysk;447 ;374;479;;
+KSPO_011_12x407x512;półka - poziom;PC polysk;497 ;374;523;;
+KSPO_012_12x407x556;półka - poziom;PC polysk;533 ;374;729;;
+KSPO_013_12x407x762;półka - poziom;PC polysk;706 ;329;523;;
+KSPO_017_12x362x625;półka - poziom;PC polysk;544 ;329;229;;
+KSPO_001_12x362x262;półka - poziom;fornir dab mat;267 ;329;329;;
+KSPO_002_12x362x362;półka - poziom;fornir dab mat;346 ;329;374;;
+KSPO_003_12x362x407;półka - poziom;fornir dab mat;379 ;329;420;;
+KSPO_004_12x362x453;półka - poziom;fornir dab mat;415 ;329;479;;
+KSPO_005_12x362x512;półka - poziom;fornir dab mat;462 ;329;523;;
+KSPO_006_12x362x556;półka - poziom;fornir dab mat;495 ;329;729;;
+KSPO_007_12x362x762;półka - poziom;fornir dab mat;656 ;374;229;;
+KSPO_008_12x407x262;półka - poziom;fornir dab mat;294 ;374;374;;
+KSPO_009_12x407x407;półka - poziom;fornir dab mat;419 ;374;420;;
+KSPO_010_12x407x453;półka - poziom;fornir dab mat;458 ;374;479;;
+KSPO_011_12x407x512;półka - poziom;fornir dab mat;510 ;374;523;;
+KSPO_012_12x407x556;półka - poziom;fornir dab mat;547 ;374;729;;
+KSPO_013_12x407x762;półka - poziom;fornir dab mat;724 ;329;523;;
+KSPO_017_12x362x625;półka - poziom;fornir dab mat;558 ;329;229;;
+KSPO_001_12x362x262;półka - poziom;fornir orzech mat;281 ;329;329;;
+KSPO_002_12x362x362;półka - poziom;fornir orzech mat;365 ;329;374;;
+KSPO_003_12x362x407;półka - poziom;fornir orzech mat;403 ;329;420;;
+KSPO_004_12x362x453;półka - poziom;fornir orzech mat;442 ;329;479;;
+KSPO_005_12x362x512;półka - poziom;fornir orzech mat;492 ;329;523;;
+KSPO_006_12x362x556;półka - poziom;fornir orzech mat;528 ;329;729;;
+KSPO_007_12x362x762;półka - poziom;fornir orzech mat;701 ;374;229;;
+KSPO_008_12x407x262;półka - poziom;fornir orzech mat;310 ;374;374;;
+KSPO_009_12x407x407;półka - poziom;fornir orzech mat;456 ;374;420;;
+KSPO_010_12x407x453;półka - poziom;fornir orzech mat;487 ;374;479;;
+KSPO_011_12x407x512;półka - poziom;fornir orzech mat;542 ;374;523;;
+KSPO_012_12x407x556;półka - poziom;fornir orzech mat;583 ;374;729;;
+KSPO_013_12x407x762;półka - poziom;fornir orzech mat;774 ;329;523;;
+KSPO_017_12x362x625;półka - poziom;fornir orzech mat;594 ;329;229;;
+KSPO_001_12x362x262;półka - poziom;fornir orzech polysk;435 ;329;329;;
+KSPO_002_12x362x362;półka - poziom;fornir orzech polysk;577 ;329;374;;
+KSPO_003_12x362x407;półka - poziom;fornir orzech polysk;642 ;329;420;;
+KSPO_004_12x362x453;półka - poziom;fornir orzech polysk;706 ;329;479;;
+KSPO_005_12x362x512;półka - poziom;fornir orzech polysk;791 ;329;523;;
+KSPO_006_12x362x556;półka - poziom;fornir orzech polysk;854 ;329;729;;
+KSPO_007_12x362x762;półka - poziom;fornir orzech polysk;1 146 ;374;229;;
+KSPO_008_12x407x262;półka - poziom;fornir orzech polysk;481 ;374;374;;
+KSPO_009_12x407x407;półka - poziom;fornir orzech polysk;713 ;374;420;;
+KSPO_010_12x407x453;półka - poziom;fornir orzech polysk;786 ;374;479;;
+KSPO_011_12x407x512;półka - poziom;fornir orzech polysk;879 ;374;523;;
+KSPO_012_12x407x556;półka - poziom;fornir orzech polysk;948 ;374;729;;
+KSPO_013_12x407x762;półka - poziom;fornir orzech polysk;1 277 ;329;523;;
+KSZ_001;Szuflada zewnętrzna;PC mat;1 027 ;;;229;79
+KSZ_002;Szuflada zewnętrzna;PC mat;1 071 ;;;329;79
+KSZ_003;Szuflada zewnętrzna;PC mat;1 091 ;;;374;79
+KSZ_004;Szuflada zewnętrzna;PC mat;1 111 ;;;420;79
+KSZ_005;Szuflada zewnętrzna;PC mat;1 136 ;;;479;79
+KSZ_006;Szuflada zewnętrzna;PC mat;1 155 ;;;523;79
+KSZ_007;Szuflada zewnętrzna;PC mat;1 246 ;;;729;79
+KSZ_008;Szuflada zewnętrzna;PC mat;1 066 ;;;229;154
+KSZ_009;Szuflada zewnętrzna;PC mat;1 120 ;;;329;154
+KSZ_010;Szuflada zewnętrzna;PC mat;1 143 ;;;374;154
+KSZ_011;Szuflada zewnętrzna;PC mat;1 168 ;;;420;154
+KSZ_012;Szuflada zewnętrzna;PC mat;1 200 ;;;479;154
+KSZ_013;Szuflada zewnętrzna;PC mat;1 223 ;;;523;154
+KSZ_014;Szuflada zewnętrzna;PC mat;1 335 ;;;729;154
+KSZ_015;Szuflada zewnętrzna;PC mat;1 102 ;;;229;229
+KSZ_016;Szuflada zewnętrzna;PC mat;1 164 ;;;329;229
+KSZ_017;Szuflada zewnętrzna;PC mat;1 193 ;;;374;229
+KSZ_018;Szuflada zewnętrzna;PC mat;1 221 ;;;420;229
+KSZ_019;Szuflada zewnętrzna;PC mat;1 257 ;;;479;229
+KSZ_020;Szuflada zewnętrzna;PC mat;1 284 ;;;523;229
+KSZ_021;Szuflada zewnętrzna;PC mat;1 412 ;;;729;229
+KSZ_022;Szuflada zewnętrzna;PC mat;1 154 ;;;229;329
+KSZ_023;Szuflada zewnętrzna;PC mat;1 227 ;;;329;329
+KSZ_024;Szuflada zewnętrzna;PC mat;1 261 ;;;374;329
+KSZ_025;Szuflada zewnętrzna;PC mat;1 294 ;;;420;329
+KSZ_026;Szuflada zewnętrzna;PC mat;1 339 ;;;479;329
+KSZ_027;Szuflada zewnętrzna;PC mat;1 371 ;;;523;329
+KSZ_028;Szuflada zewnętrzna;PC mat;1 525 ;;;729;329
+KSZ_029;Szuflada zewnętrzna;PC mat;1 179 ;;;229;374
+KSZ_030;Szuflada zewnętrzna;PC mat;1 259 ;;;329;374
+KSZ_031;Szuflada zewnętrzna;PC mat;1 294 ;;;374;374
+KSZ_032;Szuflada zewnętrzna;PC mat;1 330 ;;;420;374
+KSZ_033;Szuflada zewnętrzna;PC mat;1 378 ;;;479;374
+KSZ_034;Szuflada zewnętrzna;PC mat;1 414 ;;;523;374
+KSZ_035;Szuflada zewnętrzna;PC mat;1 578 ;;;729;374
+KSZ_036;Szuflada zewnętrzna;PC mat;1 211 ;;;229;420
+KSZ_037;Szuflada zewnętrzna;PC mat;1 298 ;;;329;420
+KSZ_038;Szuflada zewnętrzna;PC mat;1 337 ;;;374;420
+KSZ_039;Szuflada zewnętrzna;PC mat;1 376 ;;;420;420
+KSZ_040;Szuflada zewnętrzna;PC mat;1 426 ;;;479;420
+KSZ_041;Szuflada zewnętrzna;PC mat;1 466 ;;;523;420
+KSZ_042;Szuflada zewnętrzna;PC mat;1 642 ;;;729;420
+KSZ_001;Szuflada zewnętrzna;PC polysk;1 027 ;;;229;79
+KSZ_002;Szuflada zewnętrzna;PC polysk;1 071 ;;;329;79
+KSZ_003;Szuflada zewnętrzna;PC polysk;1 091 ;;;374;79
+KSZ_004;Szuflada zewnętrzna;PC polysk;1 111 ;;;420;79
+KSZ_005;Szuflada zewnętrzna;PC polysk;1 136 ;;;479;79
+KSZ_006;Szuflada zewnętrzna;PC polysk;1 155 ;;;523;79
+KSZ_007;Szuflada zewnętrzna;PC polysk;1 246 ;;;729;79
+KSZ_008;Szuflada zewnętrzna;PC polysk;1 066 ;;;229;154
+KSZ_009;Szuflada zewnętrzna;PC polysk;1 120 ;;;329;154
+KSZ_010;Szuflada zewnętrzna;PC polysk;1 143 ;;;374;154
+KSZ_011;Szuflada zewnętrzna;PC polysk;1 168 ;;;420;154
+KSZ_012;Szuflada zewnętrzna;PC polysk;1 200 ;;;479;154
+KSZ_013;Szuflada zewnętrzna;PC polysk;1 223 ;;;523;154
+KSZ_014;Szuflada zewnętrzna;PC polysk;1 335 ;;;729;154
+KSZ_015;Szuflada zewnętrzna;PC polysk;1 102 ;;;229;229
+KSZ_016;Szuflada zewnętrzna;PC polysk;1 164 ;;;329;229
+KSZ_017;Szuflada zewnętrzna;PC polysk;1 193 ;;;374;229
+KSZ_018;Szuflada zewnętrzna;PC polysk;1 221 ;;;420;229
+KSZ_019;Szuflada zewnętrzna;PC polysk;1 257 ;;;479;229
+KSZ_020;Szuflada zewnętrzna;PC polysk;1 284 ;;;523;229
+KSZ_021;Szuflada zewnętrzna;PC polysk;1 412 ;;;729;229
+KSZ_022;Szuflada zewnętrzna;PC polysk;1 154 ;;;229;329
+KSZ_023;Szuflada zewnętrzna;PC polysk;1 227 ;;;329;329
+KSZ_024;Szuflada zewnętrzna;PC polysk;1 261 ;;;374;329
+KSZ_025;Szuflada zewnętrzna;PC polysk;1 294 ;;;420;329
+KSZ_026;Szuflada zewnętrzna;PC polysk;1 339 ;;;479;329
+KSZ_027;Szuflada zewnętrzna;PC polysk;1 371 ;;;523;329
+KSZ_028;Szuflada zewnętrzna;PC polysk;1 525 ;;;729;329
+KSZ_029;Szuflada zewnętrzna;PC polysk;1 179 ;;;229;374
+KSZ_030;Szuflada zewnętrzna;PC polysk;1 259 ;;;329;374
+KSZ_031;Szuflada zewnętrzna;PC polysk;1 294 ;;;374;374
+KSZ_032;Szuflada zewnętrzna;PC polysk;1 330 ;;;420;374
+KSZ_033;Szuflada zewnętrzna;PC polysk;1 378 ;;;479;374
+KSZ_034;Szuflada zewnętrzna;PC polysk;1 414 ;;;523;374
+KSZ_035;Szuflada zewnętrzna;PC polysk;1 578 ;;;729;374
+KSZ_036;Szuflada zewnętrzna;PC polysk;1 211 ;;;229;420
+KSZ_037;Szuflada zewnętrzna;PC polysk;1 298 ;;;329;420
+KSZ_038;Szuflada zewnętrzna;PC polysk;1 337 ;;;374;420
+KSZ_039;Szuflada zewnętrzna;PC polysk;1 376 ;;;420;420
+KSZ_040;Szuflada zewnętrzna;PC polysk;1 426 ;;;479;420
+KSZ_041;Szuflada zewnętrzna;PC polysk;1 466 ;;;523;420
+KSZ_042;Szuflada zewnętrzna;PC polysk;1 642 ;;;729;420
+KSZ_001;Szuflada zewnętrzna;fornir dab mat;"1 056;00 ";;;229;79
+KSZ_002;Szuflada zewnętrzna;fornir dab mat;"1 111;00 ";;;329;79
+KSZ_003;Szuflada zewnętrzna;fornir dab mat;"1 136;00 ";;;374;79
+KSZ_004;Szuflada zewnętrzna;fornir dab mat;"1 162;00 ";;;420;79
+KSZ_005;Szuflada zewnętrzna;fornir dab mat;"1 194;00 ";;;479;79
+KSZ_006;Szuflada zewnętrzna;fornir dab mat;"1 218;00 ";;;523;79
+KSZ_007;Szuflada zewnętrzna;fornir dab mat;"1 332;00 ";;;729;79
+KSZ_008;Szuflada zewnętrzna;fornir dab mat;"1 116;00 ";;;229;154
+KSZ_009;Szuflada zewnętrzna;fornir dab mat;"1 188;00 ";;;329;154
+KSZ_010;Szuflada zewnętrzna;fornir dab mat;"1 221;00 ";;;374;154
+KSZ_011;Szuflada zewnętrzna;fornir dab mat;"1 254;00 ";;;420;154
+KSZ_012;Szuflada zewnętrzna;fornir dab mat;"1 296;00 ";;;479;154
+KSZ_013;Szuflada zewnętrzna;fornir dab mat;"1 328;00 ";;;523;154
+KSZ_014;Szuflada zewnętrzna;fornir dab mat;"1 480;00 ";;;729;154
+KSZ_015;Szuflada zewnętrzna;fornir dab mat;"1 171;00 ";;;229;229
+KSZ_016;Szuflada zewnętrzna;fornir dab mat;"1 260;00 ";;;329;229
+KSZ_017;Szuflada zewnętrzna;fornir dab mat;"1 300;00 ";;;374;229
+KSZ_018;Szuflada zewnętrzna;fornir dab mat;"1 341;00 ";;;420;229
+KSZ_019;Szuflada zewnętrzna;fornir dab mat;"1 393;00 ";;;479;229
+KSZ_020;Szuflada zewnętrzna;fornir dab mat;"1 432;00 ";;;523;229
+KSZ_021;Szuflada zewnętrzna;fornir dab mat;"1 615;00 ";;;729;229
+KSZ_022;Szuflada zewnętrzna;fornir dab mat;"1 249;00 ";;;229;329
+KSZ_023;Szuflada zewnętrzna;fornir dab mat;"1 360;00 ";;;329;329
+KSZ_024;Szuflada zewnętrzna;fornir dab mat;"1 410;00 ";;;374;329
+KSZ_025;Szuflada zewnętrzna;fornir dab mat;"1 461;00 ";;;420;329
+KSZ_026;Szuflada zewnętrzna;fornir dab mat;"1 526;00 ";;;479;329
+KSZ_027;Szuflada zewnętrzna;fornir dab mat;"1 575;00 ";;;523;329
+KSZ_028;Szuflada zewnętrzna;fornir dab mat;"1 804;00 ";;;729;329
+KSZ_029;Szuflada zewnętrzna;fornir dab mat;"1 286;00 ";;;229;374
+KSZ_030;Szuflada zewnętrzna;fornir dab mat;"1 407;00 ";;;329;374
+KSZ_031;Szuflada zewnętrzna;fornir dab mat;"1 462;00 ";;;374;374
+KSZ_032;Szuflada zewnętrzna;fornir dab mat;"1 518;00 ";;;420;374
+KSZ_033;Szuflada zewnętrzna;fornir dab mat;"1 589;00 ";;;479;374
+KSZ_034;Szuflada zewnętrzna;fornir dab mat;"1 643;00 ";;;523;374
+KSZ_035;Szuflada zewnętrzna;fornir dab mat;"1 893;00 ";;;729;374
+KSZ_036;Szuflada zewnętrzna;fornir dab mat;"1 331;00 ";;;229;420
+KSZ_037;Szuflada zewnętrzna;fornir dab mat;"1 464;00 ";;;329;420
+KSZ_038;Szuflada zewnętrzna;fornir dab mat;"1 523;00 ";;;374;420
+KSZ_039;Szuflada zewnętrzna;fornir dab mat;"1 584;00 ";;;420;420
+KSZ_040;Szuflada zewnętrzna;fornir dab mat;"1 662;00 ";;;479;420
+KSZ_041;Szuflada zewnętrzna;fornir dab mat;"1 720;00 ";;;523;420
+KSZ_042;Szuflada zewnętrzna;fornir dab mat;"1 993;00 ";;;729;420
+KSZ_001;Szuflada zewnętrzna;fornir orzech mat;1 062 ;;;229;79
+KSZ_002;Szuflada zewnętrzna;fornir orzech mat;1 119 ;;;329;79
+KSZ_003;Szuflada zewnętrzna;fornir orzech mat;1 145 ;;;374;79
+KSZ_004;Szuflada zewnętrzna;fornir orzech mat;1 171 ;;;420;79
+KSZ_005;Szuflada zewnętrzna;fornir orzech mat;1 205 ;;;479;79
+KSZ_006;Szuflada zewnętrzna;fornir orzech mat;1 230 ;;;523;79
+KSZ_007;Szuflada zewnętrzna;fornir orzech mat;1 348 ;;;729;79
+KSZ_008;Szuflada zewnętrzna;fornir orzech mat;1 126 ;;;229;154
+KSZ_009;Szuflada zewnętrzna;fornir orzech mat;1 201 ;;;329;154
+KSZ_010;Szuflada zewnętrzna;fornir orzech mat;1 235 ;;;374;154
+KSZ_011;Szuflada zewnętrzna;fornir orzech mat;1 270 ;;;420;154
+KSZ_012;Szuflada zewnętrzna;fornir orzech mat;1 315 ;;;479;154
+KSZ_013;Szuflada zewnętrzna;fornir orzech mat;1 348 ;;;523;154
+KSZ_014;Szuflada zewnętrzna;fornir orzech mat;1 508 ;;;729;154
+KSZ_015;Szuflada zewnętrzna;fornir orzech mat;1 185 ;;;229;229
+KSZ_016;Szuflada zewnętrzna;fornir orzech mat;1 278 ;;;329;229
+KSZ_017;Szuflada zewnętrzna;fornir orzech mat;1 321 ;;;374;229
+KSZ_018;Szuflada zewnętrzna;fornir orzech mat;1 364 ;;;420;229
+KSZ_019;Szuflada zewnętrzna;fornir orzech mat;1 419 ;;;479;229
+KSZ_020;Szuflada zewnętrzna;fornir orzech mat;1 460 ;;;523;229
+KSZ_021;Szuflada zewnętrzna;fornir orzech mat;1 653 ;;;729;229
+KSZ_022;Szuflada zewnętrzna;fornir orzech mat;1 267 ;;;229;329
+KSZ_023;Szuflada zewnętrzna;fornir orzech mat;1 385 ;;;329;329
+KSZ_024;Szuflada zewnętrzna;fornir orzech mat;1 438 ;;;374;329
+KSZ_025;Szuflada zewnętrzna;fornir orzech mat;1 493 ;;;420;329
+KSZ_026;Szuflada zewnętrzna;fornir orzech mat;1 562 ;;;479;329
+KSZ_027;Szuflada zewnętrzna;fornir orzech mat;1 614 ;;;523;329
+KSZ_028;Szuflada zewnętrzna;fornir orzech mat;1 857 ;;;729;329
+KSZ_029;Szuflada zewnętrzna;fornir orzech mat;1 307 ;;;229;374
+KSZ_030;Szuflada zewnętrzna;fornir orzech mat;1 436 ;;;329;374
+KSZ_031;Szuflada zewnętrzna;fornir orzech mat;1 494 ;;;374;374
+KSZ_032;Szuflada zewnętrzna;fornir orzech mat;1 553 ;;;420;374
+KSZ_033;Szuflada zewnętrzna;fornir orzech mat;1 630 ;;;479;374
+KSZ_034;Szuflada zewnętrzna;fornir orzech mat;1 687 ;;;523;374
+KSZ_035;Szuflada zewnętrzna;fornir orzech mat;1 953 ;;;729;374
+KSZ_036;Szuflada zewnętrzna;fornir orzech mat;1 354 ;;;229;420
+KSZ_037;Szuflada zewnętrzna;fornir orzech mat;1 496 ;;;329;420
+KSZ_038;Szuflada zewnętrzna;fornir orzech mat;1 559 ;;;374;420
+KSZ_039;Szuflada zewnętrzna;fornir orzech mat;1 624 ;;;420;420
+KSZ_040;Szuflada zewnętrzna;fornir orzech mat;1 707 ;;;479;420
+KSZ_041;Szuflada zewnętrzna;fornir orzech mat;1 769 ;;;523;420
+KSZ_042;Szuflada zewnętrzna;fornir orzech mat;2 060 ;;;729;420
+KSZ_001;Szuflada zewnętrzna;fornir orzech polysk;1 079 ;;;229;79
+KSZ_002;Szuflada zewnętrzna;fornir orzech polysk;1 143 ;;;329;79
+KSZ_003;Szuflada zewnętrzna;fornir orzech polysk;1 172 ;;;374;79
+KSZ_004;Szuflada zewnętrzna;fornir orzech polysk;1 201 ;;;420;79
+KSZ_005;Szuflada zewnętrzna;fornir orzech polysk;1 239 ;;;479;79
+KSZ_006;Szuflada zewnętrzna;fornir orzech polysk;1 267 ;;;523;79
+KSZ_007;Szuflada zewnętrzna;fornir orzech polysk;1 398 ;;;729;79
+KSZ_008;Szuflada zewnętrzna;fornir orzech polysk;1 154 ;;;229;154
+KSZ_009;Szuflada zewnętrzna;fornir orzech polysk;1 241 ;;;329;154
+KSZ_010;Szuflada zewnętrzna;fornir orzech polysk;1 280 ;;;374;154
+KSZ_011;Szuflada zewnętrzna;fornir orzech polysk;1 320 ;;;420;154
+KSZ_012;Szuflada zewnętrzna;fornir orzech polysk;1 371 ;;;479;154
+KSZ_013;Szuflada zewnętrzna;fornir orzech polysk;1 409 ;;;523;154
+KSZ_014;Szuflada zewnętrzna;fornir orzech polysk;1 591 ;;;729;154
+KSZ_015;Szuflada zewnętrzna;fornir orzech polysk;1 225 ;;;229;229
+KSZ_016;Szuflada zewnętrzna;fornir orzech polysk;1 334 ;;;329;229
+KSZ_017;Szuflada zewnętrzna;fornir orzech polysk;1 383 ;;;374;229
+KSZ_018;Szuflada zewnętrzna;fornir orzech polysk;1 433 ;;;420;229
+KSZ_019;Szuflada zewnętrzna;fornir orzech polysk;1 498 ;;;479;229
+KSZ_020;Szuflada zewnętrzna;fornir orzech polysk;1 546 ;;;523;229
+KSZ_021;Szuflada zewnętrzna;fornir orzech polysk;1 770 ;;;729;229
+KSZ_022;Szuflada zewnętrzna;fornir orzech polysk;1 323 ;;;229;329
+KSZ_023;Szuflada zewnętrzna;fornir orzech polysk;1 462 ;;;329;329
+KSZ_024;Szuflada zewnętrzna;fornir orzech polysk;1 525 ;;;374;329
+KSZ_025;Szuflada zewnętrzna;fornir orzech polysk;1 589 ;;;420;329
+KSZ_026;Szuflada zewnętrzna;fornir orzech polysk;1 671 ;;;479;329
+KSZ_027;Szuflada zewnętrzna;fornir orzech polysk;1 732 ;;;523;329
+KSZ_028;Szuflada zewnętrzna;fornir orzech polysk;2 019 ;;;729;329
+KSZ_029;Szuflada zewnętrzna;fornir orzech polysk;1 369 ;;;229;374
+KSZ_030;Szuflada zewnętrzna;fornir orzech polysk;1 522 ;;;329;374
+KSZ_031;Szuflada zewnętrzna;fornir orzech polysk;1 591 ;;;374;374
+KSZ_032;Szuflada zewnętrzna;fornir orzech polysk;1 661 ;;;420;374
+KSZ_033;Szuflada zewnętrzna;fornir orzech polysk;1 752 ;;;479;374
+KSZ_034;Szuflada zewnętrzna;fornir orzech polysk;1 819 ;;;523;374
+KSZ_035;Szuflada zewnętrzna;fornir orzech polysk;2 134 ;;;729;374
+KSZ_036;Szuflada zewnętrzna;fornir orzech polysk;1 424 ;;;229;420
+KSZ_037;Szuflada zewnętrzna;fornir orzech polysk;1 592 ;;;329;420
+KSZ_038;Szuflada zewnętrzna;fornir orzech polysk;1 667 ;;;374;420
+KSZ_039;Szuflada zewnętrzna;fornir orzech polysk;1 744 ;;;420;420
+KSZ_040;Szuflada zewnętrzna;fornir orzech polysk;1 843 ;;;479;420
+KSZ_041;Szuflada zewnętrzna;fornir orzech polysk;1 917 ;;;523;420
+KSZ_042;Szuflada zewnętrzna;fornir orzech polysk;2 262 ;;;729;420
