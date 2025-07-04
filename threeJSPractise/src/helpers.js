@@ -79,7 +79,7 @@ export const generatePoints = function (object) {
  * @param {string} name
  */
 export const getParametersFromModel = function (name) {
-  // np. klagem/module_F/Legged/729x383x222.glb => [729, 383, 222]
+  // np. klagem/module_F/Legged/729x383x222.glb => [729, 383, 222]  
   const splitted = name.split("/");
   const onlyname = splitted[splitted.length - 1];
   const params = onlyname.split('x');
@@ -87,9 +87,9 @@ export const getParametersFromModel = function (name) {
   return {
     module: splitted[1],
     type: splitted[2],
-    width: parseInt(params[0]),
-    depth: parseInt(params[1]),
-    height: parseInt(params[2].split(".")[0]),
+    width: parseFloat(params[0]),
+    depth: parseFloat(params[1]),
+    height: parseFloat(params[2]),
   };
 };
 
@@ -338,14 +338,12 @@ export const boxesAround = function(object){
   if (hasValue(cubesPositions, currentData.x_index - 1, currentData.y_index)) posChecked[1] = false;
   if (hasValue(cubesPositions, currentData.x_index + 1, currentData.y_index)) posChecked[2] = false;
   
-  const boxesAround = {
+  return {
       "top": !posChecked[0],
       "bottom": getParametersFromModel(object.name).type != "Legged",
       "left": !posChecked[1],
       "right": !posChecked[2]
   };
-
-  return boxesAround;
 }
 
 /**
@@ -356,4 +354,27 @@ export const boxesAround = function(object){
  */
 export const vec2toVec3 = function(vec2, z = 0) {
   return new THREE.Vector3(vec2.x, vec2.y, z);
+}
+
+/**
+ * 
+ * @param {THREE.Group} object 
+ */
+export const getConnectionsTypeByObject = function(object){
+  const bAround = boxesAround(object);
+  
+  const data = dataFromPositionVector(cubesPositions, object.position);
+
+  const topLeft = (bAround.top && bAround.left || select(cubesPositions, meshGroup, data.x_index - 1, data.y_index + 1).length > 0 ? "nlrtb" : bAround.top ? "ntb" : bAround.left ? "nlr" : "n");
+  const topRight = (bAround.top && bAround.right ? "nlrtb" : bAround.top ? "ntb" : bAround.right ? "nlr" : "n");
+
+  const bottomLeft = bAround.left ? "nlrtb" : "ntb";
+  const bottomRight = bAround.right ? "nlrtb" : "ntb";
+
+  return {
+    "topLeft": topLeft,
+    "topRight": topRight,
+    "bottomLeft": bottomLeft,
+    "bottomRight": bottomRight
+  };
 }

@@ -34,6 +34,7 @@ function importPrices() {
 
         const compareName = r[0].split(" ")[0].toLowerCase();
         const compareType = r[1].split(" ")[0].toLowerCase();
+        r[3] = r[3].replace(" ", "");
 
         if(compareName == 'uchwyt') _PRICES.handle = {'price':parseFloat(r[3])};
         else if(compareType == 'foot') _PRICES.feet.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3])});
@@ -264,7 +265,7 @@ export const getFullPrice = function(countDuplicates = false, debug = false){
 }
 
 
-const priceDebug = function(object, countDuplicates = false){
+const priceDebug = function(object = meshGroup.children[0], countDuplicates = false){
     const data = getFullObjectData(object);
     const price = getBoxPrice(object, countDuplicates);
     const profilesPrice = getProfilesPrice(data).fullPrice;

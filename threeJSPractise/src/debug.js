@@ -1,4 +1,5 @@
 import { changeJointsColor } from "./connections";
+import { getConnectionsTypeByObject } from "./helpers";
 import { meshGroup, scene, setCurrentBlock, cubesPositions, currentBlock } from "./main";
 import * as THREE from 'three';
 
@@ -55,4 +56,5 @@ window.onload = ()=>{
     window.meshGroup = meshGroup;
     window.THREE = THREE;
     window.changeJointsColor = changeJointsColor;
+    window.getConnectionsTypeByObject = getConnectionsTypeByObject;
 };

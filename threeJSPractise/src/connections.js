@@ -1,4 +1,4 @@
-import { generatePoints, modelToClone, getParametersFromModel, checkConnections, boxesAround, vec2toVec3, dataFromPositionVector, select } from "./helpers";
+import { generatePoints, modelToClone, getParametersFromModel, checkConnections, boxesAround, vec2toVec3, dataFromPositionVector, select, getConnectionsTypeByObject } from "./helpers";
 import { checkPosition, cubesPositions, getModelSize, meshGroup, scene } from "./main";
 import { getModel } from "./rederObject";
 import * as THREE from 'three';
@@ -29,6 +29,7 @@ const connectSingle = async function (obj) {
   ntb.name = "ntb";
   nlrtb.name = "nlrtb";
 
+  const joints = {"n": n, "nlr": nlr, "ntb": ntb, "nlrtb": nlrtb};
 
 
   // Obrót dla jointów łączących lewo/prawo
@@ -40,10 +41,10 @@ const connectSingle = async function (obj) {
   const size = getModelSize(obj);
   const params = getParametersFromModel(obj.name);
   const points = generatePoints(obj);
-  const data = dataFromPositionVector(cubesPositions, obj.position);
+  const connections = getConnectionsTypeByObject(obj);
 
-  const topLeft = (bAround.top && bAround.left || select(cubesPositions, meshGroup, data.x_index - 1, data.y_index + 1).length > 0 ? nlrtb.clone() : bAround.top ? ntb.clone() : bAround.left ? nlr.clone() : n.clone());
-  const topRight = (bAround.top && bAround.right ? nlrtb.clone() : bAround.top ? ntb.clone() : bAround.right ? nlr.clone() : n.clone());
+  const topLeft = joints[connections.topLeft].clone();
+  const topRight = joints[connections.topRight].clone();
 
   const offsetTL = offset[topLeft.name.toLowerCase()];
   const offsetTR = offset[topRight.name.toLowerCase()];

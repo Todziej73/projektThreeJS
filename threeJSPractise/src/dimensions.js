@@ -2,7 +2,7 @@ import { cubesPositions, generatePoints, scene, meshGroup } from "./main";
 import * as THREE from 'three';
 import { loadText } from "./rederObject";
 import { changeColumnSize } from "./configuratorPanel";
-import { getParametersFromModel, select, extremeValues, getModelSize, extremeInArray, dataFromPosition, dataFromPositionVector } from "./helpers";
+import { getParametersFromModel, select, extremeValues, getModelSize, extremeInArray, dataFromPosition, dataFromPositionVector, getConnectionsTypeByObject, boxesAround } from "./helpers";
 
 
 const dimensionsGroup = new THREE.Group();
@@ -71,8 +71,16 @@ const uDFront = function(){
     const bottomRow = select(cubesPositions, meshGroup, null, extremes.min_y);
     
     let modelXSizeName = 0;
-    bottomRow.forEach(el => {        
-        modelXSizeName += getParametersFromModel(el.name).width;
+    bottomRow.forEach(el => {
+
+        const joints = getConnectionsTypeByObject(el);
+        const params = getParametersFromModel(el.name);
+        const bAround = boxesAround(el);
+        const isLeft = !bAround.left;
+
+        modelXSizeName += OTHER_SIZES.joints[joints.bottomRight].width;
+        if(isLeft) modelXSizeName += OTHER_SIZES.joints[joints.bottomLeft].width;
+        modelXSizeName += params.width;
     });    
     
     const first = generatePoints(extremeInArray(bottomRow).min_x_Object).left;
@@ -153,11 +161,18 @@ const uDHeight = function(){
         
         miniGroup.add(text);
         // -=-=-=-
-        modelYSizeName += getParametersFromModel(el.name).height;
+        const joints = getConnectionsTypeByObject(el);
+        const params = getParametersFromModel(el.name);
+        const isLegged = params.type == "Legged";
+
+        modelYSizeName += OTHER_SIZES.joints[joints.topLeft].height;
+        if(isLegged) modelYSizeName += OTHER_SIZES.joints[joints.bottomLeft].height;
+        modelYSizeName += params.height;
     });
 
     // -=-=-=-=-=-=-
 
+    modelYSizeName += OTHER_SIZES.feet.height;
     
     const scaleY = last.top.y + first.bottom.y;
 
@@ -179,6 +194,29 @@ const uDHeight = function(){
 }
 
 
+const OTHER_SIZES = {
+    "joints": {
+        "n": {
+            "height": 39,
+            "width": 39
+        },
+        "nlr": {
+            "height": 39,
+            "width": 49.5
+        },
+        "ntb": {
+            "height": 49.5,
+            "width": 39
+        },
+        "nlrtb": {
+            "height": 49.5,
+            "width": 49.5
+        }
+    },
+    "feet": {
+        height: 52
+    }
+}
 
 const EDGES = {
     FrontWidthTop: 0,
