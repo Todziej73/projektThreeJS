@@ -59,7 +59,7 @@ const setup = function () {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    console.log('resize!');
+    // console.log('resize!');
   };
   resize();
   window.addEventListener('resize', resize);

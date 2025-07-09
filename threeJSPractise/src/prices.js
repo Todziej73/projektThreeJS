@@ -1,7 +1,7 @@
-import { boxesAround, checkConnections, getFrameColor, getFullObjectData, getObjectColor, getParametersFromModel, nameToColor } from "./helpers";
-import { checkPosition, checkSides, meshGroup } from "./main"
+import { boxesAround, checkConnections, getFullObjectData, nameToColor } from "./helpers";
+import { meshGroup } from "./main"
 import * as THREE from 'three';
-import pricesText from '/src/pricesv2new.csv?raw';
+import pricesText from '/src/pricesv3.csv?raw';
 
 
 /**
@@ -25,12 +25,12 @@ const _PRICES = {
 function importPrices() {
     const rows = pricesText.split("\n");
     for(let i = 0; i < rows.length; i++){
-        rows[i] = rows[i].split(";");
+        rows[i] = rows[i].split(",");
     }
 
     
-    for(const r of rows){
-        if(r.length < 6) continue;       
+    for(const r of rows){        
+        if(r.length < 10 || r[0].trim() == "") continue;       
 
         const compareName = r[0].split(" ")[0].toLowerCase();
         const compareType = r[1].split(" ")[0].toLowerCase();
@@ -40,8 +40,8 @@ function importPrices() {
         else if(compareType == 'foot') _PRICES.feet.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3])});
         else if(compareType == 'profil') _PRICES.profiles.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'len':parseInt(r[1].split(" ")[1])});
         else if(compareType == 'kolano') _PRICES.knees.push({'color':nameToColor(r[2]), 'price':parseFloat(r[3]), 'connects': parseInt(r[1].split(" ")[1])});
-        else if(compareType == 'szuflada') _PRICES.drawers.push({'height':parseInt(r[7]), 'width':parseInt(r[6]), 'price':parseFloat(r[3])});
-        else if(["ściana", "półka"].includes(compareType) && r[2] == "PC mat") _PRICES.walls.push({'width':parseInt(r[4]), 'height':parseInt(r[5]), 'price':parseFloat(r[3]), 'type': compareType});
+        else if(compareType == 'szuflada' && r[2] == "PC mat") _PRICES.drawers.push({'height':parseInt(r[6]), 'width':parseInt(r[4]), 'price':parseFloat(r[3])});
+        else if(["ściana", "półka"].includes(compareType) && r[2] == "PC mat") _PRICES.walls.push({'width':parseInt(r[7]), 'height':parseInt(r[9]), 'price':parseFloat(r[3]), 'type': compareType});
     };
     
 }
