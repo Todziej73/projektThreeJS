@@ -11,11 +11,20 @@ dimensionsGroup.name = "DIMENSIONS_GROUP";
 
 
 
-const TextOptions = {
+const DefaultTextOptions = {
     size: 0.5,
     material: new THREE.MeshBasicMaterial({
         color: "#222222"
-    })
+    }),
+    bold: false
+}
+
+const BoldTextOptions = {
+    size: 0.7,
+    material: new THREE.MeshBasicMaterial({
+        color: "#222222"
+    }),
+    bold: true
 }
 
 
@@ -33,13 +42,13 @@ const updateDimensions = function(){
     
     // console.log(cubesPositions);
     
-    dimensionsGroup.add(uDTop());
-    dimensionsGroup.add(uDFront());
-    dimensionsGroup.add(uDDepth());
-    dimensionsGroup.add(uDHeight());
+    dimensionsGroup.add(uDTop(DefaultTextOptions));
+    dimensionsGroup.add(uDFront(BoldTextOptions));
+    dimensionsGroup.add(uDDepth(BoldTextOptions));
+    dimensionsGroup.add(uDHeight(DefaultTextOptions, BoldTextOptions));
 }
 
-const uDTop = function (){
+const uDTop = function (TextOptions = DefaultTextOptions){
     const offset = new THREE.Vector3(0, 0.03, -0.05);
     // -=-=-=-=-=-=
     const miniGroup = new THREE.Group();
@@ -55,7 +64,7 @@ const uDTop = function (){
     
     
     texted.forEach(el => {
-        const text = blockDimensionTextWithPlacement(el, EDGES.FrontWidthTop);
+        const text = blockDimensionTextWithPlacement(el, EDGES.FrontWidthTop, TextOptions);
         text.position.add(offset);
         miniGroup.add(text);
     });
@@ -63,7 +72,7 @@ const uDTop = function (){
     return miniGroup;
 }
 
-const uDFront = function(){
+const uDFront = function(TextOptions = DefaultTextOptions){
     const offset = new THREE.Vector3(0, 0.52, -0.15);
     // -=-=-=-=-=-=
     const miniGroup = new THREE.Group();
@@ -97,7 +106,7 @@ const uDFront = function(){
 
     
 
-    const text = blockDimensionTextWithPlacement(tempObj, EDGES.FrontWidthBottom);
+    const text = blockDimensionTextWithPlacement(tempObj, EDGES.FrontWidthBottom, TextOptions);
     text.position.add(offset);
     miniGroup.add(text);
 
@@ -105,7 +114,7 @@ const uDFront = function(){
     return miniGroup;
 }
 
-const uDDepth = function(){
+const uDDepth = function(TextOptions = DefaultTextOptions){
     const offset = new THREE.Vector3(0, 0.02, 0);
     // -=-=-=-=-=-=
     const miniGroup = new THREE.Group();
@@ -116,8 +125,8 @@ const uDDepth = function(){
     const left = extremeObjects.min_x_Object;
     const right = extremeObjects.max_x_Object;
 
-    const textLeft = blockDimensionTextWithPlacement(left, EDGES.DepthBottomLeft);
-    const textRight = blockDimensionTextWithPlacement(right, EDGES.DepthBottomRight);
+    const textLeft = blockDimensionTextWithPlacement(left, EDGES.DepthBottomLeft, TextOptions);
+    const textRight = blockDimensionTextWithPlacement(right, EDGES.DepthBottomRight, TextOptions);
 
     textLeft.position.add(offset);
     textRight.position.add(offset);
@@ -132,7 +141,7 @@ const uDDepth = function(){
     return miniGroup;
 }
 
-const uDHeight = function(){
+const uDHeight = function(TextOptions1 = DefaultTextOptions, TextOptions2 = DefaultTextOptions){
     const offset = new THREE.Vector3(-0, -0.05, 0);
     // -=-=-=-=-=-=-
     const miniGroup = new THREE.Group();
@@ -149,7 +158,7 @@ const uDHeight = function(){
     // -=-=-=-=-
 
     highestColumn.forEach(el => {
-        const text = blockDimensionTextWithPlacement(el, EDGES.FrontHeightLeft);
+        const text = blockDimensionTextWithPlacement(el, EDGES.FrontHeightLeft, TextOptions1);
         const elPoints = generatePoints(el);
         text.rotateY(Math.PI / 4);
         text.rotateZ(Math.PI / 2);
@@ -182,7 +191,7 @@ const uDHeight = function(){
     
     tempObj.name = `0x0x${modelYSizeName}.glb`;
 
-    const text = blockDimensionTextWithPlacement(tempObj, EDGES.FrontHeightLeft);
+    const text = blockDimensionTextWithPlacement(tempObj, EDGES.FrontHeightLeft, TextOptions2);
     // text.position.add(offset);
     text.rotateY(Math.PI / 4);
     text.rotateZ(Math.PI / 2);
@@ -198,19 +207,19 @@ const OTHER_SIZES = {
     "joints": {
         "n": {
             "height": 39,
-            "width": 39
+            "width": 45
         },
         "nlr": {
             "height": 39,
-            "width": 49.5
+            "width": 50
         },
         "ntb": {
-            "height": 49.5,
-            "width": 39
+            "height": 50,
+            "width": 45
         },
         "nlrtb": {
-            "height": 49.5,
-            "width": 49.5
+            "height": 50,
+            "width": 50
         }
     },
     "feet": {
@@ -284,12 +293,12 @@ const TextEdgesHelper = {
  * @param {THREE.Mesh} object 
  * @param {number} edge 
  */
-const blockDimensionTextWithPlacement = function(object, edge){
+const blockDimensionTextWithPlacement = function(object, edge, TextOptions = DefaultTextOptions){
     
     const point = TextEdgesHelper.getPoint(object, edge);
     const printed = TextEdgesHelper.getText(object, edge);
 
-    const text = loadText(printed, TextOptions.material);
+    const text = loadText(printed, TextOptions.material, TextOptions.bold);
     text.position.x = point.x;
     text.position.y = point.y;
     text.position.z = point.z;

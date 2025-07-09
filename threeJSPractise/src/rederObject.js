@@ -12,26 +12,28 @@ const mustManager = new THREE.LoadingManager();
 
 // 3D FONT/TEXT LOADER -- must
 
-let font;
+let font, font_b;
 const fontLoader = new FontLoader(mustManager);
 fontLoader.load("fonts/Rethink Sans_Regular.json", (loadedFont) => {
     font = loadedFont;
-    console.log("--= Font was correctly assigned! =--");
 });
-
+fontLoader.load("fonts/Rethink Sans SemiBold_Regular.json", (loadedFont) => {
+    font_b = loadedFont;
+});
 
 /**
  * 
  * @param {string} text 
- * @param {string} fontPath 
- * @param {THREE.MeshStandardMaterial} material 
+ * @param {THREE.MeshStandardMaterial} material
+ * @param {boolean} bold
  * @returns {THREE.Mesh}
  */
-const loadText = function(text, material = new THREE.MeshStandardMaterial({ color: 0x000000 })) {
+const loadText = function(text, material = new THREE.MeshStandardMaterial({ color: 0x000000 }), bold = false) {
+    const f = bold ? font_b : font;
     const geometry = new TextGeometry(text, {
-        font: font,
+        font: f,
         size: 0.05,
-        depth: 0.001
+        depth: 0.001,
     });
 
     const textMesh = new THREE.Mesh(geometry, material);
@@ -42,6 +44,10 @@ const loadText = function(text, material = new THREE.MeshStandardMaterial({ colo
 
 mustManager.onLoad = async function () {
     console.log('Ready to work (MUSTLOADER)!');
+    while (!font || !font_b) {
+        console.log("⏳ Waiting for fonts to load...");
+        await new Promise(res => setTimeout(res, 100));
+    }
     try{
         await addCube(-1);
     }
