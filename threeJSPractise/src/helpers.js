@@ -288,17 +288,13 @@ export const nameToColor = function(name) {
  * @param {THREE.Mesh} object 
  */
 export const checkConnections = function(object){
-  const parameters = getParametersFromModel(object.name);
-  const checkPos = checkPosition(object.position);
-  const blockOnTop = checkPos[0];
-  const blockOnLeft = checkPos[1];
-  const blockOnRight = checkPos[2];
-  const blockOnBottom = parameters.type == 'Legged';
+  const conns = getConnectionsTypeByObject(object);
 
-  const leftTopSides = blockOnTop + blockOnLeft + 3;
-  const rightTopSides = blockOnTop + blockOnRight + 3;
-  const leftBottomSides = blockOnBottom + blockOnLeft + 3;
-  const rightBottomSides = blockOnBottom + blockOnRight + 3;
+
+  const leftTopSides = connectionNameToAmount(conns.topLeft) + 2;
+  const rightTopSides = connectionNameToAmount(conns.topRight) + 2;
+  const leftBottomSides = connectionNameToAmount(conns.bottomLeft) + 2;
+  const rightBottomSides = connectionNameToAmount(conns.bottomRight) + 2;
   
 
   return {
@@ -307,6 +303,12 @@ export const checkConnections = function(object){
     'leftBottomSides': leftBottomSides,
     'rightBottomSides': rightBottomSides
   }
+}
+
+const connectionNameToAmount = function(name){
+  if(name == "nlrtb") return 3;
+  if(name == "nlr" || name == "ntb") return 2;
+  return 1;
 }
 
 /**
