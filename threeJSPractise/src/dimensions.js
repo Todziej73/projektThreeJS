@@ -44,7 +44,7 @@ const updateDimensions = function(){
     
     dimensionsGroup.add(uDTop(DefaultTextOptions));
     dimensionsGroup.add(uDFront(BoldTextOptions));
-    dimensionsGroup.add(uDDepth(BoldTextOptions));
+    dimensionsGroup.add(uDDepth(DefaultTextOptions, BoldTextOptions));
     dimensionsGroup.add(uDHeight(DefaultTextOptions, BoldTextOptions));
 }
 
@@ -114,8 +114,10 @@ const uDFront = function(TextOptions = DefaultTextOptions){
     return miniGroup;
 }
 
-const uDDepth = function(TextOptions = DefaultTextOptions){
+const uDDepth = function(TextOptions1 = DefaultTextOptions, TextOptions2 = DefaultTextOptions){
     const offset = new THREE.Vector3(0, 0.02, 0);
+    const sumaddoffset = new THREE.Vector3(0.1, 0, 0)
+
     // -=-=-=-=-=-=
     const miniGroup = new THREE.Group();
     const extremes = extremeValues(cubesPositions);
@@ -125,15 +127,30 @@ const uDDepth = function(TextOptions = DefaultTextOptions){
     const left = extremeObjects.min_x_Object;
     const right = extremeObjects.max_x_Object;
 
-    const textLeft = blockDimensionTextWithPlacement(left, EDGES.DepthBottomLeft, TextOptions);
-    const textRight = blockDimensionTextWithPlacement(right, EDGES.DepthBottomRight, TextOptions);
+    const textLeft = blockDimensionTextWithPlacement(left, EDGES.DepthBottomLeft, TextOptions1);
+    const textRight = blockDimensionTextWithPlacement(right, EDGES.DepthBottomRight, TextOptions1);
+
+    const copyl = left.clone();
+    const copyr = right.clone();
+
+
+    copyl.name = `0x${getParametersFromModel(left.name).depth + (2*OTHER_SIZES.joints.n.width)}x0.glb`;
+    copyr.name = `0x${getParametersFromModel(right.name).depth + (2*OTHER_SIZES.joints.n.width)}x0.glb`;
+
+    const sumTextLeft = blockDimensionTextWithPlacement(copyl, EDGES.DepthBottomLeft, TextOptions2);
+    const sumTextRight = blockDimensionTextWithPlacement(copyr, EDGES.DepthBottomRight, TextOptions2);
 
     textLeft.position.add(offset);
     textRight.position.add(offset);
-
+    sumTextLeft.position.add(offset.clone().sub(sumaddoffset));
+    sumTextRight.position.add(offset.clone().add(sumaddoffset));
+    sumTextLeft.rotation.y = 0;
+    sumTextRight.rotation.y = 0;
 
     miniGroup.add(textLeft);
     miniGroup.add(textRight);
+    miniGroup.add(sumTextLeft);
+    miniGroup.add(sumTextRight);
 
     
 
