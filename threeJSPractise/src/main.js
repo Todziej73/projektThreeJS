@@ -224,25 +224,28 @@ document.addEventListener("pointerdown", () => isMouseDown = true);
 document.addEventListener("pointerup", () => isMouseDown = false);
 
 document.addEventListener("pointermove", function (e) {
-    if (isMouseDown) return; // Nie rób raycastingu, jeśli myszka jest wciśnięta!
+  if (isMouseDown) return; // Pomijamy, jeśli użytkownik przeciąga
 
-    mouse.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
-    raycaster.setFromCamera(mouse, camera);
-    raycaster.layers.set(0);
-    intersects = raycaster.intersectObjects(scene.children);
-    
-    
-    if (intersects.length > 0 && expansionHandles.children.includes(intersects[0].object)) {
-      document.querySelector('body').style.cursor = 'pointer';
-      intersects[0].object.material.opacity = 0.8;
-      intersects[0].object.material.color.set(0xadb5bd);
-    } else {
-      document.querySelector('body').style.cursor = 'default';
-      expansionHandles.children.forEach(function (e) {
-        e.material.color.set(0xced4da)
-        e.material.opacity = 0.8;
-      });
-    }
+  const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+  const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  mouse.set(mouseX, mouseY);
+
+  raycaster.setFromCamera(mouse, camera);
+  raycaster.layers.set(0);
+
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  if (intersects.length > 0 && expansionHandles.children.includes(intersects[0].object)) {
+    document.querySelector('body').style.cursor = 'pointer';
+    intersects[0].object.material.opacity = 0.8;
+    intersects[0].object.material.color.set(0xadb5bd);
+  } else {
+    document.querySelector('body').style.cursor = 'default';
+    expansionHandles.children.forEach(function (e) {
+      e.material.color.set(0xced4da);
+      e.material.opacity = 0.8;
+    });
+  }
 });
 
 const deleteModelBtn = document.querySelector('.deleteModelBtn');
@@ -334,46 +337,50 @@ openTutorialBtn.addEventListener('click', function(){
 
 
 
-window.addEventListener('click', function (e) {
+window.addEventListener('pointerdown', function (e) {
+  const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+  const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  mouse.set(mouseX, mouseY);
+
+  raycaster.setFromCamera(mouse, camera);
+  raycaster.layers.set(0);
+  const intersects = raycaster.intersectObjects(scene.children, true);
+
   if (intersects.length > 0) {
-    
     const clickedEl = intersects[0].object;
-    if (clickedEl.parent.parent != null && meshGroup.children.includes(clickedEl.parent.parent.parent)) { //? if block was clicked
+
+    if (clickedEl.parent?.parent && meshGroup.children.includes(clickedEl.parent.parent.parent)) {
       currentBlock = clickedEl.parent.parent.parent;
       updateActiveVisibler();
       createAddBtns(generatePoints(currentBlock));
 
-
-      //updating the panel to show te current dimensions 
       const modelSize = getParametersFromModel(currentBlock.name);
       const allInputs = document.querySelectorAll('.size-option');
       allInputs.forEach(el => el.classList.remove('size-option--active'));
 
-      //selecting size on the panel
       document.querySelector(`.width--option[data-size="${modelSize.width}"]`).classList.add('size-option--active');
       document.querySelector(`.height--option[data-size="${modelSize.height}"]`).classList.add('size-option--active');
       document.querySelector(`.depth--option[data-size="${modelSize.depth}"]`).classList.add('size-option--active');
-      
-      //selecting color on the panel
+
       const clickedElColor = '#' + currentBlock.children[0].children[0].children[1].material.color.getHexString();
       const allColorInputs = document.querySelectorAll('.main-color-picker .inputs .color');
       allColorInputs.forEach(el => el.classList.remove('color--active'));
       document.querySelector(`.color[data-color="${clickedElColor}"]`).classList.add('color--active');
 
       canDelete(currentBlock);
-
       checkSides(currentBlock);
-    } else if (expansionHandles.children.includes(clickedEl)) { //? if the add btn was clicked
+
+    } else if (expansionHandles.children.includes(clickedEl)) {
       const addBtnNr = expansionHandles.children.indexOf(clickedEl);
       addCube(addBtnNr);
-    } else if (!document.querySelector('.configure-tabs').contains(e.target) && e.target != document.querySelector('.configure-tabs')) {
+
+    } else if (!document.querySelector('.configure-tabs').contains(e.target)) {
       deselectCurrentBlock();
     }
-  } else if (!document.querySelector('.configure-tabs').contains(e.target) && e.target != document.querySelector('.configure-tabs')) {
+
+  } else if (!document.querySelector('.configure-tabs').contains(e.target)) {
     deselectCurrentBlock();
   }
-
-
 });
 
 
