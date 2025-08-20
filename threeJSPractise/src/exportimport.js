@@ -1,4 +1,4 @@
-import { cubesPositions, meshGroup, scene, spawnCube } from "./main.js";
+import { cubesPositions, meshGroup, spawnCube } from "./main.js";
 import { boxesAround, checkConnections, dataFromPositionVector, getFrameColor, getObjectColor, getParametersFromModel } from "./helpers.js";
 import { jointsGroup } from "./connections.js";
 

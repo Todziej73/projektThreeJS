@@ -222,7 +222,6 @@ export const spawnCube = async function (definition) {
 
 
 
-
 export const changeObjectColor = function (object, targetColor) {
   const targetColorVector = new THREE.Color(targetColor);
   const meshToChange = object.children[0].children[0].children[1];
