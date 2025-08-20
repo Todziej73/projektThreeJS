@@ -255,6 +255,8 @@ function canDelete(currentBlock) {
   const blockToLeft = !checkPosition(currentBlock.position)[1];
   const blockToRight = !checkPosition(currentBlock.position)[2];
 
+  
+
   if ((currentBlock.position.y === 0 && !blockAbove && blockToLeft && blockToRight) || meshGroup.children.length === 1 || (blockAbove)) {
     deleteModelBtn.classList.remove('active-btn');
   } else {
@@ -264,13 +266,15 @@ function canDelete(currentBlock) {
 
 
 
-deleteModelBtn.addEventListener('click', async function(){
+deleteModelBtn.addEventListener('click', async function(e){
+
   if(currentBlock && deleteModelBtn.classList.contains('active-btn')){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
    DIMENSIONS.updateDimensions();
-    price.textContent = getFullPrice() + "zł";
-    await connectWithJoints();
+   price.textContent = getFullPrice() + "zł";
+   await connectWithJoints();
+   deselectCurrentBlock();
   }
 });
 
@@ -348,7 +352,6 @@ window.addEventListener('pointerdown', function (e) {
 
   if (intersects.length > 0) {
     const clickedEl = intersects[0].object;
-
     if (clickedEl.parent?.parent && meshGroup.children.includes(clickedEl.parent.parent.parent)) {
       currentBlock = clickedEl.parent.parent.parent;
       updateActiveVisibler();
@@ -378,8 +381,9 @@ window.addEventListener('pointerdown', function (e) {
       deselectCurrentBlock();
     }
 
-  } else if (!document.querySelector('.configure-tabs').contains(e.target)) {
+  } else if (!document.querySelector('.configure-tabs').contains(e.target) && !this.document.querySelector('.deleteModelBtn').contains(e.target)) {
     deselectCurrentBlock();
+    
   }
 });
 
