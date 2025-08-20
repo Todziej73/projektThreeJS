@@ -8,8 +8,9 @@ import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
 import './debug.js';
-import { getFullPrice } from './prices.js';
 import { changeJointsColor, connectWithJoints, setJointsVisibility } from './connections.js';
+import { getPrice } from './woocomerceConn.js';
+
 
 const scene = setUpObj.scene;
 const camera = setUpObj.camera;
@@ -172,7 +173,7 @@ export const addCube = async function (side) {
     changeObjectColor(clone, currentColor);
     changeFrameColor(clone, currentFrameColor);
     canDelete(currentBlock)
-    price.textContent = getFullPrice() + "zł";
+    price.textContent = await getPrice() + "zł";
     await connectWithJoints();
     
     changeJointsColor(new THREE.Color(currentFrameColor));
@@ -182,6 +183,42 @@ export const addCube = async function (side) {
 }
 
 
+
+export const spawnCube = async function (definition) {
+  const modelPath = definition.name;
+  const model = await getModel(modelPath);
+  if(model){
+    const clone = modelToClone(model, modelPath);
+    const data = definition.data;
+    const currentColor = definition.material.color;
+    const currentFrameColor = definition.material.frameColor;
+    const x = definition.position.x;
+    const y = definition.position.y;
+    const z = definition.position.z;
+    const positions = [x, y, z];
+
+    clone.position.set(...positions);
+    cubesPositions.set(JSON.stringify(positions.map((val) => roundToDecimal(val))), {
+      ...data
+    });
+    // console.log(cubesPositions)
+    meshGroup.add(clone)
+
+
+    currentBlock = clone;
+    updateActiveVisibler();
+    createAddBtns(generatePoints(currentBlock));
+    DIMENSIONS.updateDimensions();
+    changeObjectColor(clone, currentColor);
+    changeFrameColor(clone, currentFrameColor);
+    price.textContent = await getPrice() + "zł";
+    await connectWithJoints();
+    
+    changeJointsColor(new THREE.Color(currentFrameColor));
+  }else{
+    console.log("Can't load model");
+  }
+}
 
 
 
@@ -269,7 +306,7 @@ deleteModelBtn.addEventListener('click', async function(){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
    DIMENSIONS.updateDimensions();
-    price.textContent = getFullPrice() + "zł";
+    price.textContent = await getPrice() + "zł";
     await connectWithJoints();
   }
 });
@@ -297,7 +334,7 @@ document.addEventListener('keydown', function(e){
 });
 
 
-confirmResetBtn.addEventListener('click', function(){
+confirmResetBtn.addEventListener('click', async function(){
   meshGroup.children.slice().forEach(function(child){
     meshGroup.remove(child);
 
@@ -314,7 +351,7 @@ confirmResetBtn.addEventListener('click', function(){
   cubesPositions.clear()
   currentColor = '#ebc027';
   addCube(-1);
-  price.textContent = getFullPrice() + "zł";
+  price.textContent = await getPrice() + "zł";
 });
 
 cancelResetBtn.addEventListener('click', hideConfirmContainer);
@@ -410,7 +447,7 @@ mainColorInputs.addEventListener('click', function (e) {
 
 
 const frameColorInputs = document.querySelector('.frame-color-picker .inputs');
-frameColorInputs.addEventListener('click', function (e) {
+frameColorInputs.addEventListener('click', async function (e) {
   const clickedEl = e.target;
   if (clickedEl.classList.contains('color')) {
 
@@ -422,7 +459,7 @@ frameColorInputs.addEventListener('click', function (e) {
       changeFrameColor(obj, clickedEl.dataset.color);
     })
     currentFrameColor = clickedEl.dataset.color;
-    price.textContent = getFullPrice() + "zł";
+    price.textContent = await getPrice() + "zł";
     changeJointsColor(new THREE.Color(currentFrameColor));
   }
 })

@@ -7,7 +7,7 @@ import {dataFromPosition, dataFromPositionVector, generatePoints, getModelSize,g
 import { checkSides, cubesPositions, currentBlock, meshGroup, setCurrentBlock } from "./main";
 import {getModel} from "./rederObject";
 import * as THREE from 'three';
-
+import { getPrice } from "./woocomerceConn";
 
 //! switching the tabs
 
@@ -82,7 +82,7 @@ export const changeColumnSize = async function (group, map, sizeSettings) {
 
   updateDimensions();
   await connectWithJoints();
-  price.textContent = getFullPrice() + "zł";
+  price.textContent = await getPrice() + "zł";
 }
 
 
@@ -160,7 +160,7 @@ export const changeRowSize = async function (group, map, sizeSettings) {
   updateDimensions();
   await connectWithJoints();
 
-  price.textContent = getFullPrice() + "zł";
+  price.textContent = await getPrice() + "zł";
 }
 
 
@@ -182,7 +182,6 @@ function adjustRows(otherRows, map, oldHeight, newHeight, posY) {
       })
    
   });
-
 }
 
 export const changeDepth = async function(group, map, sizeSettings){
@@ -217,7 +216,7 @@ export const changeDepth = async function(group, map, sizeSettings){
   updateDimensions();
   await connectWithJoints();
 
-  price.textContent = getFullPrice() + "zł";
+  price.textContent = await getPrice() + "zł";
 }
 
 
@@ -242,7 +241,7 @@ const changeWall = async function(block, wallType){
   replaceBlock.position.z = block.position.z;
   meshGroup.remove(block);
   meshGroup.add(replaceBlock);
-  price.textContent = getFullPrice() + "zł";
+  price.textContent = await getPrice() + "zł";
 }
 
 

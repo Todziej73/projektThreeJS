@@ -3,7 +3,7 @@ import { checkPosition, cubesPositions, getModelSize, meshGroup, scene } from ".
 import { getModel } from "./rederObject";
 import * as THREE from 'three';
 
-const jointsGroup = new THREE.Group();
+export const jointsGroup = new THREE.Group();
 
 jointsGroup.name = "JOINTS_GROUP";
 

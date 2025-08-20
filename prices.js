@@ -1,5 +1,5 @@
-import { boxesAround, checkConnections, dataFromPositionVector, getConnectionsTypeByObject, getFullObjectData, nameToColor, select } from "./helpers";
-import { cubesPositions, meshGroup } from "./main"
+import { boxesAround, checkConnections, dataFromPositionVector, getConnectionsTypeByObject, getFullObjectData, nameToColor, select } from "./threeJSPractise/src/helpers.js";
+import { cubesPositions, meshGroup } from "./threeJSPractise/src/main.js"
 import * as THREE from 'three';
 import pricesText from '/src/pricesv3.csv?raw';
 
