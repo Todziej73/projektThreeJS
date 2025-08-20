@@ -1,20 +1,21 @@
-import { addCube, changeObjectColor, cubesPositions, meshGroup, scene, spawnCube } from "./main.js";
-import { dataFromPositionVector, getFrameColor, getObjectColor, getParametersFromModel } from "./helpers.js";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { cubesPositions, meshGroup, scene, spawnCube } from "./main.js";
+import { boxesAround, checkConnections, dataFromPositionVector, getFrameColor, getObjectColor, getParametersFromModel } from "./helpers.js";
 import { jointsGroup } from "./connections.js";
 
 
 export const configurationToJSON = function(){
     const payload = meshGroup.children.map(obj => {
     return {
-      name: obj.name, // np. klagem/module_F/Legged/729x383x222.glb
-      position: obj.position.clone(),
-      material: {
+      'name': obj.name, // np. klagem/module_F/Legged/729x383x222.glb
+      'position': obj.position.clone(),
+      'parameters': getParametersFromModel(obj.name),
+      'material': {
         color: getObjectColor(obj),
         frameColor: getFrameColor(obj)
       },
-      data: dataFromPositionVector(cubesPositions, obj.position)
+      'data': dataFromPositionVector(cubesPositions, obj.position),
+      'connections': checkConnections(obj),
+      'boxesAround': boxesAround(obj)
     };
   });
   return payload;
