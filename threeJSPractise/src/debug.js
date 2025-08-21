@@ -3,7 +3,6 @@ import { configurationToJSON, exportConfiguration, importConfiguration } from ".
 import { getConnectionsTypeByObject } from "./helpers";
 import { meshGroup, scene, setCurrentBlock, cubesPositions, currentBlock } from "./main";
 import * as THREE from 'three';
-import { _PRICES, getBoxPrice, getFullPrice, priceDebug, fullPriceDebug } from "../../prices";
 /**
  * | DEBUG FUNCTION | -> Rapidly changes size of random blocks
  * @param {number} cd 
@@ -47,23 +46,23 @@ export const _timerStop = function(){
 
 
 //* DEBUG
-window.onload = ()=>{
-    window.scene = scene;
-    window._startChangingSizes = _startChangingSizes;
-    window._timerStart = _timerStart;
-    window._timerStop = _timerStop;
-    window.cubesPositions = cubesPositions;
-    window.currentBlock = currentBlock;
-    window.meshGroup = meshGroup;
-    window.THREE = THREE;
-    window.changeJointsColor = changeJointsColor;
-    window.getConnectionsTypeByObject = getConnectionsTypeByObject;
-    window.exportConfiguration = exportConfiguration;
-    window.importConfiguration = importConfiguration;
-    window._PRICES = _PRICES;
-    window.getBoxPrice = getBoxPrice;
-    window.getFullPrice = getFullPrice;
-    window.priceDebug = priceDebug;
-    window.fullPriceDebug = fullPriceDebug;
-    window.configurationToJSON = configurationToJSON;
-};
+// window.onload = ()=>{
+//     window.scene = scene;
+//     window._startChangingSizes = _startChangingSizes;
+//     window._timerStart = _timerStart;
+//     window._timerStop = _timerStop;
+//     window.cubesPositions = cubesPositions;
+//     window.currentBlock = currentBlock;
+//     window.meshGroup = meshGroup;
+//     window.THREE = THREE;
+//     window.changeJointsColor = changeJointsColor;
+//     window.getConnectionsTypeByObject = getConnectionsTypeByObject;
+//     window.exportConfiguration = exportConfiguration;
+//     window.importConfiguration = importConfiguration;
+//     window._PRICES = _PRICES;
+//     window.getBoxPrice = getBoxPrice;
+//     window.getFullPrice = getFullPrice;
+//     window.priceDebug = priceDebug;
+//     window.fullPriceDebug = fullPriceDebug;
+//     window.configurationToJSON = configurationToJSON;
+// };

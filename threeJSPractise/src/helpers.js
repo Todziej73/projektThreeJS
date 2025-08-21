@@ -1,9 +1,8 @@
 'use strict'
 
 import * as THREE from 'three';
-import { changeFrameColor, changeObjectColor, checkPosition, cubesPositions, currentBlock, hasValue, setCurrentBlock } from './main';
+import { changeFrameColor, changeObjectColor, checkPosition, cubesPositions, currentBlock, hasValue, meshGroup, setCurrentBlock } from './main';
 import { color } from 'three/src/nodes/TSL.js';
-
 export const roundToDecimal = function (num) {
   return Math.round(num * 1000) / 1000;
 };
