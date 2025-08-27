@@ -1,25 +1,31 @@
 import { cubesPositions, meshGroup, spawnCube } from "./main.js";
-import { boxesAround, checkConnections, dataFromPositionVector, getFrameColor, getObjectColor, getParametersFromModel } from "./helpers.js";
+import {
+  boxesAround,
+  checkConnections,
+  dataFromPositionVector,
+  getFrameColor,
+  getObjectColor,
+  getParametersFromModel,
+} from "./helpers.js";
 import { jointsGroup } from "./connections.js";
 
-
-export const configurationToJSON = function(){
-    const payload = meshGroup.children.map(obj => {
+export const configurationToJSON = function () {
+  const payload = meshGroup.children.map((obj) => {
     return {
-      'name': obj.name, // np. klagem/module_F/Legged/729x383x222.glb
-      'position': obj.position.clone(),
-      'parameters': getParametersFromModel(obj.name),
-      'material': {
+      name: obj.name, // np. klagem/module_F/Legged/729x383x222.glb
+      position: obj.position.clone(),
+      parameters: getParametersFromModel(obj.name),
+      material: {
         color: getObjectColor(obj),
-        frameColor: getFrameColor(obj)
+        frameColor: getFrameColor(obj),
       },
-      'data': dataFromPositionVector(cubesPositions, obj.position),
-      'connections': checkConnections(obj),
-      'boxesAround': boxesAround(obj)
+      data: dataFromPositionVector(cubesPositions, obj.position),
+      connections: checkConnections(obj),
+      boxesAround: boxesAround(obj),
     };
   });
   return payload;
-}
+};
 
 export const exportConfiguration = function () {
   const payload = configurationToJSON();
@@ -34,8 +40,6 @@ export const exportConfiguration = function () {
 
   URL.revokeObjectURL(url);
 };
-
-
 
 export const importConfiguration = function () {
   const input = document.createElement("input");
@@ -63,10 +67,10 @@ export const importConfiguration = function () {
 };
 
 export const importConfigurationFromJSON = function (data) {
-    meshGroup.clear();
-    jointsGroup.clear();
-    cubesPositions.clear();
-    for (const rec of data) {
-        spawnCube(rec);
-    }
-}
+  meshGroup.clear();
+  jointsGroup.clear();
+  cubesPositions.clear();
+  for (const rec of data) {
+    spawnCube(rec);
+  }
+};
