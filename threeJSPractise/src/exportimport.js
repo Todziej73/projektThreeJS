@@ -6,6 +6,7 @@ import {
   getFrameColor,
   getObjectColor,
   getParametersFromModel,
+  updatePrice,
 } from "./helpers.js";
 import { jointsGroup } from "./connections.js";
 
@@ -74,3 +75,13 @@ export const importConfigurationFromJSON = function (data) {
     spawnCube(rec);
   }
 };
+
+
+document.querySelector("#export").addEventListener('click', (e) => {
+  exportConfiguration();
+});
+
+document.querySelector("#import").addEventListener('click', (e) => {
+  importConfiguration();
+  updatePrice();
+});

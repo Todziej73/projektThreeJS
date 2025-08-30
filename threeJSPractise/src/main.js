@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {setUpObj} from './setup.js';
 import {expansionHandles,createAddBtns} from './expansionHandles';
 import {getModel} from './rederObject.js';
-import {dataFromPosition,generatePoints,getModelSize,getParametersFromModel,roundToDecimal,select,modelToClone} from './helpers.js';
+import {dataFromPosition,generatePoints,getModelSize,getParametersFromModel,roundToDecimal,select,modelToClone, updatePrice} from './helpers.js';
 import {changeColumnSize,changeDepth,changeRowSize} from './configuratorPanel.js';
 import {updateActiveVisibler} from './activeVisibler.js';
 import * as DIMENSIONS from './dimensions.js';
@@ -27,7 +27,6 @@ export const setCurrentBlock = function (object) {
 
 let currentColor = '#ebc027';
 let currentFrameColor = '#0e0e10';
-const price = document.querySelector('.price');
 
 scene.add(expansionHandles);
 
@@ -173,7 +172,7 @@ export const addCube = async function (side) {
     changeObjectColor(clone, currentColor);
     changeFrameColor(clone, currentFrameColor);
     canDelete(currentBlock)
-    price.textContent = await getPrice() + "zł";
+    await updatePrice();
     await connectWithJoints();
     
     changeJointsColor(new THREE.Color(currentFrameColor));
@@ -211,7 +210,7 @@ export const spawnCube = async function (definition) {
     DIMENSIONS.updateDimensions();
     changeObjectColor(clone, currentColor);
     changeFrameColor(clone, currentFrameColor);
-    price.textContent = await getPrice() + "zł";
+    await updatePrice();
     await connectWithJoints();
     
     changeJointsColor(new THREE.Color(currentFrameColor));
@@ -308,7 +307,7 @@ deleteModelBtn.addEventListener('click', async function(e){
     cubesPositions.delete( JSON.stringify(Object.values(currentBlock.position).map((el) => el = roundToDecimal(el))));
    meshGroup.remove(currentBlock)
    DIMENSIONS.updateDimensions();
-    price.textContent = await getPrice() + "zł";
+    await updatePrice();
     await connectWithJoints();
     deselectCurrentBlock();
   }
@@ -354,7 +353,7 @@ confirmResetBtn.addEventListener('click', async function(){
   cubesPositions.clear()
   currentColor = '#ebc027';
   addCube(-1);
-  price.textContent = await getPrice() + "zł";
+  await updatePrice();
 });
 
 cancelResetBtn.addEventListener('click', hideConfirmContainer);
@@ -462,7 +461,7 @@ frameColorInputs.addEventListener('click', async function (e) {
       changeFrameColor(obj, clickedEl.dataset.color);
     })
     currentFrameColor = clickedEl.dataset.color;
-    price.textContent = await getPrice() + "zł";
+    await updatePrice();
     changeJointsColor(new THREE.Color(currentFrameColor));
   }
 })
@@ -547,6 +546,7 @@ const getPredictedSize = function (x_index, y_index) {
 DIMENSIONS.setDimensionsVisiblity(true);
 setJointsVisibility(true);
 document.querySelector('div[data-color="#262626"]').click();
+setInterval(()=>{updatePrice()}, 3000);
 
 
 //* EXPORTS

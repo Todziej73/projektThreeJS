@@ -574,14 +574,22 @@ body {
   background-size: 100% 100%;
 }
 
-a{
+a {
   text-decoration: none;
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-.btn svg{
+.btn svg {
   width: 2.8rem;
   aspect-ratio: 1;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1%;
 }

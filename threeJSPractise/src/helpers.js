@@ -3,6 +3,10 @@
 import * as THREE from 'three';
 import { changeFrameColor, changeObjectColor, checkPosition, cubesPositions, currentBlock, hasValue, meshGroup, setCurrentBlock } from './main';
 import { color } from 'three/src/nodes/TSL.js';
+import { getPrice } from './woocomerceConn';
+
+const priceBlock = document.querySelector('.price');
+
 export const roundToDecimal = function (num) {
   return Math.round(num * 1000) / 1000;
 };
@@ -378,4 +382,8 @@ export const getConnectionsTypeByObject = function(object){
     "bottomLeft": bottomLeft,
     "bottomRight": bottomRight
   };
+}
+
+export const updatePrice = async function(){
+  priceBlock.textContent = await getPrice() + "zł";
 }

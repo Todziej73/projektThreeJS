@@ -4,7 +4,6 @@ import { Font, FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import * as THREE from 'three';
 import {addCube} from "./main";
-import { _timerStart, _timerStop } from './debug.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 const mustManager = new THREE.LoadingManager();
