@@ -1,70 +1,62 @@
 import { configurationToJSON } from "./exportimport";
 import html2canvas from "html2canvas";
 
-const captureAndSendImage = async () => {
+export async function getPrice() {
+  const form = new FormData();
+  form.append("action", "get_price");
+  form.append("config", JSON.stringify(configurationToJSON()));
+
+  const res = await fetch("https://klagem.pl/wp-admin/admin-ajax.php", {
+    method: "POST",
+    credentials: "include",
+    body: form,
+  });
+  const data = await res.json();
+  return data.data.price; // WordPress zwraca { success, data:{ price } }
+}
+
+export const captureAndSendImage = async () => {
   const node = document.querySelector("canvas");
+  if (!node) throw new Error("Nie znaleziono <canvas>.");
 
   const canvas = await html2canvas(node);
-  const dataUrl = canvas.toDataURL("image/png");
+  const dataUrl = canvas.toDataURL("image/png"); // data:image/png;base64,...
 
-  const formData = new FormData();
-  formData.append("action", "upload_custom_product_image");
-  formData.append("image", dataUrl);
+  const form = new FormData();
+  form.append("action", "upload_custom_product_image");
+  form.append("image", dataUrl);
 
-  const res = await fetch("/wp-admin/admin-ajax.php", {
+  const res = await fetch("https://klagem.pl/wp-admin/admin-ajax.php", {
     method: "POST",
-    body: formData,
+    credentials: "include",
+    body: form,
   });
 
   const data = await res.json();
-  console.log(data);
-
-  return data?.data?.url;
+  if (!data?.success) throw new Error(data?.data || "Błąd uploadu obrazu");
+  return data.data.url; // URL pliku w uploads
 };
 
-const updateWooComerceForm = async () => {
-  const productId = 1884;
+export async function addCustomProductToCart() {
+  const form = new FormData();
   const imageUrl = await captureAndSendImage();
-  // console.log("URL obrazka:", imageUrl);
+  form.append("action", "add_custom_product_to_cart");
+  form.append("image_url", imageUrl || "");
+  form.append("config", JSON.stringify(configurationToJSON()));
 
-  const body = new URLSearchParams();
-  body.append("action", "add_custom_product_to_cart");
-  body.append("product_id", productId);
-  body.append("configuration", configurationToJSON());
-  body.append("image_url", imageUrl);
-
-  const res = await fetch("", {
+  const res = await fetch("https://klagem.pl/wp-admin/admin-ajax.php", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(configurationToJSON()),
+    credentials: "include",
+    body: form,
   });
 
   const data = await res.json();
-  if (data.success) {
-    const price = data.price;
-    alert("Cena: " + price + " zł");
-    window.location.href = "/koszyk";
-  } else {
-    alert("Błąd: " + data.data);
-  }
-};
-
-export async function getPrice() {
-  const config = configurationToJSON();
-  const res = await fetch(
-    "https://klagem.pl/wp-content/plugins/customplugin/prices.php",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(config),
-    }
-  );
-  const data = await res.json();
-  return data.price;
+  if (!data?.success) throw new Error(data?.data || "Błąd dodania do koszyka");
+  return data;
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-
 
 document
   .querySelector("#add-to-cart")
-  .addEventListener("click", updateWooComerceForm);
+  .addEventListener("click", addCustomProductToCart);
