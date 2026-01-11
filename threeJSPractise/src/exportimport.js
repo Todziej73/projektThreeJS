@@ -45,25 +45,27 @@ export const exportConfiguration = function () {
 export const importConfiguration = function () {
   const input = document.createElement("input");
   input.type = "file";
-  input.accept = ".klg";
+  input.accept = ".klg,application/json";
 
-  input.onchange = async (event) => {
-    const file = event.target.files[0];
+  input.onchange = (event) => {
+    const file = event.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const data = JSON.parse(e.target.result);
-        importConfigurationFromJSON(data);
-        console.log("Zaimportowano konfigurację:", data.length, "elementów");
-      } catch (error) {
-        console.error("Błąd przy imporcie konfiguracji:", error);
+    reader.onload = (e) => {
+      let text = e.target.result.trim().toString();
+      if (text.includes('\\"')) {
+        text = text.replace(/\\"/g, '"');
       }
+      console.log(text);
+      const data = JSON.parse(text);
+      importConfigurationFromJSON(data);
     };
+
     reader.readAsText(file);
   };
 
+  document.body.appendChild(input);
   input.click();
 };
 
@@ -76,12 +78,11 @@ export const importConfigurationFromJSON = function (data) {
   }
 };
 
-
-document.querySelector("#export").addEventListener('click', (e) => {
+document.querySelector("#export").addEventListener("click", (e) => {
   exportConfiguration();
 });
 
-document.querySelector("#import").addEventListener('click', (e) => {
+document.querySelector("#import").addEventListener("click", (e) => {
   importConfiguration();
   updatePrice();
 });

@@ -26,10 +26,7 @@ body {
   display: flex;
 }
 
-
-
 /* configure tab */
-
 
 /* configure size */
 .configure-tabs {
@@ -84,8 +81,6 @@ body {
   font-size: 1.6rem;
 }
 
-
-
 .inputs {
   display: flex;
   flex-wrap: wrap;
@@ -119,7 +114,6 @@ body {
 
 /* configure structure */
 
-
 .structure-option img {
   height: 4.4rem;
   cursor: pointer;
@@ -130,9 +124,6 @@ body {
   transform: scale(1.1);
 }
 
-
-
-
 /* configure color */
 
 .main-color-picker,
@@ -140,8 +131,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-
 
 .main-color-picker,
 .frame-color-picker {
@@ -232,20 +221,17 @@ body {
   background-color: #000080;
 }
 
-
-
 .frame-color-picker .inputs .color:nth-child(1) {
   background-color: #0e0e10;
 }
 
 .frame-color-picker .inputs .color:nth-child(2) {
-  background-color: #FFD700;
+  background-color: #ffd700;
 }
 
 .frame-color-picker .inputs .color:nth-child(3) {
-  background-color: #CD7F32;
+  background-color: #cd7f32;
 }
-
 
 .hidden {
   display: none !important;
@@ -314,7 +300,6 @@ body {
   cursor: pointer;
   fill: #333;
   width: 3rem;
-
 }
 
 .deleteModelBtn svg {
@@ -323,7 +308,6 @@ body {
   fill: #999;
   cursor: not-allowed;
 }
-
 
 .active-btn svg {
   fill: #333;
@@ -388,7 +372,6 @@ body {
   background-color: #c5c7c4;
 }
 
-
 /* PROTOTYPE */
 
 .progressBarMainText {
@@ -407,7 +390,6 @@ body {
   font-size: 22dvh;
   -webkit-text-stroke: 4px #f05621;
   letter-spacing: 1px;
-
 }
 
 .fill {
@@ -430,7 +412,6 @@ body {
   color: #f05621;
   font-weight: bold;
 }
-
 
 /* tutorial */
 
@@ -511,7 +492,6 @@ body {
 
 /* price container */
 
-
 .price-container {
   z-index: 12;
   padding: 1rem 0;
@@ -543,7 +523,6 @@ body {
   font-size: 2rem;
   text-align: center;
 }
-
 
 .return-btn,
 .btn {
@@ -592,4 +571,8 @@ a {
   align-items: center;
   width: 100%;
   gap: 1%;
+}
+
+input[type="file"] {
+  display: none;
 }
